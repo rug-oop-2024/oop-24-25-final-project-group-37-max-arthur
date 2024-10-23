@@ -153,11 +153,11 @@ If you did not implement the feature
 
 | Requirement                           | Type (FN/NF) | Implemented by       | Implementation Completed (add X if done) | Comment |
 |-------------------------------------- |--------------|----------------------|--------------------------|---------|         
-| Up-to-date requirements.txt           | NF           |                      |         | |
-| `ML/detect-features`                  | FN           |                      |         | |
-| `ML/artifact`                         | NF           |                      |         | |
-| `ML/feature`                          | NF           |                      |         | |
-| `ML/metric`                           | NF           |                      |         | |
+| Up-to-date requirements.txt           | NF           | both                 | X       | |
+| `ML/detect-features`                  | FN           | both                 | X       | |
+| `ML/artifact`                         | NF           | both                 | X       | | Did not implement save method yet, unsure of what to put there
+| `ML/feature`                          | NF           | both                 | X       | | Unsure whether the __str__ method is correct like this
+| `ML/metric`                           | NF           | both                 | X       | |
 | `ML/metric/extensions`                | FN           |                      |         | |
 | `ML/model`                            | NF           |                      |         | |
 | `ML/model/extensions`                 | FN           |                      |         | |
