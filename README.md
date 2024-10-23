@@ -155,8 +155,8 @@ If you did not implement the feature
 |-------------------------------------- |--------------|----------------------|--------------------------|---------|         
 | Up-to-date requirements.txt           | NF           | both                 | X       | |
 | `ML/detect-features`                  | FN           | both                 | X       | |
-| `ML/artifact`                         | NF           | both                 | X       | | Did not implement save method yet, unsure of what to put there
-| `ML/feature`                          | NF           | both                 | X       | | Unsure whether the __str__ method is correct like this
+| `ML/artifact`                         | NF           | both                 | X       | Did not implement save method yet, unsure of what to put there |
+| `ML/feature`                          | NF           | both                 | X       | Unsure whether the \_\_str\_\_ method is correct like this |
 | `ML/metric`                           | NF           | both                 | X       | |
 | `ML/metric/extensions`                | FN           |                      |         | |
 | `ML/model`                            | NF           |                      |         | |
