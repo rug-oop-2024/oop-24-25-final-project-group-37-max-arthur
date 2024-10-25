@@ -153,30 +153,30 @@ If you did not implement the feature
 
 | Requirement                           | Type (FN/NF) | Implemented by       | Implementation Completed (add X if done) | Comment |
 |-------------------------------------- |--------------|----------------------|--------------------------|---------|         
-| Up-to-date requirements.txt           | NF           | both    | X       | |
-| `ML/detect-features`                  | FN           | both    | X       | |
-| `ML/artifact`                         | NF           | both    | X       | Did not implement save method yet, unsure of what to put there |
-| `ML/feature`                          | NF           | both    | X       | Unsure whether the \_\_str\_\_ method is correct like this |
-| `ML/metric`                           | NF           | both    | X       | |
-| `ML/metric/extensions`                | FN           |         |         | |
-| `ML/model`                            | NF           |         |         | |
-| `ML/model/extensions`                 | FN           |         |         | |
-| `ML/pipeline/evaluation`              | FN           |         |         | | 
-| `ST/page/datasets`                    | NF           |         |         | |
-| `ST/datasets/management/create`       | FN           |         |         | |
-| `ST/datasets/management/save`         | FN           |         |         | |
-| `ST/page/modelling`                   | NF           |         |         | |
-| `ST/modelling/datasets/list`          | FN           |         |         | |
-| `ST/modelling/datasets/features`      | FN           |         |         | |
-| `ST/modelling/models`                 | FN           |         |         | |
-| `ST/modelling/pipeline/split`         | FN           |         |         | |
-| `ST/modelling/pipeline/metrics`       | FN           |         |         | |
-| `ST/modelling/pipeline/summary`       | FN           |         |         | |
-| `ST/modelling/pipeline/train`         | FN           |         |         | |
-| `ST/modelling/pipeline/save`          | FN           |         |         | |
-| `ST/page/deployment`                  | FN           |         |         | |
-| `ST/deployment/load`                  | FN           |         |         | |
-| `ST/deployment/predict`               | FN           |         |         | |
+| Up-to-date requirements.txt           | NF           | both    | X  | |
+| `ML/detect-features`                  | FN           | both    | X  | |
+| `ML/artifact`                         | NF           | both    | X  | Did not implement save method yet, unsure of what to put there |
+| `ML/feature`                          | NF           | both    | X  | Unsure whether the \_\_str\_\_ method is correct like this |
+| `ML/metric`                           | NF           | both    | X  | |
+| `ML/metric/extensions`                | FN           | both    | X  | Maybe softmax and sigmoid should go somewhere else| 
+| `ML/model`                            | NF           |         |    | |
+| `ML/model/extensions`                 | FN           |         |    | |
+| `ML/pipeline/evaluation`              | FN           |         |    | | 
+| `ST/page/datasets`                    | NF           |         |    | |
+| `ST/datasets/management/create`       | FN           |         |    | |
+| `ST/datasets/management/save`         | FN           |         |    | |
+| `ST/page/modelling`                   | NF           |         |    | |
+| `ST/modelling/datasets/list`          | FN           |         |    | |
+| `ST/modelling/datasets/features`      | FN           |         |    | |
+| `ST/modelling/models`                 | FN           |         |    | |
+| `ST/modelling/pipeline/split`         | FN           |         |    | |
+| `ST/modelling/pipeline/metrics`       | FN           |         |    | |
+| `ST/modelling/pipeline/summary`       | FN           |         |    | |
+| `ST/modelling/pipeline/train`         | FN           |         |    | |
+| `ST/modelling/pipeline/save`          | FN           |         |    | |
+| `ST/page/deployment`                  | FN           |         |    | |
+| `ST/deployment/load`                  | FN           |         |    | |
+| `ST/deployment/predict`               | FN           |         |    | |
 
 If you add extra features, please indicate them below:
 | Requirement                           | Type (FN/NF) | Implemented by       | Implementation Completed (add X if done) | Comment |

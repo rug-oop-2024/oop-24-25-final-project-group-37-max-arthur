@@ -5,7 +5,6 @@ import io
 
 
 class Dataset(Artifact):
-
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(type="dataset", *args, **kwargs)
 
