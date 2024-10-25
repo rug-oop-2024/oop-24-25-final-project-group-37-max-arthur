@@ -159,7 +159,7 @@ If you did not implement the feature
 | `ML/feature`                          | NF           | both    | X  | Unsure whether the \_\_str\_\_ method is correct like this |
 | `ML/metric`                           | NF           | both    | X  | |
 | `ML/metric/extensions`                | FN           | both    | X  | Maybe softmax and sigmoid should go somewhere else| 
-| `ML/model`                            | NF           |         |    | |
+| `ML/model`                            | NF           | both    | X  | |
 | `ML/model/extensions`                 | FN           |         |    | |
 | `ML/pipeline/evaluation`              | FN           |         |    | | 
 | `ST/page/datasets`                    | NF           |         |    | |
