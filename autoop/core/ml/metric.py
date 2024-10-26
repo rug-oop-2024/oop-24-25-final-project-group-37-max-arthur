@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from torch import argmax, Tensor, exp, log, abs, where
+from torch import argmax, Tensor, exp, log, abs, where, stack
 
 METRICS = [
     "mean_squared_error",
@@ -13,7 +13,7 @@ METRICS = [
 ]
 
 
-def get_metric(name: str) -> 'Metric':  # ?be careful of leakage from the returns
+def get_metric(name: str) -> 'Metric':
     """
     Factory function to get a metric by name.
     Args:
@@ -87,10 +87,10 @@ class RSquared(Metric):
     def __call__(
             self, predictions: Tensor, labels: Tensor
     ) -> float:
-        residual_sum_se = ((labels - predictions) ** 2).sum()
-        total_sum_se = ((labels - labels.mean()) ** 2).sum()
-        rs = 1 - residual_sum_se / total_sum_se
-        return rs.item()
+        residual_sum_se = ((labels - predictions) ** 2).sum().item()
+        total_sum_se = ((labels - labels.mean()) ** 2).sum().item()
+        rs = 1 - residual_sum_se / total_sum_se if total_sum_se != 0 else 0.0
+        return rs
 
 
 class Accuracy(Metric):
@@ -99,6 +99,9 @@ class Accuracy(Metric):
     ) -> float:
         self._validate_inputs(predictions, labels)
         labels = labels.squeeze()
+        predictions = self._select_activation(labels).apply(predictions)
+        if predictions.ndim == 1:
+            predictions = where(predictions >= 0.5, 1, 0)
         if predictions.ndim > 1:
             predictions = argmax(predictions, dim=1)
         num_correct = (predictions == labels).sum()
@@ -112,23 +115,25 @@ class Precision(Metric):
     ) -> float:
         self._validate_inputs(predictions, labels)
         labels = labels.squeeze()
-        num_classes = predictions.size(1) if predictions.ndim > 1 else 1
         predictions = self._select_activation(labels).apply(predictions)
-        if predictions.ndim > 1:  # multi-class
-            predictions = argmax(predictions, dim=1)
-        else:  # binary
+
+        # binary case
+        if predictions.ndim == 1:
             predictions = where(predictions >= 0.5, 1, 0)
-        
+            classes = [1]
+
+        # multi-class case
+        else:
+            classes = range(predictions.size(1))
+            predictions = argmax(predictions, dim=1)
         precision_list = []
-        for class_idx in range(num_classes):
-            tp = ((predictions == class_idx) & (
-                labels == class_idx)).sum().item()
-            fp = ((predictions == class_idx) & (
-                labels != class_idx)).sum().item()
-            precision = tp / (tp + fp) if (tp + fp) > 0 else 0
+        for cls in classes:
+            tp = ((predictions == cls) & (labels == cls)).sum().item()
+            fp = ((predictions == cls) & (labels != cls)).sum().item()
+            precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
             precision_list.append(precision)
 
-        precision = sum(precision_list) / num_classes
+        precision = Tensor(precision_list).mean().item()
         return precision
 
 
@@ -138,35 +143,38 @@ class Recall(Metric):
     ) -> float:
         self._validate_inputs(predictions, labels)
         labels = labels.squeeze()
-        num_classes = predictions.size(1) if predictions.ndim > 1 else 1
         predictions = self._select_activation(labels).apply(predictions)
-        if predictions.ndim > 1:  # multi-class
-            predictions = argmax(predictions, dim=1)
-        else:  # binary
+
+        # binary case
+        if predictions.ndim == 1:
             predictions = where(predictions >= 0.5, 1, 0)
+            classes = [1]
+        # multi-class case
+        else:
+            classes = range(predictions.size(1))
+            predictions = argmax(predictions, dim=1)
 
         recall_list = []
-        for class_idx in range(num_classes):
-            tp = ((predictions == class_idx) & (
-                labels == class_idx)).sum().item()
-            fn = ((predictions != class_idx) & (
-                labels == class_idx)).sum().item()
-            recall = tp / (tp + fn) if (tp + fn) > 0 else 0
+        for cls in classes:
+            tp = ((predictions == cls) & (labels == cls)).sum().item()
+            fn = ((predictions != cls) & (labels == cls)).sum().item()
+            recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
             recall_list.append(recall)
 
-        recall = sum(recall_list) / num_classes
+        recall = Tensor(recall_list).mean().item()
         return recall
 
 
 class F1Score(Metric):
+    def __init__(self) -> None:
+        self.precision = Precision()
+        self.recall = Recall()
     def __call__(
             self, predictions: Tensor, labels: Tensor
     ) -> float:
-        recall = Recall()
-        precision = Precision()
-        r = recall(predictions, labels)
-        p = precision(predictions, labels)
-        f1 = 2 * (r * p) / (r + p)
+        precision = self.precision(predictions, labels)
+        recall = self.recall(predictions, labels)
+        f1 = 2 * (precision * recall) / (precision + recall + 1e-7)
         return f1
 
 
@@ -188,8 +196,14 @@ class CrossEntropyLoss(Metric):
         self._validate_inputs(predictions, labels)
         labels = labels.squeeze()
         predictions = self._select_activation(labels).apply(predictions)
-        loss_tensor = -log(predictions[range(predictions.shape[0]), labels])  # this line doesnt work for binary i think
-        return loss_tensor.mean()
+        predictions = predictions.clamp(min=1e-7, max=1 - 1e-7)
+        if predictions.ndim == 1:
+            loss_tensor = -(
+                labels * log(predictions) + (1 - labels) * log(1 - predictions)
+            )
+        else:
+            loss_tensor = -log(predictions[range(predictions.size(0)), labels])
+        return loss_tensor.mean().item()
 
 
 class ActivationStrategy(ABC):
