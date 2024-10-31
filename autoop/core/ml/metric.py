@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from torch import argmax, Tensor, exp, log, abs, where, stack
+from torch import argmax, Tensor, exp, log, abs, where
 
 METRICS = [
     "mean_squared_error",

@@ -8,7 +8,7 @@ from typing import Literal
 class Model(ABC):
     def __init__(self):
         self._parameters: dict = {}
-        self._hyper_parameters: dict = {}
+        self._hyperparameters: dict = {}
         self.type: Literal["regression", "classification"] = None  # ?do we need a setter for this here??
 
     @property
@@ -17,7 +17,7 @@ class Model(ABC):
     
     @property
     def hyper_parameters(self):
-        return deepcopy(self._hyper_parameters)
+        return deepcopy(self._hyperparameters)
     
     @abstractmethod
     def to_artifact(self, name: str) -> 'Artifact':
