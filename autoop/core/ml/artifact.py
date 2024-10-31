@@ -1,5 +1,6 @@
 import base64
 
+
 class Artifact:
     def __init__(
             self,
@@ -22,7 +23,8 @@ class Artifact:
 
     @property
     def id(self):
-        return {base64(self.asset_path)}:{self.version}
+        encoded_path = base64.b64encode(self.asset_path.encode()).decode()
+        return f"{encoded_path}:{self.version}"
 
     def read(self) -> bytes:
         return self.data

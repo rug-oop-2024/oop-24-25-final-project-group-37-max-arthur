@@ -120,5 +120,3 @@ Pipeline(
             "predictions": self._predictions,
         }
         
-
-    

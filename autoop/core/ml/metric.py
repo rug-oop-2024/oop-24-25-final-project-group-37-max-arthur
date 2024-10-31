@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from torch import argmax, Tensor, exp, log, abs, where
+from torch import argmax, Tensor, exp, log, abs, where, stack
 
 METRICS = [
     "mean_squared_error",
@@ -13,6 +13,7 @@ METRICS = [
 ]
 
 
+#  could introduce functions upstream, that pass is_binary e.g.
 def get_metric(name: str) -> 'Metric':
     """
     Factory function to get a metric by name.
@@ -45,6 +46,9 @@ def get_metric(name: str) -> 'Metric':
 
 #  !Somewhere we should check for feature type maybe?
 #  we currently return floats instead of tensor[float] everywhere
+#  could use some more helper functions maybe. Turn validate inputs
+#  into preprocess inputs where we assert, squeeze labels, and check if 
+#  predictions is ndim = 2 and size(1) = 1 and squeeze too
 
 class Metric(ABC):
     def _validate_inputs(self, predictions: Tensor, labels: Tensor) -> None:
@@ -52,7 +56,7 @@ class Metric(ABC):
             "Predictions and labels must have the same length."
         )
 
-    def _select_activation(self, labels: Tensor) -> Tensor:
+    def _select_activation(self, labels: Tensor) -> 'Activation':
         is_binary_class = True if labels.max().item() < 2 else False
         return SigmoidActivation() if is_binary_class else SoftmaxActivation()
 
@@ -89,7 +93,10 @@ class RSquared(Metric):
     ) -> float:
         residual_sum_se = ((labels - predictions) ** 2).sum().item()
         total_sum_se = ((labels - labels.mean()) ** 2).sum().item()
-        rs = 1 - residual_sum_se / total_sum_se if total_sum_se != 0 else 0.0
+        if total_sum_se == 0:
+            rs = 1.0 if residual_sum_se == 0 else 0.0
+        else:
+            rs = 1 - residual_sum_se / total_sum_se
         return rs
 
 
@@ -206,18 +213,18 @@ class CrossEntropyLoss(Metric):
         return loss_tensor.mean().item()
 
 
-class ActivationStrategy(ABC):
+class Activation(ABC):
     @abstractmethod
     def apply(self, predictions: Tensor) -> Tensor:
         pass
 
 
-class SoftmaxActivation(ActivationStrategy):
+class SoftmaxActivation(Activation):
     def apply(self, predictions: Tensor) -> Tensor:
         exp_predictions = exp(predictions)
         return exp_predictions / exp_predictions.sum(dim=1, keepdim=True)
 
 
-class SigmoidActivation(ActivationStrategy):
+class SigmoidActivation(Activation):
     def apply(self, predictions: Tensor) -> Tensor:
         return 1 / (1 + exp(-predictions))
