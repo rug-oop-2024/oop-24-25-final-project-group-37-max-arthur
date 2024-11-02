@@ -1,8 +1,9 @@
 
 from autoop.core.ml.model.model import Model
-#from autoop.core.ml.model.regression import MultipleLinearRegression
+from autoop.core.ml.model.regression import MultipleLinearRegression
 
 REGRESSION_MODELS = [
+    "MultipleLinearRegression"
 ] # add your models as str here
 
 CLASSIFICATION_MODELS = [
