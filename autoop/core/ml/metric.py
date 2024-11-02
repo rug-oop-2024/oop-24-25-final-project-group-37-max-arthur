@@ -1,5 +1,7 @@
+from typing import Callable
 from abc import ABC, abstractmethod
 from torch import argmax, Tensor, exp, log, abs, where, stack
+from autoop.functional.activations import softmax, sigmoid
 
 METRICS = [
     "mean_squared_error",
@@ -14,7 +16,7 @@ METRICS = [
 
 
 #  could introduce functions upstream, that pass is_binary e.g.
-def get_metric(name: str) -> 'Metric':
+def get_metric(name: str, needs_activation: bool=True) -> 'Metric':
     """
     Factory function to get a metric by name.
     Args:
@@ -41,30 +43,46 @@ def get_metric(name: str) -> 'Metric':
         raise ValueError(
             f"Unknown metric: {name}, valid metrics are: {METRICS}"
         )
-    return metrics_dict[name.lower()]()
+    return metrics_dict[name.lower()](needs_activation)
 
 
-#  !Somewhere we should check for feature type maybe?
 #  we currently return floats instead of tensor[float] everywhere
 #  could use some more helper functions maybe. Turn validate inputs
 #  into preprocess inputs where we assert, squeeze labels, and check if 
 #  predictions is ndim = 2 and size(1) = 1 and squeeze too
 
+
 class Metric(ABC):
+    def __init__(self, needs_avtivation: bool=True):
+        self._needs_activation = needs_avtivation
+
+    @property
+    def needs_activation(self) -> bool:
+        return self._needs_activation
+
     def _validate_inputs(self, predictions: Tensor, labels: Tensor) -> None:
+        assert isinstance(predictions, Tensor) and isinstance(labels, Tensor), (
+            "Predictions and labels are expected to be torch.Tensors."
+        )
         assert predictions.size(0) == labels.size(0), (
             "Predictions and labels must have the same length."
         )
 
-    def _select_activation(self, labels: Tensor) -> 'Activation':
+    def _select_activation(self, labels: Tensor) -> Callable[[Tensor], Tensor]:
         is_binary_class = True if labels.max().item() < 2 else False
-        return SigmoidActivation() if is_binary_class else SoftmaxActivation()
+        return sigmoid if is_binary_class else softmax
 
     @abstractmethod
     def __call__(
             self, predictions: Tensor, labels: Tensor
     ) -> float:
         pass
+
+    # !This is a quick fix to align with the pipeline test
+    def evaluate(
+            self, predictions: Tensor, labels: Tensor
+    ) -> float:
+        return self(predictions, labels)
 
 
 class MeanSquaredError(Metric):
@@ -106,7 +124,8 @@ class Accuracy(Metric):
     ) -> float:
         self._validate_inputs(predictions, labels)
         labels = labels.squeeze()
-        predictions = self._select_activation(labels).apply(predictions)
+        if self.needs_activation:
+            predictions = self._select_activation(labels)(predictions)
         if predictions.ndim == 1:
             predictions = where(predictions >= 0.5, 1, 0)
         if predictions.ndim > 1:
@@ -122,8 +141,8 @@ class Precision(Metric):
     ) -> float:
         self._validate_inputs(predictions, labels)
         labels = labels.squeeze()
-        predictions = self._select_activation(labels).apply(predictions)
-
+        if self.needs_activation:
+            predictions = self._select_activation(labels)(predictions)
         # binary case
         if predictions.ndim == 1:
             predictions = where(predictions >= 0.5, 1, 0)
@@ -150,8 +169,8 @@ class Recall(Metric):
     ) -> float:
         self._validate_inputs(predictions, labels)
         labels = labels.squeeze()
-        predictions = self._select_activation(labels).apply(predictions)
-
+        if self.needs_activation:
+            predictions = self._select_activation(labels)(predictions)
         # binary case
         if predictions.ndim == 1:
             predictions = where(predictions >= 0.5, 1, 0)
@@ -173,9 +192,11 @@ class Recall(Metric):
 
 
 class F1Score(Metric):
-    def __init__(self) -> None:
-        self.precision = Precision()
-        self.recall = Recall()
+    def __init__(self, needs_activation: bool=True) -> None:
+        self.precision = Precision(needs_activation)
+        self.recall = Recall(needs_activation)
+        super().__init__(needs_activation)
+
     def __call__(
             self, predictions: Tensor, labels: Tensor
     ) -> float:
@@ -202,7 +223,8 @@ class CrossEntropyLoss(Metric):
         """
         self._validate_inputs(predictions, labels)
         labels = labels.squeeze()
-        predictions = self._select_activation(labels).apply(predictions)
+        if self.needs_activation:
+            predictions = self._select_activation(labels)(predictions)
         predictions = predictions.clamp(min=1e-7, max=1 - 1e-7)
         if predictions.ndim == 1:
             loss_tensor = -(
@@ -211,20 +233,3 @@ class CrossEntropyLoss(Metric):
         else:
             loss_tensor = -log(predictions[range(predictions.size(0)), labels])
         return loss_tensor.mean().item()
-
-
-class Activation(ABC):
-    @abstractmethod
-    def apply(self, predictions: Tensor) -> Tensor:
-        pass
-
-
-class SoftmaxActivation(Activation):
-    def apply(self, predictions: Tensor) -> Tensor:
-        exp_predictions = exp(predictions)
-        return exp_predictions / exp_predictions.sum(dim=1, keepdim=True)
-
-
-class SigmoidActivation(Activation):
-    def apply(self, predictions: Tensor) -> Tensor:
-        return 1 / (1 + exp(-predictions))

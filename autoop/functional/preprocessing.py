@@ -5,6 +5,8 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
+from torch import Tensor, from_numpy
+
 def preprocess_features(features: List[Feature], dataset: Dataset) -> List[Tuple[str, np.ndarray, dict]]:
     """Preprocess features.
     Args:
@@ -29,3 +31,7 @@ def preprocess_features(features: List[Feature], dataset: Dataset) -> List[Tuple
     # Sort for consistency
     results = list(sorted(results, key=lambda x: x[0]))
     return results
+
+def to_tensor(*arrays: np.ndarray) -> tuple[Tensor, ...]|Tensor:
+    tensors = tuple(from_numpy(arr) for arr in arrays)
+    return tensors[0] if len(tensors) == 1 else tensors

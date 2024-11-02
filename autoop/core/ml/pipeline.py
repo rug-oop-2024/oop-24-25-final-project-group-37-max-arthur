@@ -6,7 +6,7 @@ from autoop.core.ml.dataset import Dataset
 from autoop.core.ml.model import Model
 from autoop.core.ml.feature import Feature
 from autoop.core.ml.metric import Metric
-from autoop.functional.preprocessing import preprocess_features
+from autoop.functional.preprocessing import preprocess_features, to_tensor
 import numpy as np
 
 
@@ -98,11 +98,13 @@ Pipeline(
     def _train(self):
         X = self._compact_vectors(self._train_X)
         Y = self._train_y
+        X, Y = to_tensor(X, Y)  # Check if its chill to do this here
         self._model.fit(X, Y)
 
     def _evaluate(self):
         X = self._compact_vectors(self._test_X)
         Y = self._test_y
+        X, Y = to_tensor(X, Y)  # and here
         self._metrics_results = []
         predictions = self._model.predict(X)
         for metric in self._metrics:

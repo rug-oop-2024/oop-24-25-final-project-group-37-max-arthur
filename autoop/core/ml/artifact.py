@@ -9,8 +9,8 @@ class Artifact:
             asset_path: str,
             type: str = "",
             version: str = "1.0.0",
-            tags: list[str] = None,
-            metadata: dict = None
+            tags: list[str] = [],
+            metadata: dict = {}
     ) -> None:
         self._id = None
         self.type = type
@@ -18,8 +18,8 @@ class Artifact:
         self.asset_path = asset_path
         self.data = data
         self.version = version
-        self.tags = tags or []
-        self.metadata = metadata or {}
+        self.tags = tags
+        self.metadata = metadata
 
     @property
     def id(self):
@@ -30,5 +30,5 @@ class Artifact:
         return self.data
 
     def save(self, data: bytes) -> bytes:  # ????? Can remove if not used
-        self.data = data
-        return self.data
+        self.data = data                   # i guess we are changing the data
+        return data
