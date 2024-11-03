@@ -62,12 +62,12 @@ class TestMetrics(unittest.TestCase):
         custom_ce = get_metric("cross_entropy_loss", needs_activation=False)(predictions, labels)
         loss_torch = torch.nn.BCELoss()
         torch_cle = loss_torch(predictions, labels).item()
-        self.assertAlmostEqual(custom_ce, torch_cle, places=5)
+        self.assertAlmostEqual(custom_ce.item(), torch_cle, places=5)
 
     def test_multiclass_cross_entropy_loss(self):
         predictions = torch.tensor([[2.0, 1.0, 0.1], [0.5, 2.5, 0.3], [0.9, 0.1, 2.2]])
         labels = torch.tensor([0, 1, 2], dtype=torch.long)
-        custom_ce = get_metric("cross_entropy_loss")(predictions, labels)
+        custom_ce = get_metric("cross_entropy_loss", needs_activation=True)(predictions, labels)
         loss_torch = torch.nn.CrossEntropyLoss()
         torch_cle = loss_torch(predictions, labels)
-        self.assertAlmostEqual(custom_ce, torch_cle.item(), places=5)
+        self.assertAlmostEqual(custom_ce.item(), torch_cle.item(), places=5)

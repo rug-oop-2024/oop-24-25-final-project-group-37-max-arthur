@@ -1,6 +1,6 @@
 from typing import Callable
 from abc import ABC, abstractmethod
-from torch import argmax, Tensor, exp, log, abs, where, stack
+from torch import argmax, Tensor, log, abs, where, long
 from autoop.functional.activations import softmax, sigmoid
 
 METRICS = [
@@ -16,7 +16,7 @@ METRICS = [
 
 
 #  could introduce functions upstream, that pass is_binary e.g.
-def get_metric(name: str, needs_activation: bool=True) -> 'Metric':
+def get_metric(name: str, needs_activation: bool=False) -> 'Metric':
     """
     Factory function to get a metric by name.
     Args:
@@ -46,14 +46,13 @@ def get_metric(name: str, needs_activation: bool=True) -> 'Metric':
     return metrics_dict[name.lower()](needs_activation)
 
 
-#  we currently return floats instead of tensor[float] everywhere
-#  could use some more helper functions maybe. Turn validate inputs
-#  into preprocess inputs where we assert, squeeze labels, and check if 
-#  predictions is ndim = 2 and size(1) = 1 and squeeze too
+#  we currently only return Tensor in CrossEntropyLoss
+#  Have to do this to align with torch, but this does not align
+#  with our base class.
 
 
 class Metric(ABC):
-    def __init__(self, needs_avtivation: bool=True):
+    def __init__(self, needs_avtivation: bool=False):
         self._needs_activation = needs_avtivation
 
     @property
@@ -126,6 +125,8 @@ class Accuracy(Metric):
         labels = labels.squeeze()
         if self.needs_activation:
             predictions = self._select_activation(labels)(predictions)
+        if predictions.dim() == 2 and predictions.size(1) == 1:
+            predictions = predictions.squeeze(1)
         if predictions.ndim == 1:
             predictions = where(predictions >= 0.5, 1, 0)
         if predictions.ndim > 1:
@@ -144,6 +145,8 @@ class Precision(Metric):
         if self.needs_activation:
             predictions = self._select_activation(labels)(predictions)
         # binary case
+        if predictions.dim() == 2 and predictions.size(1) == 1:
+            predictions = predictions.squeeze(1)
         if predictions.ndim == 1:
             predictions = where(predictions >= 0.5, 1, 0)
             classes = [1]
@@ -172,6 +175,8 @@ class Recall(Metric):
         if self.needs_activation:
             predictions = self._select_activation(labels)(predictions)
         # binary case
+        if predictions.dim() == 2 and predictions.size(1) == 1:
+            predictions = predictions.squeeze(1)
         if predictions.ndim == 1:
             predictions = where(predictions >= 0.5, 1, 0)
             classes = [1]
@@ -223,13 +228,18 @@ class CrossEntropyLoss(Metric):
         """
         self._validate_inputs(predictions, labels)
         labels = labels.squeeze()
+        if labels.dtype != long:  #! Need to check wheter we handle this elsewhere
+            labels = labels.long()
         if self.needs_activation:
             predictions = self._select_activation(labels)(predictions)
         predictions = predictions.clamp(min=1e-7, max=1 - 1e-7)
-        if predictions.ndim == 1:
+        # Binary case: handle both [B, 1] and [B] shapes
+        if predictions.dim() == 2 and predictions.size(1) == 1:
+            predictions = predictions.squeeze(1) # Convert [B, 1] to [B]
+        if predictions.dim() == 1:
             loss_tensor = -(
                 labels * log(predictions) + (1 - labels) * log(1 - predictions)
             )
         else:
             loss_tensor = -log(predictions[range(predictions.size(0)), labels])
-        return loss_tensor.mean().item()
+        return loss_tensor.mean()
