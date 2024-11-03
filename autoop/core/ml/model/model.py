@@ -1,11 +1,13 @@
 
 from abc import ABC, abstractmethod
-from autoop.core.ml.artifact import Artifact
-from torch import Tensor, from_numpy
-import numpy as np
+from typing import Literal
 from copy import deepcopy
 import pickle
-from typing import Literal
+from autoop.core.ml.artifact import Artifact
+from autoop.core.ml.model.trainer import Trainer
+from torch import Tensor, from_numpy
+import numpy as np
+
 
 
 # could add a method here that checks that model has been
@@ -86,11 +88,33 @@ class Model(ABC):
         
         return artifact
 
-class ClassificationModel(Model):
-    def __init__(self) -> None:
+class ClassificationMixin(Model):
+    def __init__(
+            self,
+            num_epochs: int=10,
+            lr: float=0.001
+    ) -> None:
         super().__init__()
+        self._trainer = None
+        self._num_epochs = num_epochs
+        self._lr = lr
+
     def _populate_model_parameters(self):
-        # Populate _model_parameters with references to each parameter
-        # These update automatically
-        self._model_parameters = {name: param for name, param in self.named_parameters()}
+        # Populate _model_parameters with references to torch parameters
+        # These update automatically. Also add hyperparams.
+        self._model_parameters = {
+            "num_epochs": self._num_epochs,
+            "lr": self._lr,
+            **{name: param for name, param in self.named_parameters()}
+        }
+    
+    def _set_trainer(self):
+        """Initialize the trainer with necessary parameters."""
+        if not self._trainer:
+            self._trainer = Trainer(
+                self,
+                num_epochs=self._num_epochs,
+                lr=self._lr,
+                loss_fn=self._loss_fn
+            )
 
