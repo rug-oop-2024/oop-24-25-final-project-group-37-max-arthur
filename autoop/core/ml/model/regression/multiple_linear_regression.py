@@ -60,13 +60,13 @@ class MultipleLinearRegressionOld:
         Raises:
             ValueError: If called before fitting model.
         """
-        if len(self._parameters) == 0:
+        if len(self.model_parameters) == 0:
             raise ValueError(
                 "Can not predict predict before fitting model."
             )
         ones = np.ones((observations.shape[0], 1), dtype=np.float64)
         adj_observations = np.concatenate((observations, ones), 1)
-        predictions = adj_observations @ self._parameters["parameters"]
+        predictions = adj_observations @ self.model_parameters["parameters"]
         return predictions
 
 
@@ -80,12 +80,12 @@ class MultipleLinearRegression(Model, MultipleLinearRegressionOld):
         params = MultipleLinearRegressionOld.fit(
             self, observations.numpy(), labels.numpy()
             )
-        self._parameters["coefficients"] = from_numpy(params[:-1])
-        self._parameters["intercept"] = from_numpy(params[-1:])
+        self._model_parameters["coefficients"] = from_numpy(params[:-1])
+        self._model_parameters["intercept"] = from_numpy(params[-1:])
 
     def predict(self, observations: Tensor) -> Tensor:
-        coefficients = self._parameters["coefficients"]
-        intercept = self._parameters["intercept"]
+        coefficients = self.model_parameters["coefficients"]
+        intercept = self.model_parameters["intercept"]
         
         predictions = observations @ coefficients + intercept
         return predictions

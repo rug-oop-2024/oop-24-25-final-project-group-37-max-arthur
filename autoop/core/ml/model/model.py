@@ -14,17 +14,12 @@ from typing import Literal
 
 class Model(ABC):
     def __init__(self):
-        self._parameters: dict = {}
-        self._hyperparameters: dict = {}
+        self._model_parameters: dict = {}
         self._type: Literal["regression", "classification"] = None
 
     @property
-    def parameters(self):
-        return deepcopy(self._parameters)
-    
-    @property
-    def hyper_parameters(self):
-        return deepcopy(self._hyperparameters)
+    def model_parameters(self):
+        return deepcopy(self._model_parameters)
     
     @property
     def type(self) -> str:
@@ -38,34 +33,6 @@ class Model(ABC):
                 )
         self._type = value
 
-    def to_artifact(self, name: str) -> 'Artifact':
-        # ? need to see here later if this is the best way to store it
-        # same for where we currently store the Model name
-        artifact_data = {
-            "parameters": self._parameters,
-            "hyperparameters": self._hyperparameters,
-            "type": self.type
-        }
-        
-        serialized_data = pickle.dumps(artifact_data)
-        
-        asset_path = f"models/{name}.pkl"
-        metadata = {
-            "model_type": self.type,
-            "parameter_count": len(self._parameters),
-            "hyperparameter_count": len(self._hyperparameters)
-        }
-        
-        artifact = Artifact(
-            name=name,
-            data=serialized_data,
-            asset_path=asset_path,
-            type=self.__class__.__name__,
-            metadata=metadata
-        )
-        
-        return artifact
-        
     @abstractmethod
     def fit(
             self,
@@ -93,3 +60,37 @@ class Model(ABC):
             torch.Tensor: Tensor containing predictions.
         """
         pass
+
+    def to_artifact(self, name: str) -> 'Artifact':
+        # ? need to see here later if this is the best way to store it
+        # same for where we currently store the Model name
+        artifact_data = {
+            "parameters": self.model_parameters,
+        }
+        
+        serialized_data = pickle.dumps(artifact_data)
+        
+        asset_path = f"models/{name}.pkl"
+        metadata = {
+            "model_type": self.type,
+            "parameter_count": len(self.model_parameters),
+        }
+        
+        artifact = Artifact(
+            name=name,
+            data=serialized_data,
+            asset_path=asset_path,
+            type=self.__class__.__name__,
+            metadata=metadata
+        )
+        
+        return artifact
+
+class ClassificationModel(Model):
+    def __init__(self) -> None:
+        super().__init__()
+    def _populate_model_parameters(self):
+        # Populate _model_parameters with references to each parameter
+        # These update automatically
+        self._model_parameters = {name: param for name, param in self.named_parameters()}
+
