@@ -1,3 +1,5 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.5.1
 altair==5.4.1
 annotated-types==0.7.0
 attrs==24.2.0
@@ -55,7 +57,6 @@ sympy==1.13.1
 tenacity==9.0.0
 threadpoolctl==3.5.0
 toml==0.10.2
-torch==2.5.1+cpu
 tornado==6.4.1
 typing_extensions==4.12.2
 tzdata==2024.2

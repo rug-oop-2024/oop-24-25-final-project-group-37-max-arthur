@@ -155,12 +155,12 @@ If you did not implement the feature
 |-------------------------------------- |--------------|----------------------|--------------------------|---------|         
 | Up-to-date requirements.txt           | NF           | both    | X  | |
 | `ML/detect-features`                  | FN           | both    | X  | |
-| `ML/artifact`                         | NF           | both    | X  | Did not implement save method yet, unsure of what to put there |
+| `ML/artifact`                         | NF           | both    | X  | Unsure about the purpose of .save method. Perhaps connected to requirement OOP-007 |
 | `ML/feature`                          | NF           | both    | X  | Unsure whether the \_\_str\_\_ method is correct like this |
 | `ML/metric`                           | NF           | both    | X  | |
-| `ML/metric/extensions`                | FN           | both    | X  | Maybe softmax and sigmoid should go somewhere else| 
+| `ML/metric/extensions`                | FN           | both    | X  | | 
 | `ML/model`                            | NF           | both    | X  | |
-| `ML/model/extensions`                 | FN           |         |    | |
+| `ML/model/extensions`                 | FN           | both    | X  | |
 | `ML/pipeline/evaluation`              | FN           |         |    | | 
 | `ST/page/datasets`                    | NF           |         |    | |
 | `ST/datasets/management/create`       | FN           |         |    | |
