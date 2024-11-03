@@ -6,7 +6,7 @@ class Artifact:
             self,
             name: str,
             data: bytes,
-            asset_path: str,
+            asset_path: str = None,
             type: str = "",
             version: str = "1.0.0",
             tags: list[str] = [],
