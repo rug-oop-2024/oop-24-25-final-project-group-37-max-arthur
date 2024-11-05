@@ -67,6 +67,10 @@ class Metric(ABC):
     ) -> float:
         pass
 
+    @abstractmethod
+    def __str__(self) -> str:
+        pass
+
     def _validate_inputs(self, predictions: Tensor, labels: Tensor) -> None:
         assert predictions.size(0) == labels.size(0), (
             "Predictions and labels must have the same length."
@@ -114,7 +118,7 @@ class MeanSquaredError(Metric):
         mse = ((labels - predictions) ** 2).mean().item()
         return mse
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "mean_squared_error"
 
 
@@ -129,7 +133,7 @@ class MeanAbsoluteError(Metric):
         mae = abs(labels - predictions).mean().item()
         return mae
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "mean_absolute_error"
 
 
@@ -147,7 +151,7 @@ class RSquared(Metric):
             rs = 1 - residual_sum_se / total_sum_se
         return rs
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "r_squared"
 
 
@@ -165,7 +169,7 @@ class Accuracy(Metric):
         accuracy = num_correct / labels.size(0)
         return accuracy.item()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "accuracy"
 
 
@@ -187,7 +191,7 @@ class Precision(Metric):
 
         return Tensor(precision_list).mean().item()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "precision"
 
 class Recall(Metric):
@@ -207,6 +211,9 @@ class Recall(Metric):
             recall_list.append(recall)
 
         return Tensor(recall_list).mean().item()
+    
+    def __str__(self) -> str:
+        return "recall"
 
 
 class F1Score(Metric):
@@ -223,7 +230,7 @@ class F1Score(Metric):
         f1 = 2 * (precision * recall) / (precision + recall + 1e-7)
         return f1
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "f1_score"
 
 
@@ -253,5 +260,5 @@ class CrossEntropyLoss(Metric):
             loss_tensor = -log(predictions[range(predictions.size(0)), labels])
         return loss_tensor.mean()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "cross_entropy_loss"

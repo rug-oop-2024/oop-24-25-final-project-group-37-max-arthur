@@ -82,7 +82,7 @@ class Database():
         keys = self._storage.list("")
         for key in keys:
             collection, id = key.split("/")[-2:]
-            if (self._data.get(collection, None) and not self._data[collection].get(id, None)): # fixed the bug which would not delete artifacts correctly previous code in this line was: if not self._data.get(collection, id):
+            if not self._data.get(collection, id):
                 self._storage.delete(f"{collection}/{id}")
 
     def _load(self):
