@@ -142,13 +142,13 @@ Pipeline(
         }
         return Artifact(name=name, data=pickle.dumps(data), asset_path=f"pipeline/pipeline_of_{model_artifact.type}", type="pipeline")
 
-    @staticmethod
-    def from_artifact(metrics: List[str],
-                 dataset_id: str,
-                 model_id: str,
-                 input_features: List[dict],
-                 target_feature: dict,
-                 split:int,
-                 automl):
-        dataset = automl.registry.get(dataset_id)
-        
+    # @staticmethod
+    # def from_artifact(metrics: List[str],
+    #              dataset_id: str,
+    #              model_id: str,
+    #              input_features: List[dict],
+    #              target_feature: dict,
+    #              split:int,
+    #              automl):
+    #     dataset = automl.registry.get(dataset_id)
+

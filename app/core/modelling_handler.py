@@ -18,7 +18,7 @@ def choose_model(model_type):
     elif model_type == "Classification":
         model_options = CLASSIFICATION_MODELS
     selected_model = st.selectbox("Select a model", model_options)
-    return get_model(selected_model)
+    return get_model(selected_model)()
 
 
 def determine_task_type(target_feature):

@@ -1,6 +1,6 @@
 
 from abc import ABC, abstractmethod
-from typing import Literal, Any
+from typing import Literal, Any, Union
 from sklearn.base import BaseEstimator
 from copy import deepcopy
 import pickle
@@ -88,7 +88,7 @@ class RegressionModel(Model):
         self.type = "regression"
 
     @property
-    def model(self) -> BaseEstimator | Any:
+    def model(self) -> Union[BaseEstimator, Any]:
         return deepcopy(self._model)
 
     def fit(self, observations: np.ndarray, labels: np.ndarray) -> None:

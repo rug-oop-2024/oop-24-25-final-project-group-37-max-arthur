@@ -16,7 +16,7 @@ CLASSIFICATION_MODELS = [
 ]
 
 def get_model(model_name: str) -> Model:
-    """Factory function to get a model by name."""    
+    """Factory function to get a model by name."""
     model_dict = {
         "logisticregression": LogisticRegression,
         "multilayerperceptron": MLP,
@@ -27,8 +27,8 @@ def get_model(model_name: str) -> Model:
 
 
     }
-    if model_name.lower() not in model_dict.values():
+    if model_name.lower() not in model_dict:
         raise ValueError(
-            f"Unknown metric: {model_name}, valid metrics are: {model_dict.values()}"
+            f"Unknown model: {model_name}, valid models are: {model_dict.values()}"
         )
     return model_dict[model_name.lower()]

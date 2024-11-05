@@ -3,11 +3,12 @@ from torch.nn import Module
 from torch import Tensor
 from torch.optim import AdamW, Optimizer, RMSprop, SGD
 
+
 class Trainer:
     def __init__(
             self,
             model: Module,
-            loss_fn: Callable[[Tensor, Tensor], float | Tensor],
+            loss_fn: Callable[[Tensor, Tensor], Union[float, Tensor]],
             num_epochs: int = 10,
             lr: float = 0.001,
             optimizer: Literal["adam", "rmsprop", "SGD"] = "adam"
@@ -19,7 +20,6 @@ class Trainer:
         self.optimizer = optimizer
 
     @property
-    def optimizer(self) -> Union[Optimizer, None]:
     def optimizer(self) -> Optimizer:
         return self._optimizer
 
