@@ -1,7 +1,5 @@
 from autoop.core.ml.model.model import GradientModel
-from autoop.core.ml.metric import get_metric
 from autoop.functional.preprocessing import to_tensor
-from copy import deepcopy
 import numpy as np
 from torch import Tensor, no_grad
 from torch.nn import Module
@@ -17,9 +15,6 @@ class MLP(Module, GradientModel):
         GradientModel.__init__(self, *args, **kwargs)
         Module.__init__(self)
         self._num_layers = num_layers
-        self._loss_fn = get_metric(
-            "cross_entropy_loss", needs_activation=True
-        )
         self._loss_fn = cross_entropy
 
     def forward(self, x: Tensor) -> Tensor:
@@ -36,7 +31,7 @@ class MLP(Module, GradientModel):
         labels = labels.argmax(1).long()
         self._set_dims(observations, labels)
         self._create_layers()
-        self._trainer = self._create_trainer()
+        self._create_trainer()
         self._trainer.train(observations, labels)
     
     def predict(self, observations: np.ndarray) -> Tensor:
@@ -44,9 +39,10 @@ class MLP(Module, GradientModel):
             self.eval()
             observations = to_tensor(observations)
             outputs = self.forward(observations)
+            print(f"out: {outputs.size()}")
             if self._output_dim == 1:
                 predictions = (outputs >= 0.5).int()
             else:
                 predictions = outputs.argmax(1)
-            return outputs
+            return predictions
 

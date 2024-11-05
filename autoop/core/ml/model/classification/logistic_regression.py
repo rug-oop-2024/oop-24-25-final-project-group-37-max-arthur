@@ -1,10 +1,8 @@
 from autoop.core.ml.model.model import GradientModel
-from autoop.functional.activations import sigmoid
-from autoop.core.ml.metric import get_metric
 from autoop.functional.preprocessing import to_tensor
 import numpy as np
 from torch import Tensor, no_grad
-from torch.nn import Module
+from torch.nn import Module, BCEWithLogitsLoss
 
 
 class LogisticRegression(GradientModel, Module):
@@ -12,13 +10,11 @@ class LogisticRegression(GradientModel, Module):
         GradientModel.__init__(self, *args, **kwargs)
         Module.__init__(self)
         self._num_layers = 1
-        self._loss_fn = get_metric(
-            "cross_entropy_loss", needs_activation=False
-        )
+        self._loss_fn = BCEWithLogitsLoss()
 
     def forward(self, x: Tensor) -> Tensor:
         for layer in self.layers:
-            x = sigmoid(layer(x))
+            x = layer(x)
         return x
 
     def fit(self, observations: np.ndarray, labels: np.ndarray) -> None:
@@ -28,10 +24,10 @@ class LogisticRegression(GradientModel, Module):
             "Observations and labels must have the same number of samples. "
             f"Got {labels.size(0)} and {observations.size(0)} instead."
         )
-        labels = labels.argmax(1).long()
+        labels = labels.argmax(1, keepdims=True).float()
         self._set_dims(observations, labels)
         self._create_layers()
-        self._trainer = self._create_trainer()
+        self._create_trainer()
         self._trainer.train(observations, labels)
 
     def predict(self, observations: np.ndarray) -> Tensor:
@@ -39,5 +35,4 @@ class LogisticRegression(GradientModel, Module):
             self.eval()
             observations = to_tensor(observations)
             outputs = self.forward(observations)
-            return outputs
-            return (outputs >= 0.5).int()
+            return (outputs >= 0.5).long()

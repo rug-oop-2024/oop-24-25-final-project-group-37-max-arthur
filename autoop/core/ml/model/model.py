@@ -157,14 +157,7 @@ class GradientModel(Model):
 
     def _create_trainer(self) -> Trainer:
         """Initialize the trainer with necessary parameters."""
-        if not self._trainer:
-            self._trainer = Trainer(
-                self,
-                num_epochs=self._num_epochs,
-                lr=self._lr,
-                loss_fn=self._loss_fn
-            )
-        return Trainer(
+        self._trainer = Trainer(
             self,
             num_epochs=self._num_epochs,
             lr=self._lr,

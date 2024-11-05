@@ -32,9 +32,8 @@ class RandomForestClassifier(Model):
             "Observations and labels must have the same number of samples. "
             f"Got {labels.shape[0]} and {observations.shape[0]} instead."
         )
-        self._model.fit(observations, labels)
+        self._model.fit(observations, labels.argmax(1))
     
     def predict(self, observations: np.ndarray) -> Tensor:
         predictions = self._model.predict(observations)
         return from_numpy(predictions)
-

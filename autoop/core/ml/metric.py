@@ -102,10 +102,11 @@ class Metric(ABC):
             num_classes = [1]
         elif predictions.ndim > 1:
             num_classes = list(range(predictions.size(1)))
-            predictions = argmax(predictions, dim=1)
+            predictions = argmax(predictions, dim=1).long()
         else:
             num_classes = [1]
         return predictions, labels, num_classes
+
 
 class MeanSquaredError(Metric):
     def __call__(
