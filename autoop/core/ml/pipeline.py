@@ -11,10 +11,10 @@ import numpy as np
 
 
 class Pipeline():
-    
-    def __init__(self, 
+
+    def __init__(self,
                  metrics: List[Metric],
-                 dataset: Dataset, 
+                 dataset: Dataset,
                  model: Model,
                  input_features: List[Feature],
                  target_feature: Feature,
@@ -70,7 +70,7 @@ Pipeline(
         artifacts.append(Artifact(name="pipeline_config", data=pickle.dumps(pipeline_data)))
         artifacts.append(self._model.to_artifact(name=f"pipeline_model_{self._model.type}"))
         return artifacts
-    
+
     def _register_artifact(self, name: str, artifact):
         self._artifacts[name] = artifact
 
@@ -129,4 +129,26 @@ Pipeline(
             "metrics": self._metrics_results,
             "predictions": self._predictions,
         }
+
+    def to_artifact(self, name: str) -> 'Artifact':
+        model_artifact = next(artifact for artifact in self.artifacts if artifact.name.startswith("pipeline_model"))
+        data = {
+            "model": model_artifact.id,
+            "dataset": self._dataset.id,
+            "metrics": [str(metric) for metric in self._metrics],
+            "target_feature": {"name": self._target_feature.name, "type": self._target_feature.type},
+            "input_features": [{"name": feature.name, "type": feature.type} for feature in self._input_features],
+            "split": self._split
+        }
+        return Artifact(name=name, data=pickle.dumps(data), asset_path=f"pipeline/pipeline_of_{model_artifact.type}", type="pipeline")
+
+    @staticmethod
+    def from_artifact(metrics: List[str],
+                 dataset_id: str,
+                 model_id: str,
+                 input_features: List[dict],
+                 target_feature: dict,
+                 split:int,
+                 automl):
+        dataset = automl.registry.get(dataset_id)
         

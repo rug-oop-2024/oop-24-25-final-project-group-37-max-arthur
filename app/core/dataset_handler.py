@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 
+from typing import Optional
 from autoop.core.ml.dataset import Dataset
 from autoop.core.ml.artifact import Artifact
 
@@ -19,7 +20,6 @@ def display_datasets_accordion(automl, datasets):
         with st.expander(dataset.name):
             st.dataframe(dataset.read().head())
             delete_dataset_button(automl, dataset, key=f"delete_{dataset.name}")
-            # only deletes the dataset in object directory but not the according artifact
 
 
 def slice_data_accordion(automl, datasets):
@@ -64,7 +64,7 @@ def upload_csv_button():
     return uploaded_file
 
 
-def ask_for_input(text: str, default: str):
+def ask_for_input(text: str, default: Optional[str] = None):
     return st.text_input(text, value=default)
 
 

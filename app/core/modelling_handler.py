@@ -3,7 +3,6 @@ from autoop.functional.feature import detect_feature_types
 from autoop.core.ml.model import REGRESSION_MODELS, CLASSIFICATION_MODELS, get_model
 
 from autoop.core.ml.dataset import Dataset
-from autoop.core.ml.pipeline import Pipeline
 
 
 import streamlit as st
@@ -25,7 +24,7 @@ def choose_model(model_type):
 def determine_task_type(target_feature):
     if target_feature.type == "categorical":
         return "Classification"
-    elif target_feature.type == "continuous":
+    elif target_feature.type == "numerical":
         return "Regression"
 
 
@@ -74,10 +73,8 @@ def display_pipe_line_summary(dataset, target_column, input_columns, model_type,
         st.write(f"**Testing Set:** {(1 - dataset_split) * 100}%")
 
 
-def execute_pipeline_button(selected_dataset, selected_metrics, target_feature, input_features, selected_model, dataset_split):
-    if st.button("Execute Pipeline"):
-        pipeline = Pipeline(dataset=selected_dataset, metrics=selected_metrics, target_feature=target_feature, input_features=input_features, model=selected_model, split=dataset_split)
-        results = pipeline.execute()
+def display_pipeline_results(results):
+    with st.expander("## Results", expanded=True):
         st.write("### Metrics:")
         st.write(results['metrics'])
         st.write("### Predictions:")

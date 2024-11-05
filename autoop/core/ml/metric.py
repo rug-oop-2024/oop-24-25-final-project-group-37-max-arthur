@@ -114,6 +114,9 @@ class MeanSquaredError(Metric):
         mse = ((labels - predictions) ** 2).mean().item()
         return mse
 
+    def __str__(self):
+        return "mean_squared_error"
+
 
 class MeanAbsoluteError(Metric):
     def __call__(
@@ -125,6 +128,9 @@ class MeanAbsoluteError(Metric):
         labels = labels.squeeze()
         mae = abs(labels - predictions).mean().item()
         return mae
+
+    def __str__(self):
+        return "mean_absolute_error"
 
 
 class RSquared(Metric):
@@ -141,6 +147,9 @@ class RSquared(Metric):
             rs = 1 - residual_sum_se / total_sum_se
         return rs
 
+    def __str__(self):
+        return "r_squared"
+
 
 class Accuracy(Metric):
     def __call__(
@@ -156,6 +165,9 @@ class Accuracy(Metric):
         accuracy = num_correct / labels.size(0)
         return accuracy.item()
 
+    def __str__(self):
+        return "accuracy"
+
 
 class Precision(Metric):
     def __call__(self, predictions: Tensor, labels: np.ndarray) -> float:
@@ -165,16 +177,18 @@ class Precision(Metric):
         if self.needs_activation:
             predictions = self._select_activation(labels)(predictions)
         predictions, labels, classes = self._preprocess_tensors(predictions, labels)
-        
+
         precision_list = []
         for cls in classes:
             tp = ((predictions == cls) & (labels == cls)).sum().item()
             fp = ((predictions == cls) & (labels != cls)).sum().item()
             precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
             precision_list.append(precision)
-        
+
         return Tensor(precision_list).mean().item()
 
+    def __str__(self):
+        return "precision"
 
 class Recall(Metric):
     def __call__(self, predictions: Tensor, labels: np.ndarray) -> float:
@@ -184,14 +198,14 @@ class Recall(Metric):
         if self.needs_activation:
             predictions = self._select_activation(labels)(predictions)
         predictions, labels, classes = self._preprocess_tensors(predictions, labels)
-        
+
         recall_list = []
         for cls in classes:
             tp = ((predictions == cls) & (labels == cls)).sum().item()
             fn = ((predictions != cls) & (labels == cls)).sum().item()
             recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
             recall_list.append(recall)
-        
+
         return Tensor(recall_list).mean().item()
 
 
@@ -208,6 +222,9 @@ class F1Score(Metric):
         recall = self.recall(predictions, labels)
         f1 = 2 * (precision * recall) / (precision + recall + 1e-7)
         return f1
+
+    def __str__(self):
+        return "f1_score"
 
 
 class CrossEntropyLoss(Metric):
@@ -235,3 +252,6 @@ class CrossEntropyLoss(Metric):
         else:
             loss_tensor = -log(predictions[range(predictions.size(0)), labels])
         return loss_tensor.mean()
+
+    def __str__(self):
+        return "cross_entropy_loss"

@@ -1,4 +1,4 @@
-from typing import Callable, Literal
+from typing import Callable, Literal, Union
 from torch.nn import Module
 from torch import Tensor
 from torch.optim import AdamW, Optimizer, RMSprop, SGD
@@ -19,6 +19,7 @@ class Trainer:
         self.optimizer = optimizer
 
     @property
+    def optimizer(self) -> Union[Optimizer, None]:
     def optimizer(self) -> Optimizer:
         return self._optimizer
 

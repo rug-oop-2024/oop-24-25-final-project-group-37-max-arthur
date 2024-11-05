@@ -91,7 +91,7 @@ You can place your decisions in a docs folder in the root of the project.
 E.g. docs/decisions/DSC-0001-use-typescript.md
 
 ### 📈 Testing
-* Showcase the capability of your streamlit app with at least 3 different usecases on real datasets (from Kaggle). 
+* Showcase the capability of your streamlit app with at least 3 different usecases on real datasets (from Kaggle).
 Some examples include housing prices, second-hand cars, etc.
 
 ### Checklist
@@ -152,26 +152,26 @@ If the feature has been implemented by both students, write `both`.
 If you did not implement the feature
 
 | Requirement                           | Type (FN/NF) | Implemented by       | Implementation Completed (add X if done) | Comment |
-|-------------------------------------- |--------------|----------------------|--------------------------|---------|         
+|-------------------------------------- |--------------|----------------------|--------------------------|---------|
 | Up-to-date requirements.txt           | NF           | both    | X  | |
 | `ML/detect-features`                  | FN           | both    | X  | |
 | `ML/artifact`                         | NF           | both    | X  | Unsure about the purpose of .save method. Perhaps connected to requirement OOP-007 |
 | `ML/feature`                          | NF           | both    | X  | Unsure whether the \_\_str\_\_ method is correct like this |
 | `ML/metric`                           | NF           | both    | X  | |
-| `ML/metric/extensions`                | FN           | both    | X  | | 
+| `ML/metric/extensions`                | FN           | both    | X  | |
 | `ML/model`                            | NF           | both    | X  | |
 | `ML/model/extensions`                 | FN           | both    | X  | |
-| `ML/pipeline/evaluation`              | FN           | both    | X  | | 
-| `ST/page/datasets`                    | NF           |         |    | |
-| `ST/datasets/management/create`       | FN           |         |    | |
-| `ST/datasets/management/save`         | FN           |         |    | |
-| `ST/page/modelling`                   | NF           |         |    | |
-| `ST/modelling/datasets/list`          | FN           |         |    | |
-| `ST/modelling/datasets/features`      | FN           |         |    | |
-| `ST/modelling/models`                 | FN           |         |    | |
-| `ST/modelling/pipeline/split`         | FN           |         |    | |
-| `ST/modelling/pipeline/metrics`       | FN           |         |    | |
-| `ST/modelling/pipeline/summary`       | FN           |         |    | |
+| `ML/pipeline/evaluation`              | FN           | both    | X  | |
+| `ST/page/datasets`                    | NF           | both    | X  | |
+| `ST/datasets/management/create`       | FN           | both    | X  | |
+| `ST/datasets/management/save`         | FN           | both    | X  | |
+| `ST/page/modelling`                   | NF           | both    | X  | |
+| `ST/modelling/datasets/list`          | FN           | both    | X  | |
+| `ST/modelling/datasets/features`      | FN           | both    | X  | |
+| `ST/modelling/models`                 | FN           | both    | X  | |
+| `ST/modelling/pipeline/split`         | FN           | both    | X  | |
+| `ST/modelling/pipeline/metrics`       | FN           | both    | X  | |
+| `ST/modelling/pipeline/summary`       | FN           | both    | X  | |
 | `ST/modelling/pipeline/train`         | FN           |         |    | |
 | `ST/modelling/pipeline/save`          | FN           |         |    | |
 | `ST/page/deployment`                  | FN           |         |    | |

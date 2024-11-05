@@ -28,7 +28,7 @@ class Model(ABC):
     @property
     def type(self) -> str:
         return self._type
-    
+
     @type.setter
     def type(self, value: Literal["regression", "classification"]) -> None:
         if value not in ["regression", "classification"]:
@@ -65,9 +65,9 @@ class Model(ABC):
         """
         pass
 
-    def to_artifact(self, name: str) -> 'Artifact':        
+    def to_artifact(self, name: str) -> 'Artifact':
         serialized_data = pickle.dumps(self)
-        
+
         asset_path = f"models/{name}.pkl"
         metadata = {
             "model_type": self.type,
@@ -81,7 +81,7 @@ class Model(ABC):
             metadata=metadata
         )
         return artifact
-    
+
 
 class RegressionModel(Model):
     def __init__(self) -> None:
@@ -104,7 +104,7 @@ class RegressionModel(Model):
             "Observations and labels must have the same number of samples. "
             f"Got {labels.shape[0]} and {observations.shape[0]} instead."
         )
-        self._model.fit(observations, labels) 
+        self._model.fit(observations, labels)
 
 class GradientModel(Model):
     def __init__(
@@ -127,7 +127,7 @@ class GradientModel(Model):
             "optimizer": self._optimizer,
             **{name: param for name, param in self.named_parameters()}
         })
-        
+
     def _create_layers(self) -> None:
         if self._num_layers == 1:
             self.layers = ModuleList([
@@ -153,6 +153,13 @@ class GradientModel(Model):
 
     def _create_trainer(self) -> Trainer:
         """Initialize the trainer with necessary parameters."""
+        if not self._trainer:
+            self._trainer = Trainer(
+                self,
+                num_epochs=self._num_epochs,
+                lr=self._lr,
+                loss_fn=self._loss_fn
+            )
         return Trainer(
             self,
             num_epochs=self._num_epochs,

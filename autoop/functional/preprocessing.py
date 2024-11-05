@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Tuple, Union
 from autoop.core.ml.feature import Feature
 from autoop.core.ml.dataset import Dataset
 import pandas as pd
@@ -32,6 +32,7 @@ def preprocess_features(features: List[Feature], dataset: Dataset) -> List[Tuple
     results = list(sorted(results, key=lambda x: x[0]))
     return results
 
-def to_tensor(*arrays: np.ndarray) -> tuple[Tensor, ...] | Tensor:
-    tensors = tuple(from_numpy(arr).float() for arr in arrays)
+
+def to_tensor(*arrays: np.ndarray) -> Union[tuple[Tensor, ...], Tensor]:
+    tensors = tuple(from_numpy(arr.astype(np.float64)).float() for arr in arrays)
     return tensors[0] if len(tensors) == 1 else tensors
