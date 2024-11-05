@@ -7,8 +7,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from torch import Tensor, from_numpy
 
-# added is_label too
-def preprocess_features(features: List[Feature], dataset: Dataset, is_label: bool=False) -> List[Tuple[str, np.ndarray, dict]]:
+def preprocess_features(features: List[Feature], dataset: Dataset) -> List[Tuple[str, np.ndarray, dict]]:
     """Preprocess features.
     Args:
         features (List[Feature]): List of features.
@@ -18,12 +17,8 @@ def preprocess_features(features: List[Feature], dataset: Dataset, is_label: boo
     """
     results = []
     raw = dataset.read()
-    for feature in features:  #! I added this cause onehot encoding for binary labels makes no sense
-        if is_label and feature.type == "categorical":
-            data = raw[feature.name].values.reshape(-1, 1)
-            artifact = {}
-            results.append((feature.name, data, artifact))
-        elif feature.type == "categorical":
+    for feature in features:
+        if feature.type == "categorical":
             encoder = OneHotEncoder()
             data = encoder.fit_transform(raw[feature.name].values.reshape(-1, 1)).toarray()
             artifact = {"type": "OneHotEncoder", "encoder": encoder.get_params()}
@@ -37,6 +32,6 @@ def preprocess_features(features: List[Feature], dataset: Dataset, is_label: boo
     results = list(sorted(results, key=lambda x: x[0]))
     return results
 
-def to_tensor(*arrays: np.ndarray) -> tuple[Tensor, ...]|Tensor:
+def to_tensor(*arrays: np.ndarray) -> tuple[Tensor, ...] | Tensor:
     tensors = tuple(from_numpy(arr).float() for arr in arrays)
     return tensors[0] if len(tensors) == 1 else tensors

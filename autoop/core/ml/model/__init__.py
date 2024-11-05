@@ -1,26 +1,34 @@
 
 from autoop.core.ml.model.model import Model
-from autoop.core.ml.model.regression import MultipleLinearRegression
-from autoop.core.ml.model.classification import LogisticRegression
+from autoop.core.ml.model.regression import MultipleLinearRegression, Lasso, ElasticNet
+from autoop.core.ml.model.classification import LogisticRegression, RandomForestClassifier, MLP
 
 REGRESSION_MODELS = [
-    "MultipleLinearRegression"
+    "MultipleLinearRegression",
+    "Lasso",
+    "ElasticNet"
 ]
 
 CLASSIFICATION_MODELS = [
-    "LogisticRegression"
+    "LogisticRegression",
+    "MultiLayerPerceptron",
+    "RandomForestClassifier"
 ]
 
 def get_model(model_name: str) -> Model:
-    """Factory function to get a model by name."""
-    if model_name in REGRESSION_MODELS:
-        if model_name == "MultipleLinearRegression":
-            return MultipleLinearRegression()
-    
-    elif model_name in CLASSIFICATION_MODELS:
-        if model_name == "LogisticRegression":
-            return LogisticRegression()
-    
-    else:
-        raise ValueError(f"Model '{model_name}' not found in available models.")
-    
+    """Factory function to get a model by name."""    
+    model_dict = {
+        "logisticregression": LogisticRegression,
+        "multilayerperceptron": MLP,
+        "randomforestclassifier": RandomForestClassifier,
+        "multiplelinearregression": MultipleLinearRegression,
+        "lasso": Lasso,
+        "elasticnet": ElasticNet
+
+
+    }
+    if model_name.lower() not in model_dict.values():
+        raise ValueError(
+            f"Unknown metric: {model_name}, valid metrics are: {model_dict.values()}"
+        )
+    return model_dict[model_name.lower()]

@@ -6,7 +6,7 @@ from autoop.core.ml.dataset import Dataset
 from autoop.core.ml.model import Model
 from autoop.core.ml.feature import Feature
 from autoop.core.ml.metric import Metric
-from autoop.functional.preprocessing import preprocess_features, to_tensor
+from autoop.functional.preprocessing import preprocess_features
 import numpy as np
 
 
@@ -75,7 +75,7 @@ Pipeline(
         self._artifacts[name] = artifact
 
     def _preprocess_features(self):
-        (target_feature_name, target_data, artifact) = preprocess_features([self._target_feature], self._dataset, is_label=True)[0]
+        (target_feature_name, target_data, artifact) = preprocess_features([self._target_feature], self._dataset)[0]
         self._register_artifact(target_feature_name, artifact)
         input_results = preprocess_features(self._input_features, self._dataset)
         for (feature_name, data, artifact) in input_results:
@@ -98,7 +98,6 @@ Pipeline(
     def _train(self):
         X = self._compact_vectors(self._train_X)
         Y = self._train_y
-        X, Y = to_tensor(X, Y)  # Check if its chill to do this here
         self._model.fit(X, Y)
 
     def _evaluate(self):
@@ -106,17 +105,16 @@ Pipeline(
         X_train = self._compact_vectors(self._train_X)
         Y_test = self._test_y
         Y_train = self._train_y
-        X_test, Y_test = to_tensor(X_test, Y_test)  # and here
-        X_train, Y_train = to_tensor(X_train, Y_train)
-        self._metrics_results = {"train": {}, "test": {}}
+        self._metrics_results = {}
         predictions_test = self._model.predict(X_test)
         predictions_train = self._model.predict(X_train)
         for metric in self._metrics:
             metric_name = metric.__class__.__name__
-            self._metrics_results["test"][metric_name] = metric.evaluate(
+            self._metrics_results[metric_name] = {}
+            self._metrics_results[metric_name]["test"] = metric.evaluate(
                 predictions_test, Y_test
             )
-            self._metrics_results["train"][metric_name] = metric.evaluate(
+            self._metrics_results[metric_name]["train"] = metric.evaluate(
                 predictions_train, Y_train
             )
 

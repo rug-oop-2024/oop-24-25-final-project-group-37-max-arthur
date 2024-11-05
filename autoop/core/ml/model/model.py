@@ -1,13 +1,14 @@
 
 from abc import ABC, abstractmethod
-from typing import Literal
+from typing import Literal, Any
+from sklearn.base import BaseEstimator
 from copy import deepcopy
 import pickle
 from autoop.core.ml.artifact import Artifact
 from autoop.core.ml.model.trainer import Trainer
-from torch import Tensor, from_numpy
 import numpy as np
-
+from torch import Tensor
+from torch.nn import Linear, ModuleList
 
 
 # could add a method here that checks that model has been
@@ -16,13 +17,14 @@ import numpy as np
 
 class Model(ABC):
     def __init__(self):
-        self._model_parameters: dict = {}
+        self._parameters: dict = {}
         self._type: Literal["regression", "classification"] = None
 
     @property
-    def model_parameters(self):
-        return deepcopy(self._model_parameters)
-    
+    @abstractmethod
+    def parameters(self) -> dict:
+        pass
+
     @property
     def type(self) -> str:
         return self._type
@@ -38,8 +40,8 @@ class Model(ABC):
     @abstractmethod
     def fit(
             self,
-            observations: Tensor,
-            labels: Tensor
+            observations: np.ndarray,
+            labels: np.ndarray
     ) -> None:
         """
         Abstract method to fit the model to observations and labels.
@@ -51,7 +53,7 @@ class Model(ABC):
         pass
 
     @abstractmethod
-    def predict(self, observations: Tensor) -> Tensor:
+    def predict(self, observations: np.ndarray) -> Tensor:
         """
         Abstract method to predict from the trained model.
 
@@ -63,21 +65,14 @@ class Model(ABC):
         """
         pass
 
-    def to_artifact(self, name: str) -> 'Artifact':
-        # ? need to see here later if this is the best way to store it
-        # same for where we currently store the Model name
-        artifact_data = {
-            "parameters": self.model_parameters,
-        }
-        
-        serialized_data = pickle.dumps(artifact_data)
+    def to_artifact(self, name: str) -> 'Artifact':        
+        serialized_data = pickle.dumps(self)
         
         asset_path = f"models/{name}.pkl"
         metadata = {
             "model_type": self.type,
-            "parameter_count": len(self.model_parameters),
+            "parameter_count": len(self.parameters),
         }
-        
         artifact = Artifact(
             name=name,
             data=serialized_data,
@@ -85,36 +80,83 @@ class Model(ABC):
             type=self.__class__.__name__,
             metadata=metadata
         )
-        
         return artifact
+    
 
-class ClassificationMixin(Model):
+class RegressionModel(Model):
+    def __init__(self) -> None:
+        self.type = "regression"
+
+    @property
+    def model(self) -> BaseEstimator | Any:
+        return deepcopy(self._model)
+
+    def fit(self, observations: np.ndarray, labels: np.ndarray) -> None:
+        if labels.ndim == 2:
+            if labels.shape[1] == 1:
+                labels = labels.squeeze(1)
+            else:
+                raise ValueError(
+                    "Expected labels of shape [B, 1] or [B]"
+                    f"but got {labels.shape} instead."
+                    )
+        assert labels.shape[0] == observations.shape[0], (
+            "Observations and labels must have the same number of samples. "
+            f"Got {labels.shape[0]} and {observations.shape[0]} instead."
+        )
+        self._model.fit(observations, labels) 
+
+class GradientModel(Model):
     def __init__(
             self,
-            num_epochs: int=10,
-            lr: float=0.001
+            num_epochs: int = 10,
+            lr: float = 0.001,
+            optimizer: Literal["adam", "rmsprop", "SGD"] = "adam",
     ) -> None:
         super().__init__()
-        self._trainer = None
+        self.type = "classification"
         self._num_epochs = num_epochs
         self._lr = lr
+        self._optimizer = optimizer
 
-    def _populate_model_parameters(self):
-        # Populate _model_parameters with references to torch parameters
-        # These update automatically. Also add hyperparams.
-        self._model_parameters = {
+    @property
+    def parameters(self):
+        return deepcopy({
             "num_epochs": self._num_epochs,
             "lr": self._lr,
+            "optimizer": self._optimizer,
             **{name: param for name, param in self.named_parameters()}
-        }
-    
-    def _set_trainer(self):
-        """Initialize the trainer with necessary parameters."""
-        if not self._trainer:
-            self._trainer = Trainer(
-                self,
-                num_epochs=self._num_epochs,
-                lr=self._lr,
-                loss_fn=self._loss_fn
-            )
+        })
+        
+    def _create_layers(self) -> None:
+        if self._num_layers == 1:
+            self.layers = ModuleList([
+                Linear(self._input_dim, self._output_dim)
+            ])
+            return
+        layers = [Linear(self._input_dim, self._hidden_dim)]
+        for _ in range(self._num_layers - 2):
+            layers.append(Linear(self._hidden_dim, self._hidden_dim))
+        layers.append(Linear(self._hidden_dim, self._output_dim))
+        self.layers = ModuleList(layers)
 
+    def _set_dims(
+            self,
+            observations: Tensor,
+            labels: Tensor
+    ) -> None:
+        unique_labels = len(labels.unique())
+        self._output_dim = unique_labels if unique_labels > 2 else 1
+        self._input_dim = observations.size(1)
+        if self._num_layers > 1:
+            self._hidden_dim = (self._input_dim + self._output_dim) // 2
+
+    def _create_trainer(self) -> Trainer:
+        """Initialize the trainer with necessary parameters."""
+        return Trainer(
+            self,
+            num_epochs=self._num_epochs,
+            lr=self._lr,
+            loss_fn=self._loss_fn,
+            optimizer=self._optimizer
+        )

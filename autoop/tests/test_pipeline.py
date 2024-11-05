@@ -50,7 +50,7 @@ class TestPipeline(unittest.TestCase):
         self.pipeline._preprocess_features()
         self.pipeline._split_data()
         self.pipeline._train()
-        self.assertIsNotNone(self.pipeline._model.model_parameters)
+        self.assertIsNotNone(self.pipeline._model.parameters)
 
     def test_evaluate(self):
         self.pipeline._preprocess_features()

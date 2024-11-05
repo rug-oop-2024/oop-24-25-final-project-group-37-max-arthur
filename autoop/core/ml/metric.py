@@ -1,7 +1,9 @@
 from typing import Callable
 from abc import ABC, abstractmethod
+import numpy as np
 from torch import argmax, Tensor, log, abs, where, long
 from autoop.functional.activations import softmax, sigmoid
+from autoop.functional.preprocessing import to_tensor
 
 METRICS = [
     "mean_squared_error",
@@ -59,35 +61,54 @@ class Metric(ABC):
     def needs_activation(self) -> bool:
         return self._needs_activation
 
+    @abstractmethod
+    def __call__(
+            self, predictions: Tensor, labels: np.ndarray
+    ) -> float:
+        pass
+
     def _validate_inputs(self, predictions: Tensor, labels: Tensor) -> None:
-        assert isinstance(predictions, Tensor) and isinstance(labels, Tensor), (
-            "Predictions and labels are expected to be torch.Tensors."
-        )
         assert predictions.size(0) == labels.size(0), (
             "Predictions and labels must have the same length."
         )
 
     def _select_activation(self, labels: Tensor) -> Callable[[Tensor], Tensor]:
-        is_binary_class = True if labels.max().item() < 2 else False
+        is_binary_class = True if labels.unique().numel() == 2 else False
         return sigmoid if is_binary_class else softmax
 
-    @abstractmethod
-    def __call__(
-            self, predictions: Tensor, labels: Tensor
-    ) -> float:
-        pass
-
-    # !This is a quick fix to align with the pipeline test
     def evaluate(
-            self, predictions: Tensor, labels: Tensor
+            self, predictions: Tensor, labels: np.ndarray
     ) -> float:
         return self(predictions, labels)
 
+    def _preprocess_tensors(
+            self,
+            predictions: Tensor,
+            labels: np.ndarray
+    ) -> tuple[Tensor, Tensor, list[int]]:
+        labels = labels.squeeze()
+        if labels.ndim == 2:
+            labels = labels.argmax(1).long()
+        is_binary = labels.unique().numel() <= 2
+        if predictions.dim() == 2 and predictions.size(1) == 1:
+            predictions = predictions.squeeze(1)
+
+        if is_binary and predictions.ndim == 1:
+            predictions = where(predictions >= 0.5, 1, 0)
+            num_classes = [1]
+        elif predictions.ndim > 1:
+            num_classes = list(range(predictions.size(1)))
+            predictions = argmax(predictions, dim=1)
+        else:
+            num_classes = [1]
+        return predictions, labels, num_classes
 
 class MeanSquaredError(Metric):
     def __call__(
-            self, predictions: Tensor, labels: Tensor
+            self, predictions: Tensor, labels: np.ndarray
     ) -> float:
+        if not isinstance(labels, Tensor):
+            labels = to_tensor(labels)
         self._validate_inputs(predictions, labels)
         labels = labels.squeeze()
         mse = ((labels - predictions) ** 2).mean().item()
@@ -96,8 +117,10 @@ class MeanSquaredError(Metric):
 
 class MeanAbsoluteError(Metric):
     def __call__(
-            self, predictions: Tensor, labels: Tensor
+            self, predictions: Tensor, labels: np.ndarray
     ) -> float:
+        if not isinstance(labels, Tensor):
+            labels = to_tensor(labels)
         self._validate_inputs(predictions, labels)
         labels = labels.squeeze()
         mae = abs(labels - predictions).mean().item()
@@ -106,8 +129,10 @@ class MeanAbsoluteError(Metric):
 
 class RSquared(Metric):
     def __call__(
-            self, predictions: Tensor, labels: Tensor
+            self, predictions: Tensor, labels: np.ndarray
     ) -> float:
+        if not isinstance(labels, Tensor):
+            labels = to_tensor(labels)
         residual_sum_se = ((labels - predictions) ** 2).sum().item()
         total_sum_se = ((labels - labels.mean()) ** 2).sum().item()
         if total_sum_se == 0:
@@ -119,81 +144,55 @@ class RSquared(Metric):
 
 class Accuracy(Metric):
     def __call__(
-            self, predictions: Tensor, labels: Tensor
+            self, predictions: Tensor, labels: np.ndarray
     ) -> float:
+        if not isinstance(labels, Tensor):
+            labels = to_tensor(labels)
         self._validate_inputs(predictions, labels)
-        labels = labels.squeeze()
         if self.needs_activation:
             predictions = self._select_activation(labels)(predictions)
-        if predictions.dim() == 2 and predictions.size(1) == 1:
-            predictions = predictions.squeeze(1)
-        if predictions.ndim == 1:
-            predictions = where(predictions >= 0.5, 1, 0)
-        if predictions.ndim > 1:
-            predictions = argmax(predictions, dim=1)
+        predictions, labels, _ = self._preprocess_tensors(predictions, labels)
         num_correct = (predictions == labels).sum()
         accuracy = num_correct / labels.size(0)
         return accuracy.item()
 
 
 class Precision(Metric):
-    def __call__(
-            self, predictions: Tensor, labels: Tensor
-    ) -> float:
+    def __call__(self, predictions: Tensor, labels: np.ndarray) -> float:
+        if not isinstance(labels, Tensor):
+            labels = to_tensor(labels)
         self._validate_inputs(predictions, labels)
-        labels = labels.squeeze()
         if self.needs_activation:
             predictions = self._select_activation(labels)(predictions)
-        # binary case
-        if predictions.dim() == 2 and predictions.size(1) == 1:
-            predictions = predictions.squeeze(1)
-        if predictions.ndim == 1:
-            predictions = where(predictions >= 0.5, 1, 0)
-            classes = [1]
-
-        # multi-class case
-        else:
-            classes = range(predictions.size(1))
-            predictions = argmax(predictions, dim=1)
+        predictions, labels, classes = self._preprocess_tensors(predictions, labels)
+        
         precision_list = []
         for cls in classes:
             tp = ((predictions == cls) & (labels == cls)).sum().item()
             fp = ((predictions == cls) & (labels != cls)).sum().item()
             precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
             precision_list.append(precision)
-
-        precision = Tensor(precision_list).mean().item()
-        return precision
+        
+        return Tensor(precision_list).mean().item()
 
 
 class Recall(Metric):
-    def __call__(
-            self, predictions: Tensor, labels: Tensor
-    ) -> float:
+    def __call__(self, predictions: Tensor, labels: np.ndarray) -> float:
+        if not isinstance(labels, Tensor):
+            labels = to_tensor(labels)
         self._validate_inputs(predictions, labels)
-        labels = labels.squeeze()
         if self.needs_activation:
             predictions = self._select_activation(labels)(predictions)
-        # binary case
-        if predictions.dim() == 2 and predictions.size(1) == 1:
-            predictions = predictions.squeeze(1)
-        if predictions.ndim == 1:
-            predictions = where(predictions >= 0.5, 1, 0)
-            classes = [1]
-        # multi-class case
-        else:
-            classes = range(predictions.size(1))
-            predictions = argmax(predictions, dim=1)
-
+        predictions, labels, classes = self._preprocess_tensors(predictions, labels)
+        
         recall_list = []
         for cls in classes:
             tp = ((predictions == cls) & (labels == cls)).sum().item()
             fn = ((predictions != cls) & (labels == cls)).sum().item()
             recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
             recall_list.append(recall)
-
-        recall = Tensor(recall_list).mean().item()
-        return recall
+        
+        return Tensor(recall_list).mean().item()
 
 
 class F1Score(Metric):
@@ -203,7 +202,7 @@ class F1Score(Metric):
         super().__init__(needs_activation)
 
     def __call__(
-            self, predictions: Tensor, labels: Tensor
+            self, predictions: Tensor, labels: np.ndarray
     ) -> float:
         precision = self.precision(predictions, labels)
         recall = self.recall(predictions, labels)
@@ -215,20 +214,13 @@ class CrossEntropyLoss(Metric):
     def __call__(
             self,
             predictions: Tensor,
-            labels: Tensor
+            labels: np.ndarray
     ) -> float:
-        """_summary_
-
-        Args:
-            predictions (Tensor): _description_
-            labels (Tensor): _description_
-
-        Returns:
-            float: _description_
-        """
+        if not isinstance(labels, Tensor):
+            labels = to_tensor(labels)
         self._validate_inputs(predictions, labels)
         labels = labels.squeeze()
-        if labels.dtype != long:  #! Need to check wheter we handle this elsewhere
+        if labels.dtype != long:
             labels = labels.long()
         if self.needs_activation:
             predictions = self._select_activation(labels)(predictions)
