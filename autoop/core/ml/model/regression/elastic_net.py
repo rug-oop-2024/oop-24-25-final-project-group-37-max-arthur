@@ -1,8 +1,6 @@
 from autoop.core.ml.model.model import RegressionModel
 from sklearn.linear_model import ElasticNet as ElasNet
-from torch import Tensor
-import numpy as np
-from copy import deepcopy
+
 
 class ElasticNet(RegressionModel):
     def __init__(self, *args, **kwargs) -> None:
@@ -17,7 +15,3 @@ class ElasticNet(RegressionModel):
             "intercept": self._model.intercept_,
         }
         return params
-
-    def predict(self, observations: np.ndarray) -> Tensor:
-        predictions = self._model.predict(observations)
-        return Tensor(predictions)

@@ -106,6 +106,10 @@ class RegressionModel(Model):
         )
         self._model.fit(observations, labels)
 
+    def predict(self, observations: np.ndarray) -> Tensor:
+        predictions = self._model.predict(observations)
+        return Tensor(predictions)
+
 class GradientModel(Model):
     def __init__(
             self,
