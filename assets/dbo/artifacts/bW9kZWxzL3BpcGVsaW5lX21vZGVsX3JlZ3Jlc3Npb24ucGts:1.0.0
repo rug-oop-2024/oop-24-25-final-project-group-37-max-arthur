@@ -1,1 +1,0 @@
-{"name": "pipeline_model_regression", "version": "1.0.0", "asset_path": "models/pipeline_model_regression.pkl", "tags": [], "metadata": {"model_type": "regression", "parameter_count": 0}, "type": "MultipleLinearRegression"}

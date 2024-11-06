@@ -131,24 +131,5 @@ Pipeline(
         }
 
     def to_artifact(self, name: str) -> 'Artifact':
-        model_artifact = next(artifact for artifact in self.artifacts if artifact.name.startswith("pipeline_model"))
-        data = {
-            "model": model_artifact.id,
-            "dataset": self._dataset.id,
-            "metrics": [str(metric) for metric in self._metrics],
-            "target_feature": {"name": self._target_feature.name, "type": self._target_feature.type},
-            "input_features": [{"name": feature.name, "type": feature.type} for feature in self._input_features],
-            "split": self._split
-        }
-        return Artifact(name=name, data=pickle.dumps(data), asset_path=f"pipeline/pipeline_of_{model_artifact.type}", type="pipeline")
-
-    # @staticmethod
-    # def from_artifact(metrics: List[str],
-    #              dataset_id: str,
-    #              model_id: str,
-    #              input_features: List[dict],
-    #              target_feature: dict,
-    #              split:int,
-    #              automl):
-    #     dataset = automl.registry.get(dataset_id)
-
+        data = pickle.dumps(self)
+        return Artifact(name=name, data=data, asset_path=f"pipeline/pipeline_of_{self.model.type}_{name}", type="pipeline")

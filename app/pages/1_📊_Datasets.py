@@ -1,10 +1,7 @@
 import streamlit as st
-# import pandas as pd
+import app.core.dataset_handler as dh
 
 from app.core.system import AutoMLSystem
-# from autoop.core.ml.dataset import Dataset
-
-from app.core.dataset_handler import upload_csv_button, save_csv, display_datasets_accordion, slice_data_accordion
 
 
 def render_datasets():
@@ -14,14 +11,18 @@ def render_datasets():
 
     datasets = automl.registry.list(type="dataset")
 
-    display_datasets_accordion(automl, datasets)
+    if not datasets:
+        st.write("No datasets found.")
+        return
 
-    slice_data_accordion(automl, datasets)
+    dh.display_datasets_accordion(automl, datasets)
 
-    file = upload_csv_button()
+    dh.slice_data_accordion(automl, datasets)
+
+    file = dh.upload_csv_button()
 
     if file is not None:
-        save_csv(automl, file)
+        dh.save_csv(automl, file)
 
 
 if __name__ == "__main__":
