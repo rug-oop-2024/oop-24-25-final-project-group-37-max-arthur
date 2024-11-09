@@ -47,6 +47,7 @@ class Model(BaseModel, ABC):
         """
         pass
 
+
 class MultipleLinearRegressionOld(Model):
     """
     Implementation of a multiple Linear Regression model.
@@ -72,8 +73,7 @@ class MultipleLinearRegressionOld(Model):
 
     def fit(self, observations: np.ndarray, labels: np.ndarray) -> None:
         """
-        Fits the linear regression model to the provided
-        observations and labels.
+        Fits the linear regression model to the observations and labels.
 
         Args:
             observations (np.ndarray): 2D or 1D array of independent features.
@@ -94,9 +94,9 @@ class MultipleLinearRegressionOld(Model):
         parameters = (inv @ adj_observations.T) @ labels
         self._parameters["parameters"] = parameters
 
-    def predict(self, observations: np.ndarray):
+    def predict(self, observations: np.ndarray) -> np.ndarray:
         """
-        Makes predictions using the fitted model for new observations.
+        Make predictions using the fitted model for new observations.
 
         Args:
             observations (np.ndarray): 2D or 1D array of independent features.
@@ -135,7 +135,7 @@ class MultipleLinearRegressionOld(Model):
             fit: bool
     ) -> None:
         """
-        Validates the dimensions and types of the input arrays.
+        Validate the dimensions and types of the input arrays.
 
         Runs Pydantic field_validators through by instantiating
         the Validator class.
@@ -183,15 +183,16 @@ class Validator(BaseModel):
         check_column_of_ones(observations_arr: np.ndarray) -> np.ndarray:
             Ensures no column in observations contains only ones.
     """
+
     labels_or_params: Any = Field(...)
     fit: bool
     observations: Any = Field(...)
 
     @field_validator("observations", "labels_or_params")
     @classmethod
-    def check_array_type(cls, array):
+    def check_array_type(cls, array: np.ndarray) -> np.ndarray:
         """
-        Method for checking if the provided array is a NumPy ndarray.
+        Check if the provided array is a NumPy ndarray.
 
         Args:
             array (np.ndarray): The array to check.
@@ -212,7 +213,7 @@ class Validator(BaseModel):
     @classmethod
     def validate_observations(cls, observations_arr: np.ndarray) -> np.ndarray:
         """
-        Validates data type and dimensions for observations array.
+        Validate data type and dimensions for observations array.
 
         Args:
             observations_arr (np.ndarray): Array of observations.
@@ -244,7 +245,7 @@ class Validator(BaseModel):
         cls, lab_or_par_arr: np.ndarray
     ) -> np.ndarray:
         """
-        Validates data type and dimensions for the lab_or_par_arr array.
+        Validate data type and dimensions for the lab_or_par_arr array.
 
         Args:
             lab_or_par_arr (np.ndarray): Array of labels or parameters.
@@ -275,7 +276,7 @@ class Validator(BaseModel):
     @model_validator(mode="after")
     def validate_dimensions(self) -> "Validator":
         """
-        Compares dimensions of observations and labels or parameters.
+        Compare dimensions of observations and labels or parameters.
 
         If the model is fitting, dimensions 0 must match.
 
@@ -286,7 +287,7 @@ class Validator(BaseModel):
 
         Returns:
             Validator: the validated model.
-            
+
         Raises:
             ValueError: If there is a dimension mismatch between observations
             and labels/parameters.
@@ -315,7 +316,7 @@ class Validator(BaseModel):
     @classmethod
     def check_column_of_ones(cls, observations_arr: np.ndarray) -> np.ndarray:
         """
-        Ensures that no column in the observations array contains only ones.
+        Ensure that no column in the observations array contains only ones.
 
         Args:
             observations_arr (np.ndarray): The array of observations to check.
