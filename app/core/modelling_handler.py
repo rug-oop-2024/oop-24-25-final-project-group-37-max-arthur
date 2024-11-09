@@ -58,14 +58,18 @@ def determine_task_type(target_feature: 'Feature') -> str:
         return "Regression"
 
 
-def choose_metrics() -> list['Metric']:
+def choose_metrics(model_type: str) -> list['Metric']:
     """
     Prompts the user to select metrics from a predefined list and returns the
     selected metrics.
     Returns:
         list['Metric']: A list of selected metrics.
     """
-    selected_metrics = st.multiselect("Select metrics", METRICS)
+    if model_type == "Regression":
+        available_metrics = METRICS[:4]
+    elif model_type == "Classification":
+        available_metrics = METRICS[4:]
+    selected_metrics = st.multiselect("Select metrics", available_metrics)
     metrics = [get_metric(m) for m in selected_metrics]
     return metrics
 
@@ -154,7 +158,7 @@ def display_pipeline_summary(pipeline: 'Pipeline', name: str = "Summary"
 
         st.write("### Metrics")
         st.write(
-            f"**Selected Metrics:**"
+            f"**Selected Metrics:** "
             f"{', '.join(str(m) for m in pipeline._metrics)}")
 
         st.write("### Dataset Split")

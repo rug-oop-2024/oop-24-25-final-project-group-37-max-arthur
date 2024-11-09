@@ -25,7 +25,7 @@ def choose_dataset(datasets: List['Artifact']) -> 'Dataset':
         (dataset for dataset in datasets if dataset.name == dataset_name),
         None
         )
-    st.write(f"### Selected Dataset: {artifact.name}")
+    # st.write(f"### Selected Dataset: {artifact.name}")
     return artifact_to_dataset(artifact)
 
 
@@ -135,7 +135,7 @@ def artifact_to_dataset(artifact: 'Artifact') -> 'Dataset':
                    asset_path=artifact.asset_path)
 
 
-def upload_csv_button() -> Optional[st.uploaded_file_manager.UploadedFile]:
+def upload_csv_button() -> 'st.runtime.uploaded_file_manager.UploadedFile':
     """
     Displays a file uploader widget for CSV files and returns the uploaded
     file.
@@ -174,7 +174,7 @@ def show_preview(text: str, data: pd.DataFrame) -> None:
 
 
 def save_csv(automl: 'AutoMLSystem',
-             file: st.uploaded_file_manager.UploadedFile) -> None:
+             file: 'st.runtime.uploaded_file_manager.UploadedFile') -> None:
     """
     This function reads the uploaded CSV file, shows a preview of the data,
     and prompts the user to enter a dataset name and asset path.

@@ -1,9 +1,8 @@
 import streamlit as st
-import pickle
+import app.core.deployment_handler as dph
 
 from app.core.system import AutoMLSystem
 from app.core.modelling_handler import display_pipeline_summary
-from app.core.dataset_handler import upload_csv_button
 
 
 def render_deployment():
@@ -18,27 +17,16 @@ def render_deployment():
         st.write("No pipelines found.")
         return
 
-    name = st.selectbox(
-        "Select a pipeline",
-        [pipeline_artifact.name for pipeline_artifact in pipelines]
-                        )
+    pipeline, name, selected_pipeline_artifact = dph.select_pipeline(pipelines)
+    model = pipeline._model
 
-    selected_pipeline_artifact = next(
-        (p for p in pipelines if p.name == name), None
-        )
+    dph.delete_pipeline_button(automl,
+                               name + " Pipeline",
+                               selected_pipeline_artifact.id)
 
-    pipeline = pickle.loads(selected_pipeline_artifact.read())
+    display_pipeline_summary(pipeline, name + " Summary")
 
-    st.write(f"### Selected Pipeline: {name}")
-
-    display_pipeline_summary(pipeline, name)
-
-    if st.button(f"Delete {name}"):
-        automl.registry.delete(selected_pipeline_artifact.id)
-        st.success(f"Pipeline {name} was deleted successfully.")
-
-    csv = upload_csv_button()
-# Once the user loads a pipeline, prompt them to provide a CSV on which they can perform predictions.
+    dph.prediction_accordion(automl, pipeline, model)
 
 
 if __name__ == "__main__":

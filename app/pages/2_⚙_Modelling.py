@@ -36,8 +36,8 @@ def render_modelling():
 
     dataset_split = st.slider("Select the dataset split", 0.1, 0.9, 0.8, 0.1)
 
-    selected_metrics = mh.choose_metrics()
-    
+    selected_metrics = mh.choose_metrics(model_type)
+
     required_elements = [
         selected_dataset, selected_metrics, target_feature,
         input_features, selected_model, dataset_split

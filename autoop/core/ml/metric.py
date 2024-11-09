@@ -7,13 +7,13 @@ from autoop.functional.preprocessing import to_tensor
 
 METRICS = [
     "mean_squared_error",
-    "accuracy",
     "cross_entropy_loss",
     "mean_absolute_error",
+    "r_squared",
     "precision",
+    "accuracy",
     "recall",
-    "f1_score",
-    "r_squared"
+    "f1_score"
 ]
 
 
@@ -212,7 +212,7 @@ class Recall(Metric):
             recall_list.append(recall)
 
         return Tensor(recall_list).mean().item()
-    
+
     def __str__(self) -> str:
         return "recall"
 

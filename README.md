@@ -172,11 +172,11 @@ If you did not implement the feature
 | `ST/modelling/pipeline/split`         | FN           | both    | X  | |
 | `ST/modelling/pipeline/metrics`       | FN           | both    | X  | |
 | `ST/modelling/pipeline/summary`       | FN           | both    | X  | |
-| `ST/modelling/pipeline/train`         | FN           |         |    | |
-| `ST/modelling/pipeline/save`          | FN           |         |    | |
-| `ST/page/deployment`                  | FN           |         |    | |
-| `ST/deployment/load`                  | FN           |         |    | |
-| `ST/deployment/predict`               | FN           |         |    | |
+| `ST/modelling/pipeline/train`         | FN           | both    | X  | |
+| `ST/modelling/pipeline/save`          | FN           | both    | X  | |
+| `ST/page/deployment`                  | FN           | both    | X  | |
+| `ST/deployment/load`                  | FN           | both    | X  | |
+| `ST/deployment/predict`               | FN           | both    | X  | |
 
 If you add extra features, please indicate them below:
 | Requirement                           | Type (FN/NF) | Implemented by       | Implementation Completed (add X if done) | Comment |
