@@ -1,24 +1,51 @@
-import os
 import json
-from typing import Dict, Tuple, List, Union
+from typing import List, Tuple, Union
 
 from autoop.core.storage import Storage
 
-class Database():
 
-    def __init__(self, storage: Storage):
+class Database():
+    """
+    A class representing a key-value database.
+
+    Attributes:
+        storage (Storage): The storage backend used to persist data.
+
+    Methods:
+        set(collection: str, id: str, entry: dict) -> dict:
+            Store an entry in the database under the collection and ID.
+        get(collection: str, id: str) -> Union[dict, None]:
+            Retrieve an entry from the database by collection and ID.
+        delete(collection: str, id: str) -> None:
+            Remove an entry from the database by collection and ID.
+        list(collection: str) -> List[Tuple[str, dict]]:
+            List all entries in a specified collection.
+        refresh() -> None:
+            Reload the database from storage.
+    """
+
+    def __init__(self, storage: Storage) -> None:
+        """
+        Initialize the Database with a storage backend.
+
+        Args:
+            storage (Storage): The storage instance for persisting data.
+        """
         self._storage = storage
         self._data = {}
         self._load()
 
     def set(self, collection: str, id: str, entry: dict) -> dict:
-        """Set a key in the database
+        """
+        Set a key in the database.
+
         Args:
-            collection (str): The collection to store the data in
-            id (str): The id of the data
-            entry (dict): The data to store
+            collection (str): The collection to store the data in.
+            id (str): The id of the data.
+            entry (dict): The data to store.
+
         Returns:
-            dict: The data that was stored
+            dict: The data that was stored.
         """
         assert isinstance(entry, dict), "Data must be a dictionary"
         assert isinstance(collection, str), "Collection must be a string"
@@ -30,22 +57,29 @@ class Database():
         return entry
 
     def get(self, collection: str, id: str) -> Union[dict, None]:
-        """Get a key from the database
+        """
+        Get a key from the database.
+
         Args:
-            collection (str): The collection to get the data from
-            id (str): The id of the data
+            collection (str): The collection to get the data from.
+            id (str): The id of the data.
+
         Returns:
-            Union[dict, None]: The data that was stored, or None if it doesn't exist
+            Union[dict, None]: The data that was stored, or None
+                if it doesn't exist.
         """
         if not self._data.get(collection, None):
             return None
         return self._data[collection].get(id, None)
 
-    def delete(self, collection: str, id: str):
-        """Delete a key from the database
+    def delete(self, collection: str, id: str) -> None:
+        """
+        Delete a key from the database.
+
         Args:
-            collection (str): The collection to delete the data from
-            id (str): The id of the data
+            collection (str): The collection to delete the data from.
+            id (str): The id of the data.
+
         Returns:
             None
         """
@@ -56,27 +90,43 @@ class Database():
         self._persist()
 
     def list(self, collection: str) -> List[Tuple[str, dict]]:
-        """Lists all data in a collection
+        """
+        List all data in a collection.
+
         Args:
-            collection (str): The collection to list the data from
+            collection (str): The collection to list the data from.
+
         Returns:
-            List[Tuple[str, dict]]: A list of tuples containing the id and data for each item in the collection
+            List[Tuple[str, dict]]: A list of tuples containing the id
+                and data for each item in the collection.
         """
         if not self._data.get(collection, None):
             return []
         return [(id, data) for id, data in self._data[collection].items()]
 
-    def refresh(self):
-        """Refresh the database by loading the data from storage"""
+    def refresh(self) -> None:
+        """
+        Refresh the database by loading the data from storage.
+
+        Returns:
+            None
+        """
         self._load()
 
-    def _persist(self):
-        """Persist the data to storage"""
+    def _persist(self) -> None:
+        """
+        Persist the data to storage.
+
+        Returns:
+            None
+        """
         for collection, data in self._data.items():
             if not data:
                 continue
             for id, item in data.items():
-                self._storage.save(json.dumps(item).encode(), f"{collection}/{id}")
+                self._storage.save(
+                    json.dumps(item).encode(), f"{collection}/{id}"
+                )
 
         # for things that were deleted, we need to remove them from the storage
         keys = self._storage.list("")
@@ -85,8 +135,13 @@ class Database():
             if not self._data.get(collection, None).get(id, None):
                 self._storage.delete(f"{collection}/{id}")
 
-    def _load(self):
-        """Load the data from storage"""
+    def _load(self) -> None:
+        """
+        Load the data from storage.
+
+        Returns:
+            None
+        """
         self._data = {}
         for key in self._storage.list(""):
             collection, id = key.split("/")[-2:]

@@ -1,73 +1,109 @@
 import unittest
-import torch
-from autoop.core.ml.metric import get_metric
-from sklearn.metrics import mean_squared_error, accuracy_score, mean_absolute_error
-from sklearn.metrics import precision_score, recall_score, f1_score, r2_score
 
+import numpy as np
+import torch
+from sklearn.metrics import (accuracy_score, f1_score, mean_absolute_error,
+                             mean_squared_error, precision_score, r2_score,
+                             recall_score)
+
+from autoop.core.ml.metric import get_metric
 
 
 class TestMetrics(unittest.TestCase):
-    def test_mean_squared_error(self):
+    """Unit tests for metrics."""
+
+    def test_mean_squared_error(self) -> None:
+        """Test the mean squared error metric."""
+        metric = get_metric("mean_squared_error")
+        predictions = torch.tensor([1.0, 2.0, 3.0])
+        labels = np.array([1.0, 2.0, 3.0])
+        expected = mean_squared_error(labels, predictions.numpy())
+        self.assertAlmostEqual(metric(predictions, labels), expected, places=6)
+        predictions = torch.tensor([2.0, 2.0, 2.0])
+        labels = np.array([1.0, 2.0, 3.0])
+        expected = mean_squared_error(labels, predictions.numpy())
+        self.assertAlmostEqual(metric(predictions, labels), expected, places=6)
+
+    def test_mean_absolute_error(self) -> None:
+        """Test the mean absolute error metric."""
+        metric = get_metric("mean_absolute_error")
+        predictions = torch.tensor([1.0, 2.0, 3.0])
+        labels = np.array([1.0, 2.0, 3.0])
+        expected = mean_absolute_error(labels, predictions.numpy())
+        self.assertAlmostEqual(metric(predictions, labels), expected, places=6)
+        predictions = torch.tensor([2.0, 2.0, 2.0])
+        labels = np.array([1.0, 2.0, 3.0])
+        expected = mean_absolute_error(labels, predictions.numpy())
+        self.assertAlmostEqual(metric(predictions, labels), expected, places=6)
+
+    def test_r_squared(self) -> None:
+        """Test the R-squared metric."""
+        metric = get_metric("r_squared")
         predictions = torch.tensor([3.0, -0.5, 2.0, 7.0])
-        labels = torch.tensor([2.5, 0.0, 2.0, 8.0])
-        custom_mse = get_metric("mean_squared_error", needs_activation=False)(predictions, labels)
-        sklearn_mse = mean_squared_error(labels.numpy(), predictions.numpy())
-        self.assertAlmostEqual(custom_mse, sklearn_mse, places=5)
+        labels = np.array([2.5, 0.0, 2.0, 8.0])
+        expected = r2_score(labels, predictions.numpy())
+        self.assertAlmostEqual(metric(predictions, labels), expected, places=6)
+        predictions = torch.tensor([2.5, 0.0, 2.0, 8.0])
+        labels = np.array([2.5, 0.0, 2.0, 8.0])
+        expected = r2_score(labels, predictions.numpy())
+        self.assertAlmostEqual(metric(predictions, labels), expected, places=6)
 
-    def test_mean_absolute_error(self):
-        predictions = torch.tensor([3.0, -0.5, 2.0, 7.0])
-        labels = torch.tensor([2.5, 0.0, 2.0, 8.0])
-        custom_mae = get_metric("mean_absolute_error", needs_activation=False)(predictions, labels)
-        sklearn_mae = mean_absolute_error(labels.numpy(), predictions.numpy())
-        self.assertAlmostEqual(custom_mae, sklearn_mae, places=5)
+    def test_accuracy(self) -> None:
+        """Test the accuracy metric."""
+        metric = get_metric("accuracy", needs_activation=True)
+        predictions = torch.tensor([[2.0, 1.0, 0.0],
+                                    [0.0, 3.0, 1.0],
+                                    [1.0, 0.0, 2.0],
+                                    [1.0, 2.0, 0.0]])
+        labels = np.array([2, 1, 0, 1])
+        preds_np = torch.argmax(predictions, dim=1).numpy()
+        expected = accuracy_score(labels, preds_np)
+        self.assertAlmostEqual(metric(predictions, labels), expected, places=6)
+        predictions = torch.tensor([[0, 1, 2],
+                                    [0, 2, 1],
+                                    [2, 0, 1],
+                                    [1, 2, 0]])
+        labels = np.array([0, 2, 1, 1])
+        preds_np = torch.argmax(predictions, dim=1).numpy()
+        expected = accuracy_score(labels, preds_np)
+        self.assertAlmostEqual(metric(predictions, labels), expected, places=6)
 
-    def test_r_squared(self):
-        predictions = torch.tensor([3.0, -0.5, 2.0, 7.0])
-        labels = torch.tensor([2.5, 0.0, 2.0, 8.0])
-        custom_r2 = get_metric("r_squared", needs_activation=False)(predictions, labels)
-        sklearn_r2 = r2_score(labels.numpy(), predictions.numpy())
-        self.assertAlmostEqual(custom_r2, sklearn_r2, places=5)
+    def test_precision(self) -> None:
+        """Test the precision metric."""
+        metric = get_metric("precision", needs_activation=True)
+        predictions = torch.tensor([[0.1, 0.7, 0.2],
+                                    [0.3, 0.4, 0.3],
+                                    [0.2, 0.2, 0.6],
+                                    [0.5, 0.2, 0.3]])
+        labels = np.array([1, 0, 2, 1])
+        preds_np = torch.argmax(predictions, dim=1).numpy()
+        expected = precision_score(
+            labels, preds_np, average='macro', zero_division=0
+        )
+        self.assertAlmostEqual(metric(predictions, labels), expected, places=6)
 
-    def test_accuracy(self):
-        predictions = torch.tensor([0.9, 0.2, 0.8, 0.4])
-        labels = torch.tensor([1, 0, 1, 0])
-        custom_accuracy = get_metric("accuracy", needs_activation=False)(predictions, labels)
-        sklearn_accuracy = accuracy_score(labels.numpy(), (predictions.numpy() >= 0.5).astype(int))
-        self.assertAlmostEqual(custom_accuracy, sklearn_accuracy, places=5)
+    def test_recall(self) -> None:
+        """Test the recall metric."""
+        metric = get_metric("recall", needs_activation=True)
+        predictions = torch.tensor([[0.1, 0.7, 0.2],
+                                    [0.3, 0.4, 0.3],
+                                    [0.2, 0.2, 0.6],
+                                    [0.5, 0.2, 0.3]])
+        labels = np.array([1, 0, 2, 1])
+        preds_np = torch.argmax(predictions, dim=1).numpy()
+        expected = recall_score(
+            labels, preds_np, average='macro', zero_division=0
+        )
+        self.assertAlmostEqual(metric(predictions, labels), expected, places=6)
 
-    def test_precision(self):
-        predictions = torch.tensor([0.9, 0.2, 0.8, 0.4])
-        labels = torch.tensor([1, 0, 1, 0])
-        custom_precision = get_metric("precision", needs_activation=False)(predictions, labels)
-        sklearn_precision = precision_score(labels.numpy(), (predictions.numpy() >= 0.5).astype(int), average='macro')
-        self.assertAlmostEqual(custom_precision, sklearn_precision, places=5)
-
-    def test_recall(self):
-        predictions = torch.tensor([0.9, 0.2, 0.8, 0.4])
-        labels = torch.tensor([1, 0, 1, 0])
-        custom_recall = get_metric("recall", needs_activation=False)(predictions, labels)
-        sklearn_recall = recall_score(labels.numpy(), (predictions.numpy() >= 0.5).astype(int), average='macro')
-        self.assertAlmostEqual(custom_recall, sklearn_recall, places=5)
-
-    def test_f1_score(self):
-        predictions = torch.tensor([0.9, 0.2, 0.8, 0.4])
-        labels = torch.tensor([1, 0, 1, 0])
-        custom_f1 = get_metric("f1_score", needs_activation=False)(predictions, labels)
-        sklearn_f1 = f1_score(labels.numpy(), (predictions.numpy() >= 0.5).astype(int), average='macro')
-        self.assertAlmostEqual(custom_f1, sklearn_f1, places=5)
-
-    def test_cross_entropy_loss(self):
-        predictions = torch.tensor([0.9, 0.2, 0.8, 0.4])
-        labels = torch.tensor([1, 0, 1, 0], dtype=torch.float)
-        custom_ce = get_metric("cross_entropy_loss", needs_activation=False)(predictions, labels)
-        loss_torch = torch.nn.BCELoss()
-        torch_cle = loss_torch(predictions, labels).item()
-        self.assertAlmostEqual(custom_ce.item(), torch_cle, places=5)
-
-    def test_multiclass_cross_entropy_loss(self):
-        predictions = torch.tensor([[2.0, 1.0, 0.1], [0.5, 2.5, 0.3], [0.9, 0.1, 2.2]])
-        labels = torch.tensor([0, 1, 2], dtype=torch.long)
-        custom_ce = get_metric("cross_entropy_loss", needs_activation=True)(predictions, labels)
-        loss_torch = torch.nn.CrossEntropyLoss()
-        torch_cle = loss_torch(predictions, labels)
-        self.assertAlmostEqual(custom_ce.item(), torch_cle.item(), places=5)
+    def test_f1_score(self) -> None:
+        """Test the F1 score metric."""
+        metric = get_metric("f1_score", needs_activation=True)
+        predictions = torch.tensor([[0.1, 0.7, 0.2],
+                                    [0.3, 0.4, 0.3],
+                                    [0.2, 0.2, 0.6],
+                                    [0.5, 0.2, 0.3]])
+        labels = np.array([1, 0, 2, 1])
+        preds_np = torch.argmax(predictions, dim=1).numpy()
+        expected = f1_score(labels, preds_np, average='macro', zero_division=0)
+        self.assertAlmostEqual(metric(predictions, labels), expected, places=6)

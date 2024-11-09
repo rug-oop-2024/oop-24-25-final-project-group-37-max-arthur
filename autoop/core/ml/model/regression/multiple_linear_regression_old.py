@@ -1,13 +1,10 @@
+from abc import ABC, abstractmethod
 from copy import deepcopy
 from typing import Any
 
 import numpy as np
-from pydantic import BaseModel, field_validator, Field, model_validator
-
-from abc import ABC, abstractmethod
-
-import numpy as np
-from pydantic import BaseModel, PrivateAttr
+from pydantic import (BaseModel, Field, PrivateAttr, field_validator,
+                      model_validator)
 
 
 class Model(BaseModel, ABC):

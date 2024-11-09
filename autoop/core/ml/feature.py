@@ -1,12 +1,45 @@
 from typing import Literal
-import numpy as np
-from autoop.core.ml.dataset import Dataset
 
-# Implement getter setter??
+
 class Feature():
-    def __init__(self, name: str, type: Literal["categorical", "numerical"]) -> None:
+    """
+    A class representing a feature from a dataset.
+
+    Attributes:
+        name (str): The name of the feature.
+        type (Literal["categorical", "numerical"]): The type of the feature,
+            indicating whether it is categorical or numerical.
+
+    Methods:
+        __str__() -> str:
+            Return a string representation of the feature, including its
+                name and type.
+    """
+
+    def __init__(
+            self,
+            name: str,
+            type: Literal["categorical", "numerical"]
+    ) -> None:
+        """
+        Initialize a Feature with a name and type.
+
+        Args:
+            name (str): The name of the feature.
+            type (Literal["categorical", "numerical"]): The type of the
+                feature, either 'categorical' or 'numerical'.
+
+        Returns:
+            None
+        """
         self.name = name
         self.type = type
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Return a string representation of the feature, including name and type.
+
+        Returns:
+            str: A formatted string displaying the feature's name and type.
+        """
         return f"Name: {self.name} | Type: {self.type}"

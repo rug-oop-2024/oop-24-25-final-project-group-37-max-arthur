@@ -1,13 +1,15 @@
-from typing import Callable
 from abc import ABC, abstractmethod
+from typing import Callable
+
 import numpy as np
-from torch import argmax, Tensor, log, abs, where, long
-from autoop.functional.activations import softmax, sigmoid
+from torch import Tensor, abs, argmax
+
+from autoop.functional.activations import sigmoid, softmax
 from autoop.functional.preprocessing import to_tensor
 
 METRICS = [
     "mean_squared_error",
-    "cross_entropy_loss",
+    "accuracy",
     "mean_absolute_error",
     "r_squared",
     "precision",
@@ -17,10 +19,10 @@ METRICS = [
 ]
 
 
-#  could introduce functions upstream, that pass is_binary e.g.
-def get_metric(name: str, needs_activation: bool=False) -> 'Metric':
+def get_metric(name: str, needs_activation: bool = False) -> 'Metric':
     """
-    Factory function to get a metric by name.
+    Get a metric by name.
+
     Args:
         name (str): The name of the metric to retrieve.
 
@@ -33,7 +35,6 @@ def get_metric(name: str, needs_activation: bool=False) -> 'Metric':
     metrics_dict = {
         "mean_squared_error": MeanSquaredError,
         "accuracy": Accuracy,
-        "cross_entropy_loss": CrossEntropyLoss,
         "mean_absolute_error": MeanAbsoluteError,
         "precision": Precision,
         "recall": Recall,
@@ -48,102 +49,305 @@ def get_metric(name: str, needs_activation: bool=False) -> 'Metric':
     return metrics_dict[name.lower()](needs_activation)
 
 
-#  we currently only return Tensor in CrossEntropyLoss
-#  Have to do this to align with torch, but this does not align
-#  with our base class.
-
-
 class Metric(ABC):
-    def __init__(self, needs_avtivation: bool=False):
+    """
+    Abstract base class for evaluation metrics.
+
+    Attributes:
+        needs_activation (bool): Indicates if the metric requires an
+            activation function.
+
+    Methods:
+        __call__(predictions: Tensor, labels: np.ndarray) -> float:
+            Abstract method for calculating the metric value based on
+            predictions and labels.
+        __str__() -> str:
+            Abstractmethod for returning the name of the metric.
+        evaluate(predictions: Tensor, labels: np.ndarray) -> float:
+            Alias for __call__, performs the metric calculation.
+        _validate_inputs(predictions: Tensor, labels: Tensor) -> None:
+            Validates the shape of predictions and labels.
+        _select_activation(labels: Tensor) -> Callable[[Tensor], Tensor]:
+            Selects an appropriate activation function for the metric.
+        _preprocess_classification(
+            predictions: Tensor,
+            labels: Tensor
+        ) -> tuple:
+            Preprocess predictions and labels for classification tasks.
+    """
+
+    def __init__(self, needs_avtivation: bool = False) -> None:
+        """
+        Initialize the metric with an activation requirement.
+
+        Args:
+            needs_activation (bool): Indicates if activation is required.
+                Default is False.
+        """
         self._needs_activation = needs_avtivation
 
     @property
     def needs_activation(self) -> bool:
+        """
+        Indicates whether the metric requires activation.
+
+        Returns:
+            bool: True if activation is needed, otherwise False.
+        """
         return self._needs_activation
 
     @abstractmethod
     def __call__(
-            self, predictions: Tensor, labels: np.ndarray
+            self,
+            predictions: Tensor,
+            labels: np.ndarray
     ) -> float:
+        """
+        Abstractmethod for calculating the method.
+
+        Args:
+            predictions (Tensor): Model predictions.
+            labels (np.ndarray): True labels.
+
+        Returns:
+            float: Computed metric.
+        """
         pass
 
     @abstractmethod
     def __str__(self) -> str:
+        """
+        Abstractmethod for returning the metric name.
+
+        Returns:
+            str: Name of the metric.
+        """
         pass
 
     def _validate_inputs(self, predictions: Tensor, labels: Tensor) -> None:
+        """
+        Ensure predictions and labels have matching lengths.
+
+        Args:
+            predictions (Tensor): Predicted values.
+            labels (Tensor): Actual values.
+
+        Raises:
+            AssertionError: If the lengths do not match.
+        """
         assert predictions.size(0) == labels.size(0), (
             "Predictions and labels must have the same length."
         )
 
     def _select_activation(self, labels: Tensor) -> Callable[[Tensor], Tensor]:
+        """
+        Choose the appropriate activation function.
+
+        Args:
+            labels (Tensor): Label tensor for determining class type.
+
+        Returns:
+            Callable[[Tensor], Tensor]: Activation function.
+        """
         is_binary_class = True if labels.unique().numel() == 2 else False
         return sigmoid if is_binary_class else softmax
 
     def evaluate(
-            self, predictions: Tensor, labels: np.ndarray
-    ) -> float:
-        return self(predictions, labels)
-
-    def _preprocess_tensors(
             self,
             predictions: Tensor,
             labels: np.ndarray
+    ) -> float:
+        """
+        Calculate the metric value as an alias for __call__.
+
+        Args:
+            predictions (Tensor): Model predictions.
+            labels (np.ndarray): True labels.
+
+        Returns:
+            float: The computed metric value.
+        """
+        return self(predictions, labels)
+
+    def _preprocess_classification(
+            self,
+            predictions: Tensor,
+            labels: Tensor
     ) -> tuple[Tensor, Tensor, list[int]]:
+        """
+        Preprocess predictions and labels for classification.
+
+        Args:
+            predictions (Tensor): Predicted labels.
+            labels (Tensor): Actual labels.
+
+        Returns:
+            tuple[Tensor, Tensor, list[int]]: Processed predictions, labels,
+                and class list based on the number of classes.
+        """
         labels = labels.squeeze()
+        num_classes = list(labels.unique())
         if labels.ndim == 2:
             labels = labels.argmax(1).long()
-        is_binary = labels.unique().numel() <= 2
         if predictions.dim() == 2 and predictions.size(1) == 1:
             predictions = predictions.squeeze(1)
 
-        if is_binary and predictions.ndim == 1:
-            predictions = where(predictions >= 0.5, 1, 0)
-            num_classes = [1]
-        elif predictions.ndim > 1:
+        if predictions.ndim > 1:
             num_classes = list(range(predictions.size(1)))
             predictions = argmax(predictions, dim=1).long()
-        else:
-            num_classes = [1]
         return predictions, labels, num_classes
 
 
 class MeanSquaredError(Metric):
+    """
+    Metric class for calculating mean squared error (MSE).
+
+    Attributes:
+        needs_activation (bool): Indicates if the metric requires an
+            activation function.
+
+    Methods:
+        __call__(predictions: Tensor, labels: np.ndarray) -> float:
+            Calculate the metric value based on predictions and labels.
+        __str__() -> str:
+            Return the name of the metric.
+        evaluate(predictions: Tensor, labels: np.ndarray) -> float:
+            Alias for __call__, performs the metric calculation.
+        _validate_inputs(predictions: Tensor, labels: Tensor) -> None:
+            Validates the shape of predictions and labels.
+        _select_activation(labels: Tensor) -> Callable[[Tensor], Tensor]:
+            Selects an appropriate activation function for the metric.
+        _preprocess_classification(
+            predictions: Tensor,
+            labels: Tensor
+        ) -> tuple:
+            Preprocess predictions and labels for classification tasks.
+    """
+
     def __call__(
             self, predictions: Tensor, labels: np.ndarray
     ) -> float:
-        if not isinstance(labels, Tensor):
-            labels = to_tensor(labels)
+        """
+        Calculate the mean squared error.
+
+        Args:
+            predictions (Tensor): Model predictions.
+            labels (np.ndarray): True labels.
+
+        Returns:
+            float: Computed mean squared error.
+        """
+        labels = to_tensor(labels)
         self._validate_inputs(predictions, labels)
         labels = labels.squeeze()
         mse = ((labels - predictions) ** 2).mean().item()
         return mse
 
     def __str__(self) -> str:
+        """
+        Return the metric name.
+
+        Returns:
+            str: "mean_squared_error"
+        """
         return "mean_squared_error"
 
 
 class MeanAbsoluteError(Metric):
+    """
+    Metric class for calculating mean absolute error (MAE).
+
+    Attributes:
+        needs_activation (bool): Indicates if the metric requires an
+            activation function.
+
+    Methods:
+        __call__(predictions: Tensor, labels: np.ndarray) -> float:
+            Calculate the metric value based on predictions and labels.
+        __str__() -> str:
+            Return the name of the metric.
+        evaluate(predictions: Tensor, labels: np.ndarray) -> float:
+            Alias for __call__, performs the metric calculation.
+        _validate_inputs(predictions: Tensor, labels: Tensor) -> None:
+            Validates the shape of predictions and labels.
+        _select_activation(labels: Tensor) -> Callable[[Tensor], Tensor]:
+            Selects an appropriate activation function for the metric.
+        _preprocess_classification(
+            predictions: Tensor,
+            labels: Tensor
+        ) -> tuple:
+            Preprocess predictions and labels for classification tasks.
+    """
+
     def __call__(
             self, predictions: Tensor, labels: np.ndarray
     ) -> float:
-        if not isinstance(labels, Tensor):
-            labels = to_tensor(labels)
+        """
+        Calculate the mean absolute error.
+
+        Args:
+            predictions (Tensor): Model predictions.
+            labels (np.ndarray): True labels.
+
+        Returns:
+            float: Computed mean absolute error.
+        """
+        labels = to_tensor(labels)
         self._validate_inputs(predictions, labels)
         labels = labels.squeeze()
         mae = abs(labels - predictions).mean().item()
         return mae
 
     def __str__(self) -> str:
+        """
+        Return the metric name.
+
+        Returns:
+            str: "mean_absolute_error"
+        """
         return "mean_absolute_error"
 
 
 class RSquared(Metric):
+    """
+    Metric class for calculating R-squared (coefficient of determination).
+
+    Attributes:
+        needs_activation (bool): Indicates if the metric requires an
+            activation function.
+
+    Methods:
+        __call__(predictions: Tensor, labels: np.ndarray) -> float:
+            Calculate the metric value based on predictions and labels.
+        __str__() -> str:
+            Return the name of the metric.
+        evaluate(predictions: Tensor, labels: np.ndarray) -> float:
+            Alias for __call__, performs the metric calculation.
+        _validate_inputs(predictions: Tensor, labels: Tensor) -> None:
+            Validates the shape of predictions and labels.
+        _select_activation(labels: Tensor) -> Callable[[Tensor], Tensor]:
+            Selects an appropriate activation function for the metric.
+        _preprocess_classification(
+            predictions: Tensor,
+            labels: Tensor
+        ) -> tuple:
+            Preprocess predictions and labels for classification tasks.
+    """
+
     def __call__(
             self, predictions: Tensor, labels: np.ndarray
     ) -> float:
-        if not isinstance(labels, Tensor):
-            labels = to_tensor(labels)
+        """
+        Calculate the R-squared score.
+
+        Args:
+            predictions (Tensor): Model predictions.
+            labels (np.ndarray): True labels.
+
+        Returns:
+            float: Computed R-squared score.
+        """
+        labels = to_tensor(labels)
         residual_sum_se = ((labels - predictions) ** 2).sum().item()
         total_sum_se = ((labels - labels.mean()) ** 2).sum().item()
         if total_sum_se == 0:
@@ -153,35 +357,119 @@ class RSquared(Metric):
         return rs
 
     def __str__(self) -> str:
+        """
+        Return the metric name.
+
+        Returns:
+            str: "r_squared"
+        """
         return "r_squared"
 
 
 class Accuracy(Metric):
+    """
+    Metric class for calculating classification accuracy.
+
+    Attributes:
+        needs_activation (bool): Indicates if the metric requires an
+            activation function.
+
+    Methods:
+        __call__(predictions: Tensor, labels: np.ndarray) -> float:
+            Calculate the metric value based on predictions and labels.
+        __str__() -> str:
+            Return the name of the metric.
+        evaluate(predictions: Tensor, labels: np.ndarray) -> float:
+            Alias for __call__, performs the metric calculation.
+        _validate_inputs(predictions: Tensor, labels: Tensor) -> None:
+            Validates the shape of predictions and labels.
+        _select_activation(labels: Tensor) -> Callable[[Tensor], Tensor]:
+            Selects an appropriate activation function for the metric.
+        _preprocess_classification(
+            predictions: Tensor,
+            labels: Tensor
+        ) -> tuple:
+            Preprocess predictions and labels for classification tasks.
+    """
+
     def __call__(
             self, predictions: Tensor, labels: np.ndarray
     ) -> float:
-        if not isinstance(labels, Tensor):
-            labels = to_tensor(labels)
+        """
+        Calculate accuracy.
+
+        Args:
+            predictions (Tensor): Model predictions.
+            labels (np.ndarray): True labels.
+
+        Returns:
+            float: Computed accuracy.
+        """
+        labels = to_tensor(labels)
         self._validate_inputs(predictions, labels)
         if self.needs_activation:
             predictions = self._select_activation(labels)(predictions)
-        predictions, labels, _ = self._preprocess_tensors(predictions, labels)
+        predictions, labels, _ = self._preprocess_classification(
+            predictions, labels
+        )
         num_correct = (predictions == labels).sum()
         accuracy = num_correct / labels.size(0)
         return accuracy.item()
 
     def __str__(self) -> str:
+        """
+        Return the metric name.
+
+        Returns:
+            str: "accuracy"
+        """
         return "accuracy"
 
 
 class Precision(Metric):
+    """
+    Metric class for calculating precision in classification tasks.
+
+    Attributes:
+        needs_activation (bool): Indicates if the metric requires an
+            activation function.
+
+    Methods:
+        __call__(predictions: Tensor, labels: np.ndarray) -> float:
+            Calculate the metric value based on predictions and labels.
+        __str__() -> str:
+            Return the name of the metric.
+        evaluate(predictions: Tensor, labels: np.ndarray) -> float:
+            Alias for __call__, performs the metric calculation.
+        _validate_inputs(predictions: Tensor, labels: Tensor) -> None:
+            Validates the shape of predictions and labels.
+        _select_activation(labels: Tensor) -> Callable[[Tensor], Tensor]:
+            Selects an appropriate activation function for the metric.
+        _preprocess_classification(
+            predictions: Tensor,
+            labels: Tensor
+        ) -> tuple:
+            Preprocess predictions and labels for classification tasks.
+    """
+
     def __call__(self, predictions: Tensor, labels: np.ndarray) -> float:
-        if not isinstance(labels, Tensor):
-            labels = to_tensor(labels)
+        """
+        Calculate the precision metric.
+
+        Args:
+            predictions (Tensor): Model predictions.
+            labels (np.ndarray): True labels.
+
+        Returns:
+            float: Average precision across classes.
+        """
+        labels = to_tensor(labels)
         self._validate_inputs(predictions, labels)
         if self.needs_activation:
             predictions = self._select_activation(labels)(predictions)
-        predictions, labels, classes = self._preprocess_tensors(predictions, labels)
+        predictions, labels, classes = self._preprocess_classification(
+            predictions, labels
+        )
 
         precision_list = []
         for cls in classes:
@@ -193,16 +481,59 @@ class Precision(Metric):
         return Tensor(precision_list).mean().item()
 
     def __str__(self) -> str:
+        """
+        Return the metric name.
+
+        Returns:
+            str: "precision"
+        """
         return "precision"
 
+
 class Recall(Metric):
+    """
+    Metric class for calculating recall in classification tasks.
+
+    Attributes:
+        needs_activation (bool): Indicates if the metric requires an
+            activation function.
+
+    Methods:
+        __call__(predictions: Tensor, labels: np.ndarray) -> float:
+            Calculate the metric value based on predictions and labels.
+        __str__() -> str:
+            Return the name of the metric.
+        evaluate(predictions: Tensor, labels: np.ndarray) -> float:
+            Alias for __call__, performs the metric calculation.
+        _validate_inputs(predictions: Tensor, labels: Tensor) -> None:
+            Validates the shape of predictions and labels.
+        _select_activation(labels: Tensor) -> Callable[[Tensor], Tensor]:
+            Selects an appropriate activation function for the metric.
+        _preprocess_classification(
+            predictions: Tensor,
+            labels: Tensor
+        ) -> tuple:
+            Preprocess predictions and labels for classification tasks.
+    """
+
     def __call__(self, predictions: Tensor, labels: np.ndarray) -> float:
-        if not isinstance(labels, Tensor):
-            labels = to_tensor(labels)
+        """
+        Calculate the recall metric.
+
+        Args:
+            predictions (Tensor): Model predictions.
+            labels (np.ndarray): True labels.
+
+        Returns:
+            float: Average recall across classes.
+        """
+        labels = to_tensor(labels)
         self._validate_inputs(predictions, labels)
         if self.needs_activation:
             predictions = self._select_activation(labels)(predictions)
-        predictions, labels, classes = self._preprocess_tensors(predictions, labels)
+        predictions, labels, classes = self._preprocess_classification(
+            predictions, labels
+        )
 
         recall_list = []
         for cls in classes:
@@ -214,11 +545,51 @@ class Recall(Metric):
         return Tensor(recall_list).mean().item()
 
     def __str__(self) -> str:
+        """
+        Return the metric name.
+
+        Returns:
+            str: "recall"
+        """
         return "recall"
 
 
 class F1Score(Metric):
-    def __init__(self, needs_activation: bool=True) -> None:
+    """
+    Metric class for calculating the F1 score in classification tasks.
+
+    Attributes:
+        needs_activation (bool): Indicates if the metric requires an
+            activation function.
+
+    Methods:
+        __call__(predictions: Tensor, labels: np.ndarray) -> float:
+            Calculate the metric value based on predictions and labels.
+        __str__() -> str:
+            Return the name of the metric.
+        evaluate(predictions: Tensor, labels: np.ndarray) -> float:
+            Alias for __call__, performs the metric calculation.
+        _validate_inputs(predictions: Tensor, labels: Tensor) -> None:
+            Validates the shape of predictions and labels.
+        _select_activation(labels: Tensor) -> Callable[[Tensor], Tensor]:
+            Selects an appropriate activation function for the metric.
+        _preprocess_classification(
+            predictions: Tensor,
+            labels: Tensor
+        ) -> tuple:
+            Preprocess predictions and labels for classification tasks.
+    """
+
+    def __init__(self, needs_activation: bool = True) -> None:
+        """
+        Initialize the F1 score metric, with precision and recall as instances.
+
+        Args:
+            needs_activation (bool): Indicates if activation is required.
+
+        Returns:
+            None
+        """
         self.precision = Precision(needs_activation)
         self.recall = Recall(needs_activation)
         super().__init__(needs_activation)
@@ -226,40 +597,26 @@ class F1Score(Metric):
     def __call__(
             self, predictions: Tensor, labels: np.ndarray
     ) -> float:
+        """
+        Calculate the F1 score.
+
+        Args:
+            predictions (Tensor): Model predictions.
+            labels (np.ndarray): True labels.
+
+        Returns:
+            float: Computed F1 score.
+        """
         precision = self.precision(predictions, labels)
         recall = self.recall(predictions, labels)
         f1 = 2 * (precision * recall) / (precision + recall + 1e-7)
         return f1
 
     def __str__(self) -> str:
+        """
+        Return the metric name.
+
+        Returns:
+            str: "f1_score"
+        """
         return "f1_score"
-
-
-class CrossEntropyLoss(Metric):
-    def __call__(
-            self,
-            predictions: Tensor,
-            labels: np.ndarray
-    ) -> float:
-        if not isinstance(labels, Tensor):
-            labels = to_tensor(labels)
-        self._validate_inputs(predictions, labels)
-        labels = labels.squeeze()
-        if labels.dtype != long:
-            labels = labels.long()
-        if self.needs_activation:
-            predictions = self._select_activation(labels)(predictions)
-        predictions = predictions.clamp(min=1e-7, max=1 - 1e-7)
-        # Binary case: handle both [B, 1] and [B] shapes
-        if predictions.dim() == 2 and predictions.size(1) == 1:
-            predictions = predictions.squeeze(1) # Convert [B, 1] to [B]
-        if predictions.dim() == 1:
-            loss_tensor = -(
-                labels * log(predictions) + (1 - labels) * log(1 - predictions)
-            )
-        else:
-            loss_tensor = -log(predictions[range(predictions.size(0)), labels])
-        return loss_tensor.mean()
-
-    def __str__(self) -> str:
-        return "cross_entropy_loss"

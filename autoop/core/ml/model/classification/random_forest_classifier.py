@@ -1,18 +1,53 @@
-from sklearn.ensemble import RandomForestClassifier as RFC
-from autoop.core.ml.model.model import Model
-import numpy as np
-from torch import Tensor, from_numpy
 from copy import deepcopy
+from typing import Any
+
+from sklearn.ensemble import RandomForestClassifier as RFC
+
+from autoop.core.ml.model.model import ClassificationFacadeModel
 
 
-class RandomForestClassifier(Model):
+class RandomForestClassifier(ClassificationFacadeModel):
+    """
+    Random forest classifier model using facade pattern.
+
+    Attributes:
+        type (Literal["regression", "classification"]): Specifies the
+            model type as 'classification'.
+        model (BaseEstimator): The wrapped model instance.
+        parameters (dict[str, Any]): Dictionary storing model parameters.
+
+    Methods:
+        fit(observations: np.ndarray, labels: np.ndarray) -> None:
+            Trains the model using provided observations and labels.
+
+        predict(observations: np.ndarray) -> Tensor:
+            Generates predictions from the trained model.
+
+        to_artifact(name: str) -> Artifact:
+            Serialize the model and create an Artifact object.
+    """
+
     def __init__(self, *args, **kwargs) -> None:
+        """
+        Initialize the RandomForestClassifier with the wrapped sklearn model.
+
+        Returns:
+            None
+        """
         super().__init__()
-        self.type = "classification"
         self._model = RFC(*args, **kwargs)
 
     @property
-    def parameters(self) -> dict:
+    def parameters(self) -> dict[str, Any]:
+        """
+        Dynamically return the model parameters.
+
+        Returns the hyperparameters stored in the model
+        as well as the fitted parameters from the wrapped model.
+
+        Returns:
+            dict[str, Any]: parameters dict including hyperparameters.
+        """
         params = {
             **self._model.get_params(),
             "estimators_": self._model.estimators_,
@@ -22,18 +57,3 @@ class RandomForestClassifier(Model):
             "feature_importances_": self._model.feature_importances_,
         }
         return deepcopy(params)
-
-    @property
-    def model(self) -> RFC:
-        return deepcopy(self._model)
-    
-    def fit(self, observations: np.ndarray, labels: np.ndarray) -> None:
-        assert labels.shape[0] == observations.shape[0], (
-            "Observations and labels must have the same number of samples. "
-            f"Got {labels.shape[0]} and {observations.shape[0]} instead."
-        )
-        self._model.fit(observations, labels.argmax(1))
-    
-    def predict(self, observations: np.ndarray) -> Tensor:
-        predictions = self._model.predict(observations)
-        return from_numpy(predictions)

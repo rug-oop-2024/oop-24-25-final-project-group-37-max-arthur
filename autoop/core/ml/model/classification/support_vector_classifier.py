@@ -1,16 +1,19 @@
-from sklearn.linear_model import Lasso as SklearnLasso
+from copy import deepcopy
+from typing import Any
 
-from autoop.core.ml.model.model import RegressionModel
+from sklearn.svm import SVC as SKLSVC
+
+from autoop.core.ml.model.model import ClassificationFacadeModel
 
 
-class Lasso(RegressionModel):
+class SVC(ClassificationFacadeModel):
     """
-    Lasso model using facade pattern.
+    Support vector classifier model using facade pattern.
 
     Attributes:
         type (Literal["regression", "classification"]): Specifies the
-            model type as 'regression'.
-        model (BaseEstimator | Model): The wrapped model instance.
+            model type as 'classification'.
+        model (BaseEstimator): The wrapped model instance.
         parameters (dict[str, Any]): Dictionary storing model parameters.
 
     Methods:
@@ -26,16 +29,16 @@ class Lasso(RegressionModel):
 
     def __init__(self, *args, **kwargs) -> None:
         """
-        Initialize the Lasso model with the wrapped sklearn model.
+        Initialize the SVC model with the wrapped sklearn model.
 
         Returns:
             None
         """
         super().__init__()
-        self._model = SklearnLasso(*args, **kwargs)
+        self._model = SKLSVC(*args, **kwargs)
 
     @property
-    def parameters(self) -> dict:
+    def parameters(self) -> dict[str, Any]:
         """
         Dynamically return the model parameters.
 
@@ -47,7 +50,11 @@ class Lasso(RegressionModel):
         """
         params = {
             **self._model.get_params(),
-            "fitted_parameters": self._model.coef_,
-            "intercept": self._model.intercept_,
+            "support_": getattr(self._model, "support_", None),
+            "support_vectors_": getattr(self._model, "support_vectors_", None),
+            "n_features_in_": getattr(self._model, "n_features_in_", None),
+            "classes_": getattr(self._model, "classes_", None),
+            "probA_": getattr(self._model, "probA_", None),
+            "probB_": getattr(self._model, "probB_", None),
         }
-        return params
+        return deepcopy(params)
