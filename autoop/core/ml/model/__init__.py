@@ -1,4 +1,3 @@
-
 from autoop.core.ml.model.classification import (MLP, SVC,
                                                  RandomForestClassifier)
 from autoop.core.ml.model.model import Model
