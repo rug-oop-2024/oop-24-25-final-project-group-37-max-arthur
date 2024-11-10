@@ -8,6 +8,7 @@ from autoop.core.ml.dataset import Dataset
 from autoop.core.ml.artifact import Artifact
 from app.core.system import AutoMLSystem
 from autoop.functional.image_processing import create_image_dataframe
+import random
 
 
 def choose_dataset(datasets: List['Artifact']) -> 'Dataset':
@@ -242,7 +243,7 @@ def upload_image_button(automl: 'AutoMLSystem') -> None:
 def get_all_file_paths(directory):
     """
     Recursively retrieves all file paths from the specified directory.
-    
+
     Args:
         directory (str): The directory from which to retrieve file paths.
     Returns:
@@ -254,4 +255,5 @@ def get_all_file_paths(directory):
     for root, _, files in os.walk(directory):
         for file in files:
             file_paths.append(os.path.join(root, file))
+    random.shuffle(file_paths)
     return file_paths

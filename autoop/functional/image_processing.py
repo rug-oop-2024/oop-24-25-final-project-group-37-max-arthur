@@ -55,5 +55,5 @@ def create_image_dataframe(image_paths: list[str]) -> pd.DataFrame:
     ])
 
     df.insert(0, "label", labels)
-
+    print(df)
     return df

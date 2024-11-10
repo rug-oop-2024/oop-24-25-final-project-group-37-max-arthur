@@ -129,7 +129,7 @@ def choose_input_columns(dataset: 'Dataset', target_column: str) -> list[str]:
     else:
         input_columns = st.multiselect("Select input columns", columns)
 
-    with st.container(height=200, border=False):
+    with st.container(height=100, border=False):
         st.write(f"Input columns selected: {input_columns}")
     return input_columns
 
@@ -287,6 +287,11 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
             actual = pipeline._test_y
             predicted = predictions
 
+            if actual.ndim > 1:
+                actual = actual.flatten()
+            if predicted.ndim > 1:
+                predicted = predicted.flatten()
+
             cm_df = pd.crosstab(pd.Series(actual, name='Actual'),
                                 pd.Series(predicted, name='Predicted'))
 
@@ -295,8 +300,8 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
             fig_cm.colorbar(cax)
             ax_cm.set_xticks(range(len(cm_df.columns)))
             ax_cm.set_yticks(range(len(cm_df.index)))
-            ax_cm.set_xticklabels([''] + list(cm_df.columns), rotation=45)
-            ax_cm.set_yticklabels([''] + list(cm_df.index))
+            ax_cm.set_xticklabels(cm_df.columns, rotation=45)
+            ax_cm.set_yticklabels(cm_df.index)
             ax_cm.set_xlabel('Predicted')
             ax_cm.set_ylabel('Actual')
             ax_cm.set_title('Confusion Matrix')

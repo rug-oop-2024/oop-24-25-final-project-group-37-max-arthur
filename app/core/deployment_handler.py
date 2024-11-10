@@ -235,7 +235,7 @@ def prediction_accordion(automl: 'AutoMLSystem',
     """
     Displays an interactive accordion for making predictions using a given
     AutoML system, pipeline, and model.
-    
+
     Args:
         automl (AutoMLSystem): The automated machine learning system to use
         for selecting the dataset.

@@ -13,7 +13,7 @@ def render_deployment():
     It retrieves the available pipelines from the AutoML system and provides
     options to display pipeline summaries, delete pipelines,
     and make predictions using the selected pipeline.
-    
+
     Args:
         None
     Returns:
