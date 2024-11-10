@@ -269,7 +269,8 @@ Pipeline(
         Serialize the pipeline instance into an artifact.
 
         Args:
-            name (str): The name of the artifact.
+            name (str): The name of the pipeline.
+            version (str): The version of the pipeline.
 
         Returns:
             Artifact: Serialized pipeline artifact.
