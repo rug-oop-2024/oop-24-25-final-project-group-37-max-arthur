@@ -64,7 +64,7 @@ def determine_task_type(
         # give user option to interpret numerical integer target as categorical
         if np.issubdtype(target_column.dtype, np.integer):
             interpret_as_categorical = st.checkbox(
-                "Interpret integer numerical target feature as categorical"
+                "Interpret numerical target feature as categorical"
             )
             if interpret_as_categorical:
                 return "Classification"
