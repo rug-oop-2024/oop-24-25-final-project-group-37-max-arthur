@@ -71,11 +71,15 @@
   <h1>Source code for app.core.dataset_handler</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="nn">st</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span>
 <span class="kn">from</span> <span class="nn">autoop.core.ml.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
 <span class="kn">from</span> <span class="nn">autoop.core.ml.artifact</span> <span class="kn">import</span> <span class="n">Artifact</span>
 <span class="kn">from</span> <span class="nn">app.core.system</span> <span class="kn">import</span> <span class="n">AutoMLSystem</span>
+<span class="kn">from</span> <span class="nn">autoop.functional.image_processing</span> <span class="kn">import</span> <span class="n">create_image_dataframe</span>
+<span class="kn">import</span> <span class="nn">random</span>
 
 
 <div class="viewcode-block" id="choose_dataset">
@@ -107,6 +111,7 @@
                                <span class="n">datasets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;Artifact&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Displays an accordion of datasets using Streamlit.</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        automl (AutoMLSystem): The AutoML system instance.</span>
 <span class="sd">        datasets (List[Artifact]): A list of dataset artifacts.</span>
@@ -172,6 +177,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Displays a button in the Streamlit app to save a DataFrame as a dataset</span>
 <span class="sd">    and register it with the AutoML system.</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        automl (AutoMLSystem): The AutoML system instance to register</span>
 <span class="sd">        the dataset with.</span>
@@ -195,6 +201,7 @@
                           <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handles the deletion of a dataset through a Streamlit button.</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        automl (AutoMLSystem): The AutoML system instance that manages datasets</span>
 <span class="sd">        dataset (List[Artifact]): The dataset to be deleted.</span>
@@ -212,6 +219,7 @@
 <span class="k">def</span> <span class="nf">artifact_to_dataset</span><span class="p">(</span><span class="n">artifact</span><span class="p">:</span> <span class="s1">&#39;Artifact&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Dataset&#39;</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Converts an Artifact object to a Dataset object.</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        artifact (Artifact): The Artifact object to be converted.</span>
 <span class="sd">    Returns:</span>
@@ -228,6 +236,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Displays a file uploader widget for CSV files and returns the uploaded</span>
 <span class="sd">    file.</span>
+
 <span class="sd">    Returns:</span>
 <span class="sd">        Optional[st.uploaded_file_manager.UploadedFile]: The uploaded CSV</span>
 <span class="sd">        file.</span>
@@ -242,6 +251,7 @@
 <span class="k">def</span> <span class="nf">ask_for_input</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Displays a text input widget and returns the user&#39;s input.</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        text (str): The label for the text input widget.</span>
 <span class="sd">        default (Optional[str], optional): The default value for the text</span>
@@ -258,6 +268,7 @@
 <span class="k">def</span> <span class="nf">show_preview</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Displays a preview of the given DataFrame along with a text description.</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        text (str): The text description to display.</span>
 <span class="sd">        data (pd.DataFrame): The DataFrame to preview.</span>
@@ -277,7 +288,9 @@
 <span class="sd">    This function reads the uploaded CSV file, shows a preview of the data,</span>
 <span class="sd">    and prompts the user to enter a dataset name and asset path.</span>
 <span class="sd">    It then saves the dataset to the AutoML system using the provided name and</span>
-<span class="sd">    asset path.    Args:</span>
+<span class="sd">    asset path.</span>
+
+<span class="sd">    Args:</span>
 <span class="sd">        automl (AutoMLSystem): The AutoML system instance where the dataset</span>
 <span class="sd">        will be saved.</span>
 <span class="sd">        file (st.uploaded_file_manager.UploadedFile): The uploaded CSV file to</span>
@@ -292,6 +305,64 @@
     <span class="n">asset_path</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">name</span>
     <span class="c1"># implement a check weather that name already exists</span>
     <span class="n">save_df_to_dataset_button</span><span class="p">(</span><span class="n">automl</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">asset_path</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="upload_image_button">
+<a class="viewcode-back" href="../../../app.core.html#app.core.dataset_handler.upload_image_button">[docs]</a>
+<span class="k">def</span> <span class="nf">upload_image_button</span><span class="p">(</span><span class="n">automl</span><span class="p">:</span> <span class="s1">&#39;AutoMLSystem&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles the upload of a zip file containing images, extracts the images,</span>
+<span class="sd">    and processes them into a dataframe for further use in an AutoML system.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        automl (AutoMLSystem): An instance of the AutoMLSystem class.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">uploaded_file</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">file_uploader</span><span class="p">(</span><span class="s2">&quot;Upload a zip file of images&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;zip&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">uploaded_file</span><span class="p">:</span>
+        <span class="n">extract_path</span> <span class="o">=</span> <span class="s2">&quot;assets/uploaded_data&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">extract_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">extract_path</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">uploaded_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">z</span><span class="p">:</span>
+            <span class="n">z</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">extract_path</span><span class="p">)</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Files extracted to </span><span class="si">{</span><span class="n">extract_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Extracted Directories and Files:&quot;</span><span class="p">)</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">extract_path</span><span class="p">))</span>
+
+        <span class="n">image_paths</span> <span class="o">=</span> <span class="n">get_all_file_paths</span><span class="p">(</span><span class="n">extract_path</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">create_image_dataframe</span><span class="p">(</span><span class="n">image_paths</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">ask_for_input</span><span class="p">(</span><span class="s2">&quot;Enter dataset name&quot;</span><span class="p">,</span> <span class="n">uploaded_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">asset_path</span> <span class="o">=</span> <span class="n">uploaded_file</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">save_df_to_dataset_button</span><span class="p">(</span><span class="n">automl</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">asset_path</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_all_file_paths">
+<a class="viewcode-back" href="../../../app.core.html#app.core.dataset_handler.get_all_file_paths">[docs]</a>
+<span class="k">def</span> <span class="nf">get_all_file_paths</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Recursively retrieves all file paths from the specified directory.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        directory (str): The directory from which to retrieve file paths.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        list: A list of full file paths for all files found within the</span>
+<span class="sd">        directory and its subdirectories.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">file_paths</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">file_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">file</span><span class="p">))</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">file_paths</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">file_paths</span></div>
 
 </pre></div>
 
