@@ -48,12 +48,10 @@ def select_pipeline(pipelines: List['Artifact']) -> Tuple['Pipeline', str,
 
     name = st.selectbox(
         "Select a pipeline",
-        [pipeline_artifact.name for pipeline_artifact in pipelines]
-                        )
+        [pipeline_artifact.name for pipeline_artifact in pipelines])
 
     selected_pipeline_artifact = next(
-        (p for p in pipelines if p.name == name), None
-        )
+        (p for p in pipelines if p.name == name), None)
     pipeline = pickle.loads(selected_pipeline_artifact.read())
     return pipeline, name, selected_pipeline_artifact
 
@@ -167,6 +165,17 @@ def get_feature_names(pipeline: 'Pipeline') -> List[str]:
 
 def show_predictions(predictions: Tensor, pipeline: 'Pipeline',
                      observation_vector: np.ndarray) -> None:
+    """
+    Display predictions in an expandable section using Streamlit.
+    Args:
+        predictions (Tensor): The predictions to display.
+        pipeline (Pipeline): The pipeline used to generate feature names.
+        observation_vector (np.ndarray): The observation vector containing the
+        observation data.
+    Returns:
+        None
+    """
+
     with st.expander("Show Predictions"):
         if isinstance(predictions, Tensor):
             predictions = predictions.numpy()

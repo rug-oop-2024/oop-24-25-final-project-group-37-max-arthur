@@ -7,6 +7,22 @@ from autoop.core.ml.pipeline import Pipeline
 
 
 def render_modelling():
+    """
+    Renders the Modelling page for the Streamlit application.
+    This function sets up the page configuration, displays the modelling
+    section header, and provides an interface for designing a machine learning
+    pipeline. Users can select a dataset, choose target and input columns,
+    determine the model type, select a model, configure the dataset split, and
+    choose evaluation metrics. The function also handles the execution and
+    display of the pipeline results.
+    Args:
+        None
+    Raises:
+        ValueError: If any required elements are missing for pipeline creation.
+    Returns:
+        None
+    """
+
     st.set_page_config(page_title="Modelling", page_icon="📈")
 
     st.write("# ⚙ Modelling")
@@ -26,12 +42,10 @@ def render_modelling():
         selected_target_column = mh.choose_target_column(selected_dataset)
 
         selected_input_columns = mh.choose_input_columns(
-            selected_dataset, selected_target_column
-            )
+            selected_dataset, selected_target_column)
 
         target_feature, input_features = mh.generate_target_and_input_features(
-            selected_dataset, selected_target_column, selected_input_columns
-            )
+            selected_dataset, selected_target_column, selected_input_columns)
 
         model_type = mh.determine_task_type(
             target_feature, selected_dataset.read()[target_feature.name])
@@ -58,8 +72,7 @@ def render_modelling():
                     target_feature=target_feature,
                     input_features=input_features,
                     model=selected_model,
-                    split=dataset_split
-                    )
+                    split=dataset_split)
                 st.session_state.pipeline = pipeline
 
             mh.execute_pipeline_button(st.session_state.pipeline)

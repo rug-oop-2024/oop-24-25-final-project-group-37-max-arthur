@@ -98,8 +98,7 @@ def choose_target_column(dataset: 'Dataset') -> str:
         str: The name of the selected target column.
     """
     target_column = st.selectbox(
-        "Select the target column", dataset.read().columns
-        )
+        "Select the target column", dataset.read().columns)
     st.write(f"Target column selected: {target_column}")
     return target_column
 
@@ -128,8 +127,8 @@ def choose_input_columns(dataset: 'Dataset', target_column: str) -> list[str]:
 
 
 def generate_target_and_input_features(
-    dataset: 'Dataset', target_column: str, input_columns: list[str]
-     ) -> tuple['Feature', list['Feature']]:
+        dataset: 'Dataset', target_column: str,
+        input_columns: list[str]) -> tuple['Feature', list['Feature']]:
     """
     Generates the target feature and input features from the given dataset.
     Args:
@@ -143,11 +142,8 @@ def generate_target_and_input_features(
     """
     features = detect_feature_types(dataset)
     target_feature = next(
-        feature for feature in features if feature.name == target_column
-        )
-    input_features = [
-        feature for feature in features if feature.name in input_columns
-        ]
+        feature for feature in features if feature.name == target_column)
+    input_features = [f for f in features if f.name in input_columns]
     return target_feature, input_features
 
 

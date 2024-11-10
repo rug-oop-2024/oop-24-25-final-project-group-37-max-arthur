@@ -6,6 +6,19 @@ from app.core.modelling_handler import display_pipeline_summary
 
 
 def render_deployment():
+    """
+    Renders the deployment page for the application.
+    This function sets up the deployment page using Streamlit, allowing users
+    to select and manage machine learning pipelines.
+    It retrieves the available pipelines from the AutoML system and provides
+    options to display pipeline summaries, delete pipelines,
+    and make predictions using the selected pipeline.
+    Args:
+        None
+    Returns:
+        None
+    """
+
     st.set_page_config(page_title="Deployment", page_icon="💈")
     st.write("# Deployment")
 
