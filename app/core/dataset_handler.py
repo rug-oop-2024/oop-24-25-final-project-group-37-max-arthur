@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import zipfile
-import io
 import os
 
 from typing import Optional, List
@@ -199,6 +198,15 @@ def save_csv(automl: 'AutoMLSystem',
 
 
 def upload_image_button(automl: 'AutoMLSystem') -> None:
+    """
+    Handles the upload of a zip file containing images, extracts the images,
+    and processes them into a dataframe for further use in an AutoML system.
+    Args:
+        automl (AutoMLSystem): An instance of the AutoMLSystem class.
+    Returns:
+        None
+    """
+
     uploaded_file = st.file_uploader("Upload a zip file of images", type="zip")
 
     if uploaded_file:
@@ -222,8 +230,17 @@ def upload_image_button(automl: 'AutoMLSystem') -> None:
 
 
 def get_all_file_paths(directory):
+    """
+    Recursively retrieves all file paths from the specified directory.
+    Args:
+        directory (str): The directory from which to retrieve file paths.
+    Returns:
+        list: A list of full file paths for all files found within the
+        directory and its subdirectories.
+    """
+
     file_paths = []
     for root, _, files in os.walk(directory):
         for file in files:
-            file_paths.append(os.path.join(root, file))  # Collect only files
+            file_paths.append(os.path.join(root, file))
     return file_paths
