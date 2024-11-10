@@ -5,7 +5,7 @@ Subpackages
 -----------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    autoop.core.ml.model.classification
    autoop.core.ml.model.regression

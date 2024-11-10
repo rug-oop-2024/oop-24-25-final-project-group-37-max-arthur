@@ -72,7 +72,6 @@
   <h1>Source code for autoop.core.ml.model.regression.elastic_net</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 
-<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">ElasticNet</span> <span class="k">as</span> <span class="n">ElasNet</span>
 
 <span class="kn">from</span> <span class="nn">autoop.core.ml.model.model</span> <span class="kn">import</span> <span class="n">RegressionModel</span>
@@ -87,7 +86,7 @@
 <span class="sd">    Attributes:</span>
 <span class="sd">        type (Literal[&quot;regression&quot;, &quot;classification&quot;]): Specifies the</span>
 <span class="sd">            model type as &#39;regression&#39;.</span>
-<span class="sd">        model (BaseEstimator): The wrapped model instance.</span>
+<span class="sd">        model (ElasNet): The wrapped model instance.</span>
 <span class="sd">        parameters (dict[str, Any]): Dictionary storing model parameters.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -102,12 +101,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">ElasNet</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseEstimator</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ElasNet</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a deep copy of the underlying model instance.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            BaseEstimator: A copy of the wrapped model instance</span>
+<span class="sd">            ElasNet: A copy of the wrapped model instance</span>
 <span class="sd">                used in training and prediction.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="p">)</span>
