@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>autoop.core.ml.model.classification package &mdash; p p documentation</title>
+  <title>autoop.core.ml.model.classification package &mdash; AutoML v0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=4a36d9c3"></script>
+      <script src="_static/documentation_options.js?v=34cd777e"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -32,7 +32,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            p
+            AutoML
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -44,7 +44,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">autoop</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="autoop.html">autoop package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="autoop.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="autoop.core.html">autoop.core package</a></li>
@@ -54,6 +54,7 @@
 <li class="toctree-l3"><a class="reference internal" href="autoop.html#module-autoop">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="app.core.html">app.core package</a></li>
 </ul>
 </li>
 </ul>
@@ -64,7 +65,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">p</a>
+          <a href="index.html">AutoML</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -72,7 +73,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">autoop</a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Modules</a></li>
           <li class="breadcrumb-item"><a href="autoop.html">autoop package</a></li>
           <li class="breadcrumb-item"><a href="autoop.core.html">autoop.core package</a></li>
           <li class="breadcrumb-item"><a href="autoop.core.ml.html">autoop.core.ml package</a></li>
@@ -96,7 +97,7 @@
 <span id="autoop-core-ml-model-classification-multi-layer-perceptron-module"></span><h2>autoop.core.ml.model.classification.multi_layer_perceptron module<a class="headerlink" href="#module-autoop.core.ml.model.classification.multi_layer_perceptron" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="autoop.core.ml.model.classification.multi_layer_perceptron.MLP">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.model.classification.multi_layer_perceptron.</span></span><span class="sig-name descname"><span class="pre">MLP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'adam'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'rmsprop'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'SGD'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'adam'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/model/classification/multi_layer_perceptron.html#MLP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.classification.multi_layer_perceptron.MLP" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.model.classification.multi_layer_perceptron.</span></span><span class="sig-name descname"><span class="pre">MLP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'adam'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'rmsprop'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'SGD'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'adam'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/model/classification/multi_layer_perceptron.html#MLP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.classification.multi_layer_perceptron.MLP" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.model.Model" title="autoop.core.ml.model.model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
 <p>Multi-layer perceptron model for classification.</p>
 <p>Initialized automatically according to the attribute
@@ -105,7 +106,7 @@ labels passed during fit.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="autoop.core.ml.model.classification.multi_layer_perceptron.MLP.num_layers">
 <span class="sig-name descname"><span class="pre">num_layers</span></span><a class="headerlink" href="#autoop.core.ml.model.classification.multi_layer_perceptron.MLP.num_layers" title="Link to this definition"></a></dt>
-<dd><p>Number of layers in the model, set to 1.</p>
+<dd><p>Number of layers in the model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
@@ -415,6 +416,7 @@ as well as the fitted parameters from the wrapped model.</p>
 </section>
 <section id="module-autoop.core.ml.model.classification">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-autoop.core.ml.model.classification" title="Link to this heading"></a></h2>
+<p>Classification package including 3 different classification modules.</p>
 </section>
 </section>
 
@@ -429,7 +431,7 @@ as well as the fitted parameters from the wrapped model.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, p.</p>
+    <p>&#169; Copyright 2024, Arthur &amp; Max.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

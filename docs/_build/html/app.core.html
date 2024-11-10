@@ -1,0 +1,777 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>app.core package &mdash; AutoML v0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=34cd777e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="autoop.functional package" href="autoop.functional.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            AutoML
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="autoop.html">autoop package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">app.core package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-app.core.dataset_handler">app.core.dataset_handler module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.dataset_handler.artifact_to_dataset"><code class="docutils literal notranslate"><span class="pre">artifact_to_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.dataset_handler.ask_for_input"><code class="docutils literal notranslate"><span class="pre">ask_for_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.dataset_handler.choose_dataset"><code class="docutils literal notranslate"><span class="pre">choose_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.dataset_handler.delete_dataset_button"><code class="docutils literal notranslate"><span class="pre">delete_dataset_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.dataset_handler.display_datasets_accordion"><code class="docutils literal notranslate"><span class="pre">display_datasets_accordion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.dataset_handler.save_csv"><code class="docutils literal notranslate"><span class="pre">save_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.dataset_handler.save_df_to_dataset_button"><code class="docutils literal notranslate"><span class="pre">save_df_to_dataset_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.dataset_handler.show_preview"><code class="docutils literal notranslate"><span class="pre">show_preview()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.dataset_handler.slice_data_accordion"><code class="docutils literal notranslate"><span class="pre">slice_data_accordion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.dataset_handler.upload_csv_button"><code class="docutils literal notranslate"><span class="pre">upload_csv_button()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-app.core.deployment_handler">app.core.deployment_handler module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.deployment_handler.choose_data"><code class="docutils literal notranslate"><span class="pre">choose_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.deployment_handler.delete_pipeline_button"><code class="docutils literal notranslate"><span class="pre">delete_pipeline_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.deployment_handler.download_df"><code class="docutils literal notranslate"><span class="pre">download_df()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.deployment_handler.download_pickled_model"><code class="docutils literal notranslate"><span class="pre">download_pickled_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.deployment_handler.get_feature_names"><code class="docutils literal notranslate"><span class="pre">get_feature_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.deployment_handler.predict_button"><code class="docutils literal notranslate"><span class="pre">predict_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.deployment_handler.prediction_accordion"><code class="docutils literal notranslate"><span class="pre">prediction_accordion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.deployment_handler.preprocess_data"><code class="docutils literal notranslate"><span class="pre">preprocess_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.deployment_handler.select_pipeline"><code class="docutils literal notranslate"><span class="pre">select_pipeline()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.deployment_handler.show_predictions"><code class="docutils literal notranslate"><span class="pre">show_predictions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-app.core.modelling_handler">app.core.modelling_handler module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.modelling_handler.choose_input_columns"><code class="docutils literal notranslate"><span class="pre">choose_input_columns()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.modelling_handler.choose_metrics"><code class="docutils literal notranslate"><span class="pre">choose_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.modelling_handler.choose_model"><code class="docutils literal notranslate"><span class="pre">choose_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.modelling_handler.choose_target_column"><code class="docutils literal notranslate"><span class="pre">choose_target_column()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.modelling_handler.determine_task_type"><code class="docutils literal notranslate"><span class="pre">determine_task_type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.modelling_handler.display_pipeline_results"><code class="docutils literal notranslate"><span class="pre">display_pipeline_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.modelling_handler.display_pipeline_summary"><code class="docutils literal notranslate"><span class="pre">display_pipeline_summary()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.modelling_handler.execute_pipeline_button"><code class="docutils literal notranslate"><span class="pre">execute_pipeline_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.modelling_handler.generate_target_and_input_features"><code class="docutils literal notranslate"><span class="pre">generate_target_and_input_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.modelling_handler.save_pipeline_button"><code class="docutils literal notranslate"><span class="pre">save_pipeline_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.modelling_handler.write_helper_text"><code class="docutils literal notranslate"><span class="pre">write_helper_text()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-app.core.system">app.core.system module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.system.ArtifactRegistry"><code class="docutils literal notranslate"><span class="pre">ArtifactRegistry</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.core.system.AutoMLSystem"><code class="docutils literal notranslate"><span class="pre">AutoMLSystem</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-app.core">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AutoML</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Modules</a></li>
+      <li class="breadcrumb-item active">app.core package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/app.core.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="app-core-package">
+<h1>app.core package<a class="headerlink" href="#app-core-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-app.core.dataset_handler">
+<span id="app-core-dataset-handler-module"></span><h2>app.core.dataset_handler module<a class="headerlink" href="#module-app.core.dataset_handler" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.dataset_handler.artifact_to_dataset">
+<span class="sig-prename descclassname"><span class="pre">app.core.dataset_handler.</span></span><span class="sig-name descname"><span class="pre">artifact_to_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact"><span class="pre">Artifact</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.dataset.Dataset" title="autoop.core.ml.dataset.Dataset"><span class="pre">Dataset</span></a></span></span><a class="reference internal" href="_modules/app/core/dataset_handler.html#artifact_to_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.dataset_handler.artifact_to_dataset" title="Link to this definition"></a></dt>
+<dd><p>Converts an Artifact object to a Dataset object.
+:param artifact: The Artifact object to be converted.
+:type artifact: Artifact</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A new Dataset object created from the given Artifact.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.dataset.Dataset" title="autoop.core.ml.dataset.Dataset">Dataset</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.dataset_handler.ask_for_input">
+<span class="sig-prename descclassname"><span class="pre">app.core.dataset_handler.</span></span><span class="sig-name descname"><span class="pre">ask_for_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/app/core/dataset_handler.html#ask_for_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.dataset_handler.ask_for_input" title="Link to this definition"></a></dt>
+<dd><p>Displays a text input widget and returns the user’s input.
+:param text: The label for the text input widget.
+:type text: str
+:param default: The default value for the text
+:type default: Optional[str], optional
+:param input. Defaults to None.:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The user’s input as a string.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.dataset_handler.choose_dataset">
+<span class="sig-prename descclassname"><span class="pre">app.core.dataset_handler.</span></span><span class="sig-name descname"><span class="pre">choose_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datasets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact"><span class="pre">Artifact</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.dataset.Dataset" title="autoop.core.ml.dataset.Dataset"><span class="pre">Dataset</span></a></span></span><a class="reference internal" href="_modules/app/core/dataset_handler.html#choose_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.dataset_handler.choose_dataset" title="Link to this definition"></a></dt>
+<dd><p>Prompts the user to select a dataset from a list of datasets and returns
+the selected dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datasets</strong> (<em>List</em><em>[</em><em>'Artifact'</em><em>]</em>) – A list of Artifact objects representing</p></li>
+<li><p><strong>datasets.</strong> (<em>available</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The selected dataset converted from the chosen Artifact.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.dataset.Dataset" title="autoop.core.ml.dataset.Dataset">Dataset</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.dataset_handler.delete_dataset_button">
+<span class="sig-prename descclassname"><span class="pre">app.core.dataset_handler.</span></span><span class="sig-name descname"><span class="pre">delete_dataset_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">automl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#app.core.system.AutoMLSystem" title="app.core.system.AutoMLSystem"><span class="pre">AutoMLSystem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact"><span class="pre">Artifact</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/dataset_handler.html#delete_dataset_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.dataset_handler.delete_dataset_button" title="Link to this definition"></a></dt>
+<dd><p>Handles the deletion of a dataset through a Streamlit button.
+:param automl: The AutoML system instance that manages datasets
+:type automl: AutoMLSystem
+:param dataset: The dataset to be deleted.
+:type dataset: List[Artifact]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.dataset_handler.display_datasets_accordion">
+<span class="sig-prename descclassname"><span class="pre">app.core.dataset_handler.</span></span><span class="sig-name descname"><span class="pre">display_datasets_accordion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">automl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#app.core.system.AutoMLSystem" title="app.core.system.AutoMLSystem"><span class="pre">AutoMLSystem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">datasets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact"><span class="pre">Artifact</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/dataset_handler.html#display_datasets_accordion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.dataset_handler.display_datasets_accordion" title="Link to this definition"></a></dt>
+<dd><p>Displays an accordion of datasets using Streamlit.
+:param automl: The AutoML system instance.
+:type automl: AutoMLSystem
+:param datasets: A list of dataset artifacts.
+:type datasets: List[Artifact]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.dataset_handler.save_csv">
+<span class="sig-prename descclassname"><span class="pre">app.core.dataset_handler.</span></span><span class="sig-name descname"><span class="pre">save_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">automl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#app.core.system.AutoMLSystem" title="app.core.system.AutoMLSystem"><span class="pre">AutoMLSystem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">UploadedFile</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/dataset_handler.html#save_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.dataset_handler.save_csv" title="Link to this definition"></a></dt>
+<dd><p>This function reads the uploaded CSV file, shows a preview of the data,
+and prompts the user to enter a dataset name and asset path.
+It then saves the dataset to the AutoML system using the provided name and
+asset path.    Args:</p>
+<blockquote>
+<div><p>automl (AutoMLSystem): The AutoML system instance where the dataset
+will be saved.
+file (st.uploaded_file_manager.UploadedFile): The uploaded CSV file to
+be saved.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.dataset_handler.save_df_to_dataset_button">
+<span class="sig-prename descclassname"><span class="pre">app.core.dataset_handler.</span></span><span class="sig-name descname"><span class="pre">save_df_to_dataset_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">automl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#app.core.system.AutoMLSystem" title="app.core.system.AutoMLSystem"><span class="pre">AutoMLSystem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/dataset_handler.html#save_df_to_dataset_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.dataset_handler.save_df_to_dataset_button" title="Link to this definition"></a></dt>
+<dd><p>Displays a button in the Streamlit app to save a DataFrame as a dataset
+and register it with the AutoML system.
+:param automl: The AutoML system instance to register
+:type automl: AutoMLSystem
+:param the dataset with.:
+:param name: The name of the dataset.
+:type name: str
+:param data: The DataFrame containing the dataset.
+:type data: pd.DataFrame
+:param asset_path: The file path where the dataset asset will be saved.
+:type asset_path: str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.dataset_handler.show_preview">
+<span class="sig-prename descclassname"><span class="pre">app.core.dataset_handler.</span></span><span class="sig-name descname"><span class="pre">show_preview</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/dataset_handler.html#show_preview"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.dataset_handler.show_preview" title="Link to this definition"></a></dt>
+<dd><p>Displays a preview of the given DataFrame along with a text description.
+:param text: The text description to display.
+:type text: str
+:param data: The DataFrame to preview.
+:type data: pd.DataFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.dataset_handler.slice_data_accordion">
+<span class="sig-prename descclassname"><span class="pre">app.core.dataset_handler.</span></span><span class="sig-name descname"><span class="pre">slice_data_accordion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">automl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#app.core.system.AutoMLSystem" title="app.core.system.AutoMLSystem"><span class="pre">AutoMLSystem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">datasets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact"><span class="pre">Artifact</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/dataset_handler.html#slice_data_accordion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.dataset_handler.slice_data_accordion" title="Link to this definition"></a></dt>
+<dd><p>Displays a Streamlit interface for slicing a dataset based on user-defined
+criteria.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>automl</strong> (<a class="reference internal" href="#app.core.system.AutoMLSystem" title="app.core.system.AutoMLSystem"><em>AutoMLSystem</em></a>) – The AutoML system instance.</p></li>
+<li><p><strong>datasets</strong> (<em>List</em><em>[</em><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact"><em>Artifact</em></a><em>]</em>) – A list of dataset artifacts to choose from.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>Exception</strong> – If there is an error in slicing the data based on the</p></li>
+<li><p><strong>provided criteria.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.dataset_handler.upload_csv_button">
+<span class="sig-prename descclassname"><span class="pre">app.core.dataset_handler.</span></span><span class="sig-name descname"><span class="pre">upload_csv_button</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">UploadedFile</span></span></span><a class="reference internal" href="_modules/app/core/dataset_handler.html#upload_csv_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.dataset_handler.upload_csv_button" title="Link to this definition"></a></dt>
+<dd><p>Displays a file uploader widget for CSV files and returns the uploaded
+file.
+:returns: The uploaded CSV</p>
+<blockquote>
+<div><p>file.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[st.uploaded_file_manager.UploadedFile]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-app.core.deployment_handler">
+<span id="app-core-deployment-handler-module"></span><h2>app.core.deployment_handler module<a class="headerlink" href="#module-app.core.deployment_handler" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.deployment_handler.choose_data">
+<span class="sig-prename descclassname"><span class="pre">app.core.deployment_handler.</span></span><span class="sig-name descname"><span class="pre">choose_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">automl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#app.core.system.AutoMLSystem" title="app.core.system.AutoMLSystem"><span class="pre">AutoMLSystem</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact"><span class="pre">Artifact</span></a></span></span><a class="reference internal" href="_modules/app/core/deployment_handler.html#choose_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.deployment_handler.choose_data" title="Link to this definition"></a></dt>
+<dd><p>Prompts the user to select a CSV file or choose an existing dataset
+for making predictions.
+:param automl: The AutoML system instance used for managing
+:type automl: AutoMLSystem
+:param datasets.:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The selected dataset artifact.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact">Artifact</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.deployment_handler.delete_pipeline_button">
+<span class="sig-prename descclassname"><span class="pre">app.core.deployment_handler.</span></span><span class="sig-name descname"><span class="pre">delete_pipeline_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">automl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#app.core.system.AutoMLSystem" title="app.core.system.AutoMLSystem"><span class="pre">AutoMLSystem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/deployment_handler.html#delete_pipeline_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.deployment_handler.delete_pipeline_button" title="Link to this definition"></a></dt>
+<dd><p>Displays a button to delete a pipeline and handles the deletion process.
+:param automl: The AutoML system instance that manages the
+:type automl: AutoMLSystem
+:param pipelines.:
+:param name: The name of the pipeline to be deleted.
+:type name: str
+:param id: The unique identifier of the pipeline to be deleted.
+:type id: str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.deployment_handler.download_df">
+<span class="sig-prename descclassname"><span class="pre">app.core.deployment_handler.</span></span><span class="sig-name descname"><span class="pre">download_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linktext</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/deployment_handler.html#download_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.deployment_handler.download_df" title="Link to this definition"></a></dt>
+<dd><p>Generates a download link for a given DataFrame and displays it in a
+Streamlit app.
+:param dataframe: The DataFrame to be downloaded.
+:type dataframe: pd.DataFrame
+:param filename: The name of the file to be downloaded.
+:type filename: str
+:param linktext: The text to be displayed for the download link.
+:type linktext: str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.deployment_handler.download_pickled_model">
+<span class="sig-prename descclassname"><span class="pre">app.core.deployment_handler.</span></span><span class="sig-name descname"><span class="pre">download_pickled_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.model.Model" title="autoop.core.ml.model.model.Model"><span class="pre">Model</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/deployment_handler.html#download_pickled_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.deployment_handler.download_pickled_model" title="Link to this definition"></a></dt>
+<dd><p>Serializes a given model using pickle and provides a Streamlit download
+button for the pickled model.
+:param model: The model to be serialized and downloaded.
+:type model: Model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.deployment_handler.get_feature_names">
+<span class="sig-prename descclassname"><span class="pre">app.core.deployment_handler.</span></span><span class="sig-name descname"><span class="pre">get_feature_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.pipeline.Pipeline" title="autoop.core.ml.pipeline.Pipeline"><span class="pre">Pipeline</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/app/core/deployment_handler.html#get_feature_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.deployment_handler.get_feature_names" title="Link to this definition"></a></dt>
+<dd><p>Extracts the feature names from the pipeline’s input features.
+:param pipeline: The pipeline object containing the input features.
+:type pipeline: Pipeline</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of feature names.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.deployment_handler.predict_button">
+<span class="sig-prename descclassname"><span class="pre">app.core.deployment_handler.</span></span><span class="sig-name descname"><span class="pre">predict_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compact_observation_vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.pipeline.Pipeline" title="autoop.core.ml.pipeline.Pipeline"><span class="pre">Pipeline</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.model.Model" title="autoop.core.ml.model.model.Model"><span class="pre">Model</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/deployment_handler.html#predict_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.deployment_handler.predict_button" title="Link to this definition"></a></dt>
+<dd><p>Handles the prediction button click event in a Streamlit application.
+:param compact_observation_vector: The input data for making
+:type compact_observation_vector: np.ndarray
+:param predictions.:
+:param pipeline: The pipeline object containing the model and its
+:type pipeline: Pipeline
+:param parameters.:
+:param model: The model object used for making predictions.
+:type model: Model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.deployment_handler.prediction_accordion">
+<span class="sig-prename descclassname"><span class="pre">app.core.deployment_handler.</span></span><span class="sig-name descname"><span class="pre">prediction_accordion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">automl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#app.core.system.AutoMLSystem" title="app.core.system.AutoMLSystem"><span class="pre">AutoMLSystem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.pipeline.Pipeline" title="autoop.core.ml.pipeline.Pipeline"><span class="pre">Pipeline</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.model.Model" title="autoop.core.ml.model.model.Model"><span class="pre">Model</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/deployment_handler.html#prediction_accordion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.deployment_handler.prediction_accordion" title="Link to this definition"></a></dt>
+<dd><p>Displays an interactive accordion for making predictions using a given
+AutoML system, pipeline, and model.
+:param automl: The automated machine learning system to use
+:type automl: AutoMLSystem
+:param for selecting the dataset.:
+:param pipeline: The data processing pipeline.
+:type pipeline: Pipeline
+:param model: The machine learning model to use for making
+:type model: Model
+:param predictions.:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.deployment_handler.preprocess_data">
+<span class="sig-prename descclassname"><span class="pre">app.core.deployment_handler.</span></span><span class="sig-name descname"><span class="pre">preprocess_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact"><span class="pre">Artifact</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.pipeline.Pipeline" title="autoop.core.ml.pipeline.Pipeline"><span class="pre">Pipeline</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/app/core/deployment_handler.html#preprocess_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.deployment_handler.preprocess_data" title="Link to this definition"></a></dt>
+<dd><p>Preprocesses the data by detecting feature types, validating pipeline
+input features, and concatenating input vectors into a compact observation
+vector.
+:param dataset: The dataset to be preprocessed.
+:type dataset: Artifact
+:param pipeline: The pipeline containing the input features and
+:type pipeline: Pipeline
+:param execution logic.:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The compact observation vector after preprocessing.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – If the input features of the pipeline are not present in</p></li>
+<li><p><strong>the new data.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.deployment_handler.select_pipeline">
+<span class="sig-prename descclassname"><span class="pre">app.core.deployment_handler.</span></span><span class="sig-name descname"><span class="pre">select_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipelines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact"><span class="pre">Artifact</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.pipeline.Pipeline" title="autoop.core.ml.pipeline.Pipeline"><span class="pre">Pipeline</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact"><span class="pre">Artifact</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/app/core/deployment_handler.html#select_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.deployment_handler.select_pipeline" title="Link to this definition"></a></dt>
+<dd><p>Selects a pipeline from a list of pipeline artifacts.
+:param pipelines: A list of pipeline artifacts to choose
+:type pipelines: List[‘Artifact’]
+:param from.:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple containing the selected
+pipeline, the name of the selected pipeline, and the selected pipeline
+artifact.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple[‘Pipeline’, str, ‘Artifact’]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.deployment_handler.show_predictions">
+<span class="sig-prename descclassname"><span class="pre">app.core.deployment_handler.</span></span><span class="sig-name descname"><span class="pre">show_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.pipeline.Pipeline" title="autoop.core.ml.pipeline.Pipeline"><span class="pre">Pipeline</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">observation_vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/deployment_handler.html#show_predictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.deployment_handler.show_predictions" title="Link to this definition"></a></dt>
+<dd><p>Display predictions in an expandable section using Streamlit.
+:param predictions: The predictions to display.
+:type predictions: Tensor
+:param pipeline: The pipeline used to generate feature names.
+:type pipeline: Pipeline
+:param observation_vector: The observation vector containing the
+:type observation_vector: np.ndarray
+:param observation data.:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-app.core.modelling_handler">
+<span id="app-core-modelling-handler-module"></span><h2>app.core.modelling_handler module<a class="headerlink" href="#module-app.core.modelling_handler" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.modelling_handler.choose_input_columns">
+<span class="sig-prename descclassname"><span class="pre">app.core.modelling_handler.</span></span><span class="sig-name descname"><span class="pre">choose_input_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.dataset.Dataset" title="autoop.core.ml.dataset.Dataset"><span class="pre">Dataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/app/core/modelling_handler.html#choose_input_columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.modelling_handler.choose_input_columns" title="Link to this definition"></a></dt>
+<dd><p>Allows the user to select input columns from a dataset, excluding the
+target column.
+:param dataset: The dataset from which to select columns.
+:type dataset: Dataset
+:param target_column: The name of the target column to exclude from
+:type target_column: str
+:param selection.:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of selected input column names.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.modelling_handler.choose_metrics">
+<span class="sig-prename descclassname"><span class="pre">app.core.modelling_handler.</span></span><span class="sig-name descname"><span class="pre">choose_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.metric.Metric" title="autoop.core.ml.metric.Metric"><span class="pre">Metric</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/app/core/modelling_handler.html#choose_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.modelling_handler.choose_metrics" title="Link to this definition"></a></dt>
+<dd><p>Prompts the user to select metrics from a predefined list and returns the
+selected metrics.
+:returns: A list of selected metrics.
+:rtype: list[‘Metric’]</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.modelling_handler.choose_model">
+<span class="sig-prename descclassname"><span class="pre">app.core.modelling_handler.</span></span><span class="sig-name descname"><span class="pre">choose_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.model.Model" title="autoop.core.ml.model.model.Model"><span class="pre">Model</span></a></span></span><a class="reference internal" href="_modules/app/core/modelling_handler.html#choose_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.modelling_handler.choose_model" title="Link to this definition"></a></dt>
+<dd><p>Choose a machine learning model based on the specified model type.
+:param model_type: The type of model to choose. Can be either
+:type model_type: str
+:param “Regression” or “Classification”.:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An instance of the selected machine learning model.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.model.Model" title="autoop.core.ml.model.model.Model">Model</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.modelling_handler.choose_target_column">
+<span class="sig-prename descclassname"><span class="pre">app.core.modelling_handler.</span></span><span class="sig-name descname"><span class="pre">choose_target_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.dataset.Dataset" title="autoop.core.ml.dataset.Dataset"><span class="pre">Dataset</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/app/core/modelling_handler.html#choose_target_column"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.modelling_handler.choose_target_column" title="Link to this definition"></a></dt>
+<dd><p>Prompts the user to select a target column from the given dataset using a
+select box.
+:param dataset: The dataset object from which to select the target
+:type dataset: Dataset
+:param column.:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The name of the selected target column.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.modelling_handler.determine_task_type">
+<span class="sig-prename descclassname"><span class="pre">app.core.modelling_handler.</span></span><span class="sig-name descname"><span class="pre">determine_task_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_feature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.feature.Feature" title="autoop.core.ml.feature.Feature"><span class="pre">Feature</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/app/core/modelling_handler.html#determine_task_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.modelling_handler.determine_task_type" title="Link to this definition"></a></dt>
+<dd><p>Determines the type of machine learning task based on the target feature.
+:param target_feature: The target feature for which the task type
+:type target_feature: Feature
+:param is to be determined.:
+:param target_column: The column data of the target feature.
+:type target_column: pd.Series</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The type of task, either ‘Classification’ if the target feature
+is categorical, or ‘Regression’ if the target feature is numerical.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.modelling_handler.display_pipeline_results">
+<span class="sig-prename descclassname"><span class="pre">app.core.modelling_handler.</span></span><span class="sig-name descname"><span class="pre">display_pipeline_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.pipeline.Pipeline" title="autoop.core.ml.pipeline.Pipeline"><span class="pre">Pipeline</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/modelling_handler.html#display_pipeline_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.modelling_handler.display_pipeline_results" title="Link to this definition"></a></dt>
+<dd><p>Display the pipeline results using Streamlit.
+:param results: A dictionary containing the results of the pipeline.</p>
+<blockquote>
+<div><p>It should have the following keys:
+- ‘metrics’: The performance metrics of the pipeline.
+- ‘predictions’: The predictions made by the pipeline.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.modelling_handler.display_pipeline_summary">
+<span class="sig-prename descclassname"><span class="pre">app.core.modelling_handler.</span></span><span class="sig-name descname"><span class="pre">display_pipeline_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.pipeline.Pipeline" title="autoop.core.ml.pipeline.Pipeline"><span class="pre">Pipeline</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Summary'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/modelling_handler.html#display_pipeline_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.modelling_handler.display_pipeline_summary" title="Link to this definition"></a></dt>
+<dd><p>Display a summary of the given pipeline using Streamlit.
+:param pipeline: The pipeline object containing dataset, model,
+:type pipeline: Pipeline
+:param and metrics information.:
+:param name: The name to be displayed in the expander header.
+:type name: str, optional
+:param Defaults to “Summary”.:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.modelling_handler.execute_pipeline_button">
+<span class="sig-prename descclassname"><span class="pre">app.core.modelling_handler.</span></span><span class="sig-name descname"><span class="pre">execute_pipeline_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.pipeline.Pipeline" title="autoop.core.ml.pipeline.Pipeline"><span class="pre">Pipeline</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/modelling_handler.html#execute_pipeline_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.modelling_handler.execute_pipeline_button" title="Link to this definition"></a></dt>
+<dd><p>Handles the execution of a pipeline when the “Execute Pipeline” button
+is pressed.
+:param pipeline: An instance of the Pipeline class that contains
+:type pipeline: Pipeline
+:param the logic to be executed.:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.modelling_handler.generate_target_and_input_features">
+<span class="sig-prename descclassname"><span class="pre">app.core.modelling_handler.</span></span><span class="sig-name descname"><span class="pre">generate_target_and_input_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.dataset.Dataset" title="autoop.core.ml.dataset.Dataset"><span class="pre">Dataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.feature.Feature" title="autoop.core.ml.feature.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.feature.Feature" title="autoop.core.ml.feature.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/app/core/modelling_handler.html#generate_target_and_input_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.modelling_handler.generate_target_and_input_features" title="Link to this definition"></a></dt>
+<dd><p>Generates the target feature and input features from the given dataset.
+:param dataset: The dataset from which to extract features.
+:type dataset: Dataset
+:param target_column: The name of the target column.
+:type target_column: str
+:param input_columns: A list of column names to be used as input
+:type input_columns: list[str]
+:param features.:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple containing the target feature
+and a list of input features.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[<a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.feature.Feature" title="autoop.core.ml.feature.Feature">Feature</a>, list[<a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.feature.Feature" title="autoop.core.ml.feature.Feature">Feature</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.modelling_handler.save_pipeline_button">
+<span class="sig-prename descclassname"><span class="pre">app.core.modelling_handler.</span></span><span class="sig-name descname"><span class="pre">save_pipeline_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">automl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#app.core.system.AutoMLSystem" title="app.core.system.AutoMLSystem"><span class="pre">AutoMLSystem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.pipeline.Pipeline" title="autoop.core.ml.pipeline.Pipeline"><span class="pre">Pipeline</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/modelling_handler.html#save_pipeline_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.modelling_handler.save_pipeline_button" title="Link to this definition"></a></dt>
+<dd><p>Displays a button to save a machine learning pipeline using Streamlit.
+This function renders a Streamlit interface to save a given machine
+learning pipeline. It prompts the user to input a name for the pipeline
+and provides a button to save the pipeline using pickle. Upon successful
+saving, a success message is displayed.
+:param automl: The AutoML system instance that manages the
+:type automl: AutoMLSystem
+:param pipeline registry.:
+:param pipeline: The machine learning pipeline to be saved.
+:type pipeline: Pipeline</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.core.modelling_handler.write_helper_text">
+<span class="sig-prename descclassname"><span class="pre">app.core.modelling_handler.</span></span><span class="sig-name descname"><span class="pre">write_helper_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/app/core/modelling_handler.html#write_helper_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.modelling_handler.write_helper_text" title="Link to this definition"></a></dt>
+<dd><p>Writes the given text to the Streamlit app with a specific style.
+:param text: The text to be written in the Streamlit app.
+:type text: str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-app.core.system">
+<span id="app-core-system-module"></span><h2>app.core.system module<a class="headerlink" href="#module-app.core.system" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.core.system.ArtifactRegistry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.core.system.</span></span><span class="sig-name descname"><span class="pre">ArtifactRegistry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.html#autoop.core.database.Database" title="autoop.core.database.Database"><span class="pre">Database</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">storage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.html#autoop.core.storage.Storage" title="autoop.core.storage.Storage"><span class="pre">Storage</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/core/system.html#ArtifactRegistry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.system.ArtifactRegistry" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.core.system.ArtifactRegistry.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/core/system.html#ArtifactRegistry.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.system.ArtifactRegistry.delete" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.core.system.ArtifactRegistry.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact"><span class="pre">Artifact</span></a></span></span><a class="reference internal" href="_modules/app/core/system.html#ArtifactRegistry.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.system.ArtifactRegistry.get" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.core.system.ArtifactRegistry.list">
+<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact"><span class="pre">Artifact</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/app/core/system.html#ArtifactRegistry.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.system.ArtifactRegistry.list" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.core.system.ArtifactRegistry.register">
+<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.html#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact"><span class="pre">Artifact</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/core/system.html#ArtifactRegistry.register"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.system.ArtifactRegistry.register" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.core.system.AutoMLSystem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.core.system.</span></span><span class="sig-name descname"><span class="pre">AutoMLSystem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">storage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.html#autoop.core.storage.LocalStorage" title="autoop.core.storage.LocalStorage"><span class="pre">LocalStorage</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.html#autoop.core.database.Database" title="autoop.core.database.Database"><span class="pre">Database</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/core/system.html#AutoMLSystem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.system.AutoMLSystem" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.core.system.AutoMLSystem.get_instance">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_instance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/core/system.html#AutoMLSystem.get_instance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.core.system.AutoMLSystem.get_instance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="app.core.system.AutoMLSystem.registry">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">registry</span></span><a class="headerlink" href="#app.core.system.AutoMLSystem.registry" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.core">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-app.core" title="Link to this heading"></a></h2>
+<p>Includes all necessary functionality that the pages package needs
+to run the AutoML application.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="autoop.functional.html" class="btn btn-neutral float-left" title="autoop.functional package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Arthur &amp; Max.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,325 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>app.core.dataset_handler &mdash; AutoML v0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=34cd777e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            AutoML
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AutoML</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">app.core.dataset_handler</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for app.core.dataset_handler</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">autoop.core.ml.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span> <span class="nn">autoop.core.ml.artifact</span> <span class="kn">import</span> <span class="n">Artifact</span>
+<span class="kn">from</span> <span class="nn">app.core.system</span> <span class="kn">import</span> <span class="n">AutoMLSystem</span>
+
+
+<div class="viewcode-block" id="choose_dataset">
+<a class="viewcode-back" href="../../../app.core.html#app.core.dataset_handler.choose_dataset">[docs]</a>
+<span class="k">def</span> <span class="nf">choose_dataset</span><span class="p">(</span><span class="n">datasets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;Artifact&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;Dataset&#39;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Prompts the user to select a dataset from a list of datasets and returns</span>
+<span class="sd">    the selected dataset.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        datasets (List[&#39;Artifact&#39;]): A list of Artifact objects representing</span>
+<span class="sd">        available datasets.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dataset: The selected dataset converted from the chosen Artifact.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dataset_name</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="s2">&quot;Select a dataset&quot;</span><span class="p">,</span>
+                                <span class="p">[</span><span class="n">dataset</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">])</span>
+    <span class="n">artifact</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">dataset</span> <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">datasets</span> <span class="k">if</span> <span class="n">dataset</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">dataset_name</span><span class="p">),</span>
+        <span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">artifact_to_dataset</span><span class="p">(</span><span class="n">artifact</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="display_datasets_accordion">
+<a class="viewcode-back" href="../../../app.core.html#app.core.dataset_handler.display_datasets_accordion">[docs]</a>
+<span class="k">def</span> <span class="nf">display_datasets_accordion</span><span class="p">(</span><span class="n">automl</span><span class="p">:</span> <span class="s1">&#39;AutoMLSystem&#39;</span><span class="p">,</span>
+                               <span class="n">datasets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;Artifact&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Displays an accordion of datasets using Streamlit.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        automl (AutoMLSystem): The AutoML system instance.</span>
+<span class="sd">        datasets (List[Artifact]): A list of dataset artifacts.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Available Datasets:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">artifact</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">:</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">artifact_to_dataset</span><span class="p">(</span><span class="n">artifact</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">st</span><span class="o">.</span><span class="n">expander</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">dataframe</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+            <span class="n">delete_dataset_button</span><span class="p">(</span><span class="n">automl</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="slice_data_accordion">
+<a class="viewcode-back" href="../../../app.core.html#app.core.dataset_handler.slice_data_accordion">[docs]</a>
+<span class="k">def</span> <span class="nf">slice_data_accordion</span><span class="p">(</span><span class="n">automl</span><span class="p">:</span> <span class="s1">&#39;AutoMLSystem&#39;</span><span class="p">,</span> <span class="n">datasets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;Artifact&#39;</span><span class="p">]</span>
+                         <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Displays a Streamlit interface for slicing a dataset based on user-defined</span>
+<span class="sd">    criteria.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        automl (AutoMLSystem): The AutoML system instance.</span>
+<span class="sd">        datasets (List[Artifact]): A list of dataset artifacts to choose from.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        Exception: If there is an error in slicing the data based on the</span>
+<span class="sd">        provided criteria.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Slice Dataset:&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">st</span><span class="o">.</span><span class="n">expander</span><span class="p">(</span><span class="s2">&quot;Slice Dataset&quot;</span><span class="p">):</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">choose_dataset</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span>
+        <span class="n">slice_criteria</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">text_input</span><span class="p">(</span>
+            <span class="s2">&quot;Enter slice criteria (e.g., age &gt; 18,&quot;</span>
+            <span class="s2">&quot;smoker == &#39;yes&#39;, region in [&#39;southeast&#39;, &#39;northwest&#39;]):&quot;</span><span class="p">)</span>
+        <span class="n">show_preview</span><span class="p">(</span><span class="s2">&quot;Data Preview:&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="n">slice_criteria</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">sliced_data</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">slice_criteria</span><span class="p">)</span>
+                <span class="n">show_preview</span><span class="p">(</span><span class="s2">&quot;Sliced Data Preview:&quot;</span><span class="p">,</span> <span class="n">sliced_data</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">ask_for_input</span><span class="p">(</span><span class="s2">&quot;Enter sliced dataset name&quot;</span><span class="p">,</span>
+                                     <span class="sa">f</span><span class="s2">&quot;sliced_</span><span class="si">{</span><span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">asset_path</span> <span class="o">=</span> <span class="n">ask_for_input</span><span class="p">(</span><span class="s2">&quot;Enter sliced asset path&quot;</span><span class="p">,</span>
+                                           <span class="sa">f</span><span class="s2">&quot;sliced_</span><span class="si">{</span><span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="c1"># implement a check weather that name already exists</span>
+
+                <span class="n">save_df_to_dataset_button</span><span class="p">(</span><span class="n">automl</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">sliced_data</span><span class="p">,</span>
+                                          <span class="n">asset_path</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">st</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in slicing data: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="save_df_to_dataset_button">
+<a class="viewcode-back" href="../../../app.core.html#app.core.dataset_handler.save_df_to_dataset_button">[docs]</a>
+<span class="k">def</span> <span class="nf">save_df_to_dataset_button</span><span class="p">(</span><span class="n">automl</span><span class="p">:</span> <span class="s1">&#39;AutoMLSystem&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                              <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">asset_path</span><span class="p">:</span> <span class="nb">str</span>
+                              <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Displays a button in the Streamlit app to save a DataFrame as a dataset</span>
+<span class="sd">    and register it with the AutoML system.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        automl (AutoMLSystem): The AutoML system instance to register</span>
+<span class="sd">        the dataset with.</span>
+<span class="sd">        name (str): The name of the dataset.</span>
+<span class="sd">        data (pd.DataFrame): The DataFrame containing the dataset.</span>
+<span class="sd">        asset_path (str): The file path where the dataset asset will be saved.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">st</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;Save Dataset&quot;</span><span class="p">):</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                                         <span class="n">asset_path</span><span class="o">=</span><span class="n">asset_path</span><span class="p">)</span>
+        <span class="n">automl</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; saved and registered successfully.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="delete_dataset_button">
+<a class="viewcode-back" href="../../../app.core.html#app.core.dataset_handler.delete_dataset_button">[docs]</a>
+<span class="k">def</span> <span class="nf">delete_dataset_button</span><span class="p">(</span><span class="n">automl</span><span class="p">:</span> <span class="s1">&#39;AutoMLSystem&#39;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;Artifact&#39;</span><span class="p">]</span>
+                          <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles the deletion of a dataset through a Streamlit button.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        automl (AutoMLSystem): The AutoML system instance that manages datasets</span>
+<span class="sd">        dataset (List[Artifact]): The dataset to be deleted.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">st</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Delete </span><span class="si">{</span><span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="n">automl</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset </span><span class="si">{</span><span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> deleted successfully.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="artifact_to_dataset">
+<a class="viewcode-back" href="../../../app.core.html#app.core.dataset_handler.artifact_to_dataset">[docs]</a>
+<span class="k">def</span> <span class="nf">artifact_to_dataset</span><span class="p">(</span><span class="n">artifact</span><span class="p">:</span> <span class="s1">&#39;Artifact&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Dataset&#39;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts an Artifact object to a Dataset object.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        artifact (Artifact): The Artifact object to be converted.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Dataset: A new Dataset object created from the given Artifact.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">artifact</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">artifact</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+                   <span class="n">asset_path</span><span class="o">=</span><span class="n">artifact</span><span class="o">.</span><span class="n">asset_path</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="upload_csv_button">
+<a class="viewcode-back" href="../../../app.core.html#app.core.dataset_handler.upload_csv_button">[docs]</a>
+<span class="k">def</span> <span class="nf">upload_csv_button</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="s1">&#39;st.runtime.uploaded_file_manager.UploadedFile&#39;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Displays a file uploader widget for CSV files and returns the uploaded</span>
+<span class="sd">    file.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Optional[st.uploaded_file_manager.UploadedFile]: The uploaded CSV</span>
+<span class="sd">        file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">uploaded_file</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">file_uploader</span><span class="p">(</span><span class="s2">&quot;Upload a CSV file&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;csv&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">uploaded_file</span></div>
+
+
+
+<div class="viewcode-block" id="ask_for_input">
+<a class="viewcode-back" href="../../../app.core.html#app.core.dataset_handler.ask_for_input">[docs]</a>
+<span class="k">def</span> <span class="nf">ask_for_input</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Displays a text input widget and returns the user&#39;s input.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): The label for the text input widget.</span>
+<span class="sd">        default (Optional[str], optional): The default value for the text</span>
+<span class="sd">        input. Defaults to None.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        str: The user&#39;s input as a string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">st</span><span class="o">.</span><span class="n">text_input</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">default</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="show_preview">
+<a class="viewcode-back" href="../../../app.core.html#app.core.dataset_handler.show_preview">[docs]</a>
+<span class="k">def</span> <span class="nf">show_preview</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Displays a preview of the given DataFrame along with a text description.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): The text description to display.</span>
+<span class="sd">        data (pd.DataFrame): The DataFrame to preview.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="save_csv">
+<a class="viewcode-back" href="../../../app.core.html#app.core.dataset_handler.save_csv">[docs]</a>
+<span class="k">def</span> <span class="nf">save_csv</span><span class="p">(</span><span class="n">automl</span><span class="p">:</span> <span class="s1">&#39;AutoMLSystem&#39;</span><span class="p">,</span>
+             <span class="n">file</span><span class="p">:</span> <span class="s1">&#39;st.runtime.uploaded_file_manager.UploadedFile&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function reads the uploaded CSV file, shows a preview of the data,</span>
+<span class="sd">    and prompts the user to enter a dataset name and asset path.</span>
+<span class="sd">    It then saves the dataset to the AutoML system using the provided name and</span>
+<span class="sd">    asset path.    Args:</span>
+<span class="sd">        automl (AutoMLSystem): The AutoML system instance where the dataset</span>
+<span class="sd">        will be saved.</span>
+<span class="sd">        file (st.uploaded_file_manager.UploadedFile): The uploaded CSV file to</span>
+<span class="sd">        be saved.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="n">show_preview</span><span class="p">(</span><span class="s2">&quot;Data Preview:&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">ask_for_input</span><span class="p">(</span><span class="s2">&quot;Enter dataset name&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">asset_path</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">name</span>
+    <span class="c1"># implement a check weather that name already exists</span>
+    <span class="n">save_df_to_dataset_button</span><span class="p">(</span><span class="n">automl</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">asset_path</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Arthur &amp; Max.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

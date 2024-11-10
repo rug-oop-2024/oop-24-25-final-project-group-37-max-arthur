@@ -1,0 +1,381 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>app.core.deployment_handler &mdash; AutoML v0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=34cd777e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            AutoML
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AutoML</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">app.core.deployment_handler</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for app.core.deployment_handler</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">app.core.dataset_handler</span> <span class="k">as</span> <span class="nn">dh</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">from</span> <span class="nn">app.core.system</span> <span class="kn">import</span> <span class="n">AutoMLSystem</span>
+<span class="kn">from</span> <span class="nn">autoop.core.ml.artifact</span> <span class="kn">import</span> <span class="n">Artifact</span>
+<span class="kn">from</span> <span class="nn">autoop.core.ml.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">autoop.core.ml.model</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">autoop.functional.feature</span> <span class="kn">import</span> <span class="n">detect_feature_types</span>
+<span class="kn">from</span> <span class="nn">autoop.functional.preprocessing</span> <span class="kn">import</span> <span class="n">preprocess_features</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+
+
+<div class="viewcode-block" id="delete_pipeline_button">
+<a class="viewcode-back" href="../../../app.core.html#app.core.deployment_handler.delete_pipeline_button">[docs]</a>
+<span class="k">def</span> <span class="nf">delete_pipeline_button</span><span class="p">(</span><span class="n">automl</span><span class="p">:</span> <span class="s1">&#39;AutoMLSystem&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Displays a button to delete a pipeline and handles the deletion process.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        automl (AutoMLSystem): The AutoML system instance that manages the</span>
+<span class="sd">        pipelines.</span>
+<span class="sd">        name (str): The name of the pipeline to be deleted.</span>
+<span class="sd">        id (str): The unique identifier of the pipeline to be deleted.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">st</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Delete </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="n">automl</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pipeline </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> was deleted successfully.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="select_pipeline">
+<a class="viewcode-back" href="../../../app.core.html#app.core.deployment_handler.select_pipeline">[docs]</a>
+<span class="k">def</span> <span class="nf">select_pipeline</span><span class="p">(</span><span class="n">pipelines</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;Artifact&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="s1">&#39;Pipeline&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span>
+                                                          <span class="s1">&#39;Artifact&#39;</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Selects a pipeline from a list of pipeline artifacts.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        pipelines (List[&#39;Artifact&#39;]): A list of pipeline artifacts to choose</span>
+<span class="sd">        from.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[&#39;Pipeline&#39;, str, &#39;Artifact&#39;]: A tuple containing the selected</span>
+<span class="sd">        pipeline, the name of the selected pipeline, and the selected pipeline</span>
+<span class="sd">        artifact.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span>
+        <span class="s2">&quot;Select a pipeline&quot;</span><span class="p">,</span>
+        <span class="p">[</span><span class="n">pipeline_artifact</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">pipeline_artifact</span> <span class="ow">in</span> <span class="n">pipelines</span><span class="p">])</span>
+
+    <span class="n">selected_pipeline_artifact</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pipelines</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">pipeline</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">selected_pipeline_artifact</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">pipeline</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">selected_pipeline_artifact</span></div>
+
+
+
+<div class="viewcode-block" id="choose_data">
+<a class="viewcode-back" href="../../../app.core.html#app.core.deployment_handler.choose_data">[docs]</a>
+<span class="k">def</span> <span class="nf">choose_data</span><span class="p">(</span><span class="n">automl</span><span class="p">:</span> <span class="s1">&#39;AutoMLSystem&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Artifact&#39;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Prompts the user to select a CSV file or choose an existing dataset</span>
+<span class="sd">    for making predictions.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        automl (AutoMLSystem): The AutoML system instance used for managing</span>
+<span class="sd">        datasets.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Artifact: The selected dataset artifact.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;### Select Data&quot;</span><span class="p">)</span>
+    <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Upload a CSV file to create a dataset or/and choose a dataset&quot;</span>
+             <span class="s2">&quot; to make predictions.&quot;</span><span class="p">)</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">dh</span><span class="o">.</span><span class="n">upload_csv_button</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dh</span><span class="o">.</span><span class="n">save_csv</span><span class="p">(</span><span class="n">automl</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Refresh to choose just uploaded CSV file.&quot;</span><span class="p">)</span>
+    <span class="n">datasets</span> <span class="o">=</span> <span class="n">automl</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;dataset&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dh</span><span class="o">.</span><span class="n">choose_dataset</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="download_df">
+<a class="viewcode-back" href="../../../app.core.html#app.core.deployment_handler.download_df">[docs]</a>
+<span class="k">def</span> <span class="nf">download_df</span><span class="p">(</span><span class="n">dataframe</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">linktext</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a download link for a given DataFrame and displays it in a</span>
+<span class="sd">    Streamlit app.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        dataframe (pd.DataFrame): The DataFrame to be downloaded.</span>
+<span class="sd">        filename (str): The name of the file to be downloaded.</span>
+<span class="sd">        linktext (str): The text to be displayed for the download link.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">csv</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+    <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;data:file/csv;base64&quot;</span>
+    <span class="n">href</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&lt;a href=&quot;</span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">b64</span><span class="si">}</span><span class="s1">&quot; download=&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&quot;&gt;</span><span class="si">{</span><span class="n">linktext</span><span class="si">}</span><span class="s1">&lt;/a&gt;&#39;</span>
+    <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="n">href</span><span class="p">,</span> <span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="download_pickled_model">
+<a class="viewcode-back" href="../../../app.core.html#app.core.deployment_handler.download_pickled_model">[docs]</a>
+<span class="k">def</span> <span class="nf">download_pickled_model</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="s1">&#39;Model&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Serializes a given model using pickle and provides a Streamlit download</span>
+<span class="sd">    button for the pickled model.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        model (Model): The model to be serialized and downloaded.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">st</span><span class="o">.</span><span class="n">download_button</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Download Pickled Model&quot;</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+        <span class="n">file_name</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">.pkl&#39;</span><span class="p">,</span>
+        <span class="n">mime</span><span class="o">=</span><span class="s1">&#39;application/octet-stream&#39;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="predict_button">
+<a class="viewcode-back" href="../../../app.core.html#app.core.deployment_handler.predict_button">[docs]</a>
+<span class="k">def</span> <span class="nf">predict_button</span><span class="p">(</span><span class="n">compact_observation_vector</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                   <span class="n">pipeline</span><span class="p">:</span> <span class="s1">&#39;Pipeline&#39;</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="s1">&#39;Model&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles the prediction button click event in a Streamlit application.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        compact_observation_vector (np.ndarray): The input data for making</span>
+<span class="sd">        predictions.</span>
+<span class="sd">        pipeline (Pipeline): The pipeline object containing the model and its</span>
+<span class="sd">        parameters.</span>
+<span class="sd">        model (Model): The model object used for making predictions.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;### Model Parameters&quot;</span><span class="p">)</span>
+    <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+    <span class="n">download_pickled_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">st</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;Predict&quot;</span><span class="p">):</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">compact_observation_vector</span><span class="p">)</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;### Predictions&quot;</span><span class="p">)</span>
+        <span class="n">show_predictions</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">pipeline</span><span class="p">,</span> <span class="n">compact_observation_vector</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">predictions</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+            <span class="n">download_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s2">&quot;predictions.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;Download Predictions CSV&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_feature_names">
+<a class="viewcode-back" href="../../../app.core.html#app.core.deployment_handler.get_feature_names">[docs]</a>
+<span class="k">def</span> <span class="nf">get_feature_names</span><span class="p">(</span><span class="n">pipeline</span><span class="p">:</span> <span class="s1">&#39;Pipeline&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts the feature names from the pipeline&#39;s input features.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        pipeline (Pipeline): The pipeline object containing the input features.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        List[str]: A list of feature names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">temp_cat_features</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">_input_features</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">feature</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;categorical&quot;</span><span class="p">:</span>
+            <span class="n">temp_cat_features</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">feature</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_class_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+                    <span class="n">feature</span><span class="o">.</span><span class="n">num_options</span><span class="p">)])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">feature_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feature</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">temp_cat_features</span><span class="p">:</span>
+        <span class="n">feature_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">feature_names</span></div>
+
+
+
+<div class="viewcode-block" id="show_predictions">
+<a class="viewcode-back" href="../../../app.core.html#app.core.deployment_handler.show_predictions">[docs]</a>
+<span class="k">def</span> <span class="nf">show_predictions</span><span class="p">(</span><span class="n">predictions</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">pipeline</span><span class="p">:</span> <span class="s1">&#39;Pipeline&#39;</span><span class="p">,</span>
+                     <span class="n">observation_vector</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Display predictions in an expandable section using Streamlit.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        predictions (Tensor): The predictions to display.</span>
+<span class="sd">        pipeline (Pipeline): The pipeline used to generate feature names.</span>
+<span class="sd">        observation_vector (np.ndarray): The observation vector containing the</span>
+<span class="sd">        observation data.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">with</span> <span class="n">st</span><span class="o">.</span><span class="n">expander</span><span class="p">(</span><span class="s2">&quot;Show Predictions&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
+            <span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">feature_names</span> <span class="o">=</span> <span class="n">get_feature_names</span><span class="p">(</span><span class="n">pipeline</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">observation_vector</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Predictions&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">predictions</span>
+
+        <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="preprocess_data">
+<a class="viewcode-back" href="../../../app.core.html#app.core.deployment_handler.preprocess_data">[docs]</a>
+<span class="k">def</span> <span class="nf">preprocess_data</span><span class="p">(</span><span class="n">dataset</span><span class="p">:</span> <span class="s1">&#39;Artifact&#39;</span><span class="p">,</span> <span class="n">pipeline</span><span class="p">:</span> <span class="s1">&#39;Pipeline&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Preprocesses the data by detecting feature types, validating pipeline</span>
+<span class="sd">    input features, and concatenating input vectors into a compact observation</span>
+<span class="sd">    vector.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        dataset (Artifact): The dataset to be preprocessed.</span>
+<span class="sd">        pipeline (Pipeline): The pipeline containing the input features and</span>
+<span class="sd">        execution logic.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: The compact observation vector after preprocessing.</span>
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the input features of the pipeline are not present in</span>
+<span class="sd">        the new data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">feature_types</span> <span class="o">=</span> <span class="n">detect_feature_types</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+
+    <span class="n">pipeline_input_features</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">_input_features</span>
+    <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">pipeline_input_features</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">feature_types</span><span class="p">]:</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Input features of the pipeline are not present in &quot;</span>
+                     <span class="s2">&quot;the new data. Please choose a different dataset.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Input features of the pipeline are not present in the new &quot;</span>
+                <span class="s2">&quot;data. Please choose a different dataset.&quot;</span><span class="p">)</span>
+
+    <span class="n">input_results</span> <span class="o">=</span> <span class="n">preprocess_features</span><span class="p">(</span><span class="n">pipeline_input_features</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+    <span class="n">input_vectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span> <span class="k">for</span> <span class="p">(</span><span class="n">feature_name</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">artifact</span><span class="p">)</span> <span class="ow">in</span> <span class="n">input_results</span><span class="p">]</span>
+    <span class="n">compact_observation_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">input_vectors</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">compact_observation_vector</span></div>
+
+
+
+<div class="viewcode-block" id="prediction_accordion">
+<a class="viewcode-back" href="../../../app.core.html#app.core.deployment_handler.prediction_accordion">[docs]</a>
+<span class="k">def</span> <span class="nf">prediction_accordion</span><span class="p">(</span><span class="n">automl</span><span class="p">:</span> <span class="s1">&#39;AutoMLSystem&#39;</span><span class="p">,</span>
+                         <span class="n">pipeline</span><span class="p">:</span> <span class="s1">&#39;Pipeline&#39;</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="s1">&#39;Model&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Displays an interactive accordion for making predictions using a given</span>
+<span class="sd">    AutoML system, pipeline, and model.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        automl (AutoMLSystem): The automated machine learning system to use</span>
+<span class="sd">        for selecting the dataset.</span>
+<span class="sd">        pipeline (Pipeline): The data processing pipeline.</span>
+<span class="sd">        model (Model): The machine learning model to use for making</span>
+<span class="sd">        predictions.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">with</span> <span class="n">st</span><span class="o">.</span><span class="n">container</span><span class="p">(</span><span class="n">border</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">choose_data</span><span class="p">(</span><span class="n">automl</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dataset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;### Data Preview&quot;</span><span class="p">)</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+    <span class="k">with</span> <span class="n">st</span><span class="o">.</span><span class="n">container</span><span class="p">(</span><span class="n">border</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;### Predict&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dataset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">observations</span> <span class="o">=</span> <span class="n">preprocess_data</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">pipeline</span><span class="p">)</span>
+            <span class="n">predict_button</span><span class="p">(</span><span class="n">observations</span><span class="p">,</span> <span class="n">pipeline</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Arthur &amp; Max.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

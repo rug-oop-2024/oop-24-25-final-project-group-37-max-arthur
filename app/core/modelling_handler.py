@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import streamlit as st
@@ -207,18 +208,142 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
     with st.expander("## Results"):
         st.write("### Metrics:")
         st.write(results['metrics'])
+        
+        # Safely extract metrics
+        metrics = results.get('metrics', {})
+        # Predictions Section
         st.write("### Predictions:")
-        predictions = results['predictions']
-        if isinstance(predictions, Tensor):
-            predictions = predictions.numpy()
-        feature_names = get_feature_names(pipeline)
+        predictions = results.get('predictions', None)
+        if predictions is not None:
+            if isinstance(predictions, Tensor):
+                predictions = predictions.numpy()
+            feature_names = get_feature_names(pipeline)
 
-        data = pipeline._compact_vectors(pipeline._test_X)
+            data = pipeline._compact_vectors(pipeline._test_X)
 
-        df = pd.DataFrame(data, columns=feature_names)
-        df['Predictions'] = predictions
+            df = pd.DataFrame(data, columns=feature_names)
+            df['Predictions'] = predictions
 
-        st.write(df)
+            st.write(df)
+        else:
+            st.write("No predictions available.")
+        # Check if metrics are in the expected nested dictionary format
+        if all(isinstance(v, dict) for v in metrics.values()):
+            # Extract metric names, and their corresponding train and test values
+            metric_names = list(metrics.keys())
+            train_values = [v.get('train', 0) for v in metrics.values()]
+            test_values = [v.get('test', 0) for v in metrics.values()]
+            
+            # Define bar width and positions
+            bar_width = 0.35
+            indices = range(len(metric_names))
+            
+            # Create the plot
+            fig, ax = plt.subplots(figsize=(10, 6))
+            
+            # Plot train metrics
+            bars_train = ax.bar([i - bar_width/2 for i in indices], train_values, 
+                   width=bar_width, label='Train', color='skyblue')
+            
+            # Plot test metrics
+            bars_test = ax.bar([i + bar_width/2 for i in indices], test_values, 
+                   width=bar_width, label='Test', color='salmon')
+            
+            # Set labels and title
+            ax.set_ylabel('Scores')
+            ax.set_title('Model Performance Metrics')
+            ax.set_xticks(indices)
+            ax.set_xticklabels(metric_names, rotation=45, ha='right')
+            ax.legend()
+            plt.tight_layout()
+            
+            # Add annotations
+            for bar in bars_train:
+                height = bar.get_height()
+                ax.annotate(f'{height:.2f}',
+                            xy=(bar.get_x() + bar.get_width() / 2, height),
+                            xytext=(0, 3),  # 3 points vertical offset
+                            textcoords="offset points",
+                            ha='center', va='bottom')
+            
+            for bar in bars_test:
+                height = bar.get_height()
+                ax.annotate(f'{height:.2f}',
+                            xy=(bar.get_x() + bar.get_width() / 2, height),
+                            xytext=(0, 3),
+                            textcoords="offset points",
+                            ha='center', va='bottom')
+            
+            # Display the plot in Streamlit
+            st.pyplot(fig)
+        else:
+            # Handle unexpected metrics structure
+            st.write("Metrics are not in the expected format for visualization.")
+        
+        # Model Type Detection Debug
+        model_type = pipeline.model._type
+        st.write(f"**Detected Model Type:** {model_type}")  # Debug statement
+
+        # Generate and display additional graphs based on model type
+        if model_type == "classification":
+            actual = pipeline._test_y
+            predicted = predictions
+
+            # Create a confusion matrix using pandas
+            cm_df = pd.crosstab(pd.Series(actual, name='Actual'),
+                                pd.Series(predicted, name='Predicted'))
+            
+            fig_cm, ax_cm = plt.subplots(figsize=(8, 6))
+            cax = ax_cm.matshow(cm_df, cmap='Blues')
+            fig_cm.colorbar(cax)
+            ax_cm.set_xticks(range(len(cm_df.columns)))
+            ax_cm.set_yticks(range(len(cm_df.index)))
+            ax_cm.set_xticklabels([''] + list(cm_df.columns), rotation=45)
+            ax_cm.set_yticklabels([''] + list(cm_df.index))
+            ax_cm.set_xlabel('Predicted')
+            ax_cm.set_ylabel('Actual')
+            ax_cm.set_title('Confusion Matrix')
+
+            # Add text annotations
+            for i in range(len(cm_df.index)):
+                for j in range(len(cm_df.columns)):
+                    ax_cm.text(j, i, cm_df.iloc[i, j], ha='center', va='center', color='red')
+            
+            plt.tight_layout()
+            st.pyplot(fig_cm)
+            
+            # Display confusion matrix as a DataFrame
+            st.write("### Confusion Matrix:")
+            st.dataframe(cm_df)
+        
+        elif model_type == "regression":
+            try:
+                # Flatten the actual values to convert (268, 1) to (268,)
+                actual = pipeline._test_y.flatten()
+                predicted = predictions.flatten()  # Ensure predictions are 1D
+
+                # Debug statements for shapes after flattening
+                st.write(f"**Actual Values Shape After Flattening:** {actual.shape}")
+                st.write(f"**Predicted Values Shape After Flattening:** {predicted.shape}")
+
+                residuals = actual - predicted
+
+                fig_res, ax_res = plt.subplots(figsize=(10, 6))
+                ax_res.scatter(predicted, residuals, alpha=0.5)
+                ax_res.axhline(y=0, color='r', linestyle='--')
+                ax_res.set_xlabel('Predicted Values')
+                ax_res.set_ylabel('Residuals')
+                ax_res.set_title('Residual Plot')
+                plt.tight_layout()
+                st.pyplot(fig_res)
+                
+                # Display residual statistics
+                residual_mean = residuals.mean()
+                residual_std = residuals.std()
+                st.write(f"**Residuals Mean:** {residual_mean:.4f}")
+                st.write(f"**Residuals Standard Deviation:** {residual_std:.4f}")
+            except Exception as e:
+                st.error(f"An error occurred while generating the residual plot: {e}")
 
 
 def execute_pipeline_button(pipeline: 'Pipeline') -> None:

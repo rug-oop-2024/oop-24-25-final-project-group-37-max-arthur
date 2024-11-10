@@ -1,3 +1,20 @@
+# Welcome to our AutoML library
+
+To run the application type:
+
+`streamlit run app/Welcome.py`
+
+You will be met with a custom welcome page and have acess to an instructions page. Our __HTML Docs__ are under `docs/_build/html`.
+
+We also prepared three use-cases:
+
+- A regression usecase for *LINK HERE*
+- A classification use case for *LINK HERE*
+- A classification use case for training on the popular digit classification dataset MNIST. As our model as the capability to turn pictures into datasets, you can have the model predict based on uploaded pictures after training. *LINK SOMEHWERE HERE*
+
+
+
+
 # AutOOP your first AutoML library
 
 🎉🥳 Congratulations on making it to this final project! We are excited to see what you can do.
@@ -185,6 +202,8 @@ If you add extra features, please indicate them below:
 | `ST/modelling/download_model`          | FN           |                     |        | The user can download the model to use it in production. They simply need to unpickly to get the instance |
 | `ST/modelling/download_predictions`    | FN           |                     |        | The user can download their predictions as a CSV |
 | `ML/image_preprocessing`          | FN           | Both                    | X       | Function to turn image data into a trainable dataset. |
+| `ST/Image as dataset`          | FN           | Both                    | X       | Enables the user to input images to be turned into datasets for classification.|
 | `ST/modelling/download_model`          |            |                     |        |  |
-| `ST/modelling/download_model`          |            |                     |        |  |
+| `ST/pages/instructions_welcome`          | NF           | Both                    | X       | Custom welcome and instruction pages for the app. |
+| `HTML/docs`          | NF           | Both                    | X       | HTML documentation using sphinx. Located under docs/_build/ |
 

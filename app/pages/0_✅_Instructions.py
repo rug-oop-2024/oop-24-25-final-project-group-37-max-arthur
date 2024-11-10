@@ -1,4 +1,3 @@
-# from autoop.core.ml.artifact import Artifact
 import streamlit as st
 
 st.set_page_config(
@@ -6,4 +5,4 @@ st.set_page_config(
     page_icon="👋",
 )
 
-st.markdown(open("INSTRUCTIONS.md").read())
+st.markdown(open("app/content/instructions.md").read())

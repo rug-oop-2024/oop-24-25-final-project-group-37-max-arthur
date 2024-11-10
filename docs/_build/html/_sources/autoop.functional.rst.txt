@@ -20,6 +20,14 @@ autoop.functional.feature module
    :undoc-members:
    :show-inheritance:
 
+autoop.functional.image\_processing module
+------------------------------------------
+
+.. automodule:: autoop.functional.image_processing
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 autoop.functional.preprocessing module
 --------------------------------------
 

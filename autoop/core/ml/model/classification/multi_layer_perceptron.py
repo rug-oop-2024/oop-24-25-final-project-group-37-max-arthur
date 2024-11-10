@@ -31,7 +31,7 @@ class MLP(Model, Module):
     def __init__(
             self,
             num_layers: int = 3,
-            num_epochs: int = 20,
+            num_epochs: int = 25,
             lr: float = 0.001,
             optimizer: Literal["adam", "rmsprop", "SGD"] = "adam"
     ) -> None:
