@@ -34,6 +34,7 @@ def display_datasets_accordion(automl: 'AutoMLSystem',
                                datasets: List['Artifact']) -> None:
     """
     Displays an accordion of datasets using Streamlit.
+
     Args:
         automl (AutoMLSystem): The AutoML system instance.
         datasets (List[Artifact]): A list of dataset artifacts.
@@ -93,6 +94,7 @@ def save_df_to_dataset_button(automl: 'AutoMLSystem', name: str,
     """
     Displays a button in the Streamlit app to save a DataFrame as a dataset
     and register it with the AutoML system.
+
     Args:
         automl (AutoMLSystem): The AutoML system instance to register
         the dataset with.
@@ -113,6 +115,7 @@ def delete_dataset_button(automl: 'AutoMLSystem', dataset: List['Artifact']
                           ) -> None:
     """
     Handles the deletion of a dataset through a Streamlit button.
+
     Args:
         automl (AutoMLSystem): The AutoML system instance that manages datasets
         dataset (List[Artifact]): The dataset to be deleted.
@@ -127,6 +130,7 @@ def delete_dataset_button(automl: 'AutoMLSystem', dataset: List['Artifact']
 def artifact_to_dataset(artifact: 'Artifact') -> 'Dataset':
     """
     Converts an Artifact object to a Dataset object.
+
     Args:
         artifact (Artifact): The Artifact object to be converted.
     Returns:
@@ -140,6 +144,7 @@ def upload_csv_button() -> 'st.runtime.uploaded_file_manager.UploadedFile':
     """
     Displays a file uploader widget for CSV files and returns the uploaded
     file.
+
     Returns:
         Optional[st.uploaded_file_manager.UploadedFile]: The uploaded CSV
         file.
@@ -151,6 +156,7 @@ def upload_csv_button() -> 'st.runtime.uploaded_file_manager.UploadedFile':
 def ask_for_input(text: str, default: Optional[str] = None) -> str:
     """
     Displays a text input widget and returns the user's input.
+
     Args:
         text (str): The label for the text input widget.
         default (Optional[str], optional): The default value for the text
@@ -164,6 +170,7 @@ def ask_for_input(text: str, default: Optional[str] = None) -> str:
 def show_preview(text: str, data: pd.DataFrame) -> None:
     """
     Displays a preview of the given DataFrame along with a text description.
+
     Args:
         text (str): The text description to display.
         data (pd.DataFrame): The DataFrame to preview.
@@ -180,7 +187,9 @@ def save_csv(automl: 'AutoMLSystem',
     This function reads the uploaded CSV file, shows a preview of the data,
     and prompts the user to enter a dataset name and asset path.
     It then saves the dataset to the AutoML system using the provided name and
-    asset path.    Args:
+    asset path.
+
+    Args:
         automl (AutoMLSystem): The AutoML system instance where the dataset
         will be saved.
         file (st.uploaded_file_manager.UploadedFile): The uploaded CSV file to
@@ -201,6 +210,7 @@ def upload_image_button(automl: 'AutoMLSystem') -> None:
     """
     Handles the upload of a zip file containing images, extracts the images,
     and processes them into a dataframe for further use in an AutoML system.
+
     Args:
         automl (AutoMLSystem): An instance of the AutoMLSystem class.
     Returns:
@@ -232,6 +242,7 @@ def upload_image_button(automl: 'AutoMLSystem') -> None:
 def get_all_file_paths(directory):
     """
     Recursively retrieves all file paths from the specified directory.
+    
     Args:
         directory (str): The directory from which to retrieve file paths.
     Returns:

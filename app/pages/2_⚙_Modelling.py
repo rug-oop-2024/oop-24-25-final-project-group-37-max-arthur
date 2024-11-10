@@ -15,6 +15,7 @@ def render_modelling():
     determine the model type, select a model, configure the dataset split, and
     choose evaluation metrics. The function also handles the execution and
     display of the pipeline results.
+    
     Args:
         None
     Raises:

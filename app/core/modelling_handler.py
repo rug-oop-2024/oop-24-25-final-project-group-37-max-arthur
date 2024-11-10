@@ -18,6 +18,7 @@ from autoop.functional.feature import Feature, detect_feature_types
 def write_helper_text(text: str) -> None:
     """
     Writes the given text to the Streamlit app with a specific style.
+
     Args:
         text (str): The text to be written in the Streamlit app.
     Returns:
@@ -29,6 +30,7 @@ def write_helper_text(text: str) -> None:
 def choose_model(model_type: str) -> 'Model':
     """
     Choose a machine learning model based on the specified model type.
+
     Args:
         model_type (str): The type of model to choose. Can be either
         "Regression" or "Classification".
@@ -49,6 +51,7 @@ def determine_task_type(
 ) -> str:
     """
     Determines the type of machine learning task based on the target feature.
+
     Args:
         target_feature (Feature): The target feature for which the task type
         is to be determined.
@@ -76,6 +79,7 @@ def choose_metrics(model_type: str) -> list['Metric']:
     """
     Prompts the user to select metrics from a predefined list and returns the
     selected metrics.
+
     Returns:
         list['Metric']: A list of selected metrics.
     """
@@ -92,6 +96,7 @@ def choose_target_column(dataset: 'Dataset') -> str:
     """
     Prompts the user to select a target column from the given dataset using a
     select box.
+
     Args:
         dataset (Dataset): The dataset object from which to select the target
         column.
@@ -108,6 +113,7 @@ def choose_input_columns(dataset: 'Dataset', target_column: str) -> list[str]:
     """
     Allows the user to select input columns from a dataset, excluding the
     target column.
+
     Args:
         dataset (Dataset): The dataset from which to select columns.
         target_column (str): The name of the target column to exclude from
@@ -133,6 +139,7 @@ def generate_target_and_input_features(
         input_columns: list[str]) -> tuple['Feature', list['Feature']]:
     """
     Generates the target feature and input features from the given dataset.
+
     Args:
         dataset (Dataset): The dataset from which to extract features.
         target_column (str): The name of the target column.
@@ -153,6 +160,7 @@ def display_pipeline_summary(pipeline: 'Pipeline', name: str = "Summary"
                              ) -> None:
     """
     Display a summary of the given pipeline using Streamlit.
+
     Args:
         pipeline (Pipeline): The pipeline object containing dataset, model,
         and metrics information.
@@ -197,6 +205,7 @@ def display_pipeline_summary(pipeline: 'Pipeline', name: str = "Summary"
 def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
     """
     Display the pipeline results using Streamlit.
+
     Args:
         results (dict): A dictionary containing the results of the pipeline.
                         It should have the following keys:
@@ -208,10 +217,8 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
     with st.expander("## Results"):
         st.write("### Metrics:")
         st.write(results['metrics'])
-        
-        # Safely extract metrics
+
         metrics = results.get('metrics', {})
-        # Predictions Section
         st.write("### Predictions:")
         predictions = results.get('predictions', None)
         if predictions is not None:
@@ -227,36 +234,30 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
             st.write(df)
         else:
             st.write("No predictions available.")
-        # Check if metrics are in the expected nested dictionary format
         if all(isinstance(v, dict) for v in metrics.values()):
-            # Extract metric names, and their corresponding train and test values
             metric_names = list(metrics.keys())
             train_values = [v.get('train', 0) for v in metrics.values()]
             test_values = [v.get('test', 0) for v in metrics.values()]
-            
-            # Define bar width and positions
+
             bar_width = 0.35
             indices = range(len(metric_names))
-            
-            # Create the plot
+
             fig, ax = plt.subplots(figsize=(10, 6))
-            
-            # Plot train metrics
-            bars_train = ax.bar([i - bar_width/2 for i in indices], train_values, 
-                   width=bar_width, label='Train', color='skyblue')
-            
-            # Plot test metrics
-            bars_test = ax.bar([i + bar_width/2 for i in indices], test_values, 
-                   width=bar_width, label='Test', color='salmon')
-            
-            # Set labels and title
+
+            bars_train = ax.bar([i - bar_width/2 for i in indices],
+                                train_values, width=bar_width, label='Train',
+                                color='skyblue')
+
+            bars_test = ax.bar([i + bar_width/2 for i in indices], test_values,
+                               width=bar_width, label='Test', color='salmon')
+
             ax.set_ylabel('Scores')
             ax.set_title('Model Performance Metrics')
             ax.set_xticks(indices)
             ax.set_xticklabels(metric_names, rotation=45, ha='right')
             ax.legend()
             plt.tight_layout()
-            
+
             # Add annotations
             for bar in bars_train:
                 height = bar.get_height()
@@ -265,7 +266,7 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
                             xytext=(0, 3),  # 3 points vertical offset
                             textcoords="offset points",
                             ha='center', va='bottom')
-            
+
             for bar in bars_test:
                 height = bar.get_height()
                 ax.annotate(f'{height:.2f}',
@@ -273,26 +274,22 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
                             xytext=(0, 3),
                             textcoords="offset points",
                             ha='center', va='bottom')
-            
-            # Display the plot in Streamlit
+
             st.pyplot(fig)
         else:
-            # Handle unexpected metrics structure
-            st.write("Metrics are not in the expected format for visualization.")
-        
-        # Model Type Detection Debug
-        model_type = pipeline.model._type
-        st.write(f"**Detected Model Type:** {model_type}")  # Debug statement
+            st.write("Metrics are not in the expected format for "
+                     "visualization.")
 
-        # Generate and display additional graphs based on model type
+        model_type = pipeline.model._type
+        st.write(f"**Detected Model Type:** {model_type}")
+
         if model_type == "classification":
             actual = pipeline._test_y
             predicted = predictions
 
-            # Create a confusion matrix using pandas
             cm_df = pd.crosstab(pd.Series(actual, name='Actual'),
                                 pd.Series(predicted, name='Predicted'))
-            
+
             fig_cm, ax_cm = plt.subplots(figsize=(8, 6))
             cax = ax_cm.matshow(cm_df, cmap='Blues')
             fig_cm.colorbar(cax)
@@ -304,27 +301,25 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
             ax_cm.set_ylabel('Actual')
             ax_cm.set_title('Confusion Matrix')
 
-            # Add text annotations
             for i in range(len(cm_df.index)):
                 for j in range(len(cm_df.columns)):
-                    ax_cm.text(j, i, cm_df.iloc[i, j], ha='center', va='center', color='red')
-            
+                    ax_cm.text(j, i, cm_df.iloc[i, j], ha='center',
+                               va='center', color='red')
+
             plt.tight_layout()
             st.pyplot(fig_cm)
-            
-            # Display confusion matrix as a DataFrame
             st.write("### Confusion Matrix:")
             st.dataframe(cm_df)
-        
+
         elif model_type == "regression":
             try:
-                # Flatten the actual values to convert (268, 1) to (268,)
                 actual = pipeline._test_y.flatten()
-                predicted = predictions.flatten()  # Ensure predictions are 1D
+                predicted = predictions.flatten()
 
-                # Debug statements for shapes after flattening
-                st.write(f"**Actual Values Shape After Flattening:** {actual.shape}")
-                st.write(f"**Predicted Values Shape After Flattening:** {predicted.shape}")
+                st.write(f"**Actual Values Shape After Flattening:**"
+                         f" {actual.shape}")
+                st.write(f"**Predicted Values Shape After Flattening:**"
+                         f" {predicted.shape}")
 
                 residuals = actual - predicted
 
@@ -336,27 +331,28 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
                 ax_res.set_title('Residual Plot')
                 plt.tight_layout()
                 st.pyplot(fig_res)
-                
-                # Display residual statistics
+
                 residual_mean = residuals.mean()
                 residual_std = residuals.std()
                 st.write(f"**Residuals Mean:** {residual_mean:.4f}")
-                st.write(f"**Residuals Standard Deviation:** {residual_std:.4f}")
+                st.write(f"**Residuals Standard Deviation:**"
+                         f" {residual_std:.4f}")
             except Exception as e:
-                st.error(f"An error occurred while generating the residual plot: {e}")
+                st.error(f"An error occurred while generating the residual"
+                         f" plot: {e}")
 
 
 def execute_pipeline_button(pipeline: 'Pipeline') -> None:
     """
     Handles the execution of a pipeline when the "Execute Pipeline" button
     is pressed.
+
     Args:
         pipeline (Pipeline): An instance of the Pipeline class that contains
         the logic to be executed.
     Returns:
         None
     """
-
     if st.button("Execute Pipeline"):
         if 'results' not in st.session_state:
             results = pipeline.execute()
@@ -371,6 +367,7 @@ def save_pipeline_button(automl: 'AutoMLSystem', pipeline: 'Pipeline') -> None:
     learning pipeline. It prompts the user to input a name for the pipeline
     and provides a button to save the pipeline using pickle. Upon successful
     saving, a success message is displayed.
+
     Args:
         automl (AutoMLSystem): The AutoML system instance that manages the
         pipeline registry.

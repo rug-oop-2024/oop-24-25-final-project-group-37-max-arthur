@@ -37,6 +37,7 @@ def select_pipeline(pipelines: List['Artifact']) -> Tuple['Pipeline', str,
                                                           'Artifact']:
     """
     Selects a pipeline from a list of pipeline artifacts.
+
     Args:
         pipelines (List['Artifact']): A list of pipeline artifacts to choose
         from.
@@ -60,6 +61,7 @@ def choose_data(automl: 'AutoMLSystem') -> 'Artifact':
     """
     Prompts the user to select a CSV file or choose an existing dataset
     for making predictions.
+
     Args:
         automl (AutoMLSystem): The AutoML system instance used for managing
         datasets.
@@ -81,6 +83,7 @@ def download_df(dataframe: pd.DataFrame, filename: str, linktext: str) -> None:
     """
     Generates a download link for a given DataFrame and displays it in a
     Streamlit app.
+
     Args:
         dataframe (pd.DataFrame): The DataFrame to be downloaded.
         filename (str): The name of the file to be downloaded.
@@ -99,6 +102,7 @@ def download_pickled_model(model: 'Model') -> None:
     """
     Serializes a given model using pickle and provides a Streamlit download
     button for the pickled model.
+
     Args:
         model (Model): The model to be serialized and downloaded.
     Returns:
@@ -118,6 +122,7 @@ def predict_button(compact_observation_vector: np.ndarray,
                    pipeline: 'Pipeline', model: 'Model') -> None:
     """
     Handles the prediction button click event in a Streamlit application.
+
     Args:
         compact_observation_vector (np.ndarray): The input data for making
         predictions.
@@ -144,6 +149,7 @@ def predict_button(compact_observation_vector: np.ndarray,
 def get_feature_names(pipeline: 'Pipeline') -> List[str]:
     """
     Extracts the feature names from the pipeline's input features.
+
     Args:
         pipeline (Pipeline): The pipeline object containing the input features.
     Returns:
@@ -167,6 +173,7 @@ def show_predictions(predictions: Tensor, pipeline: 'Pipeline',
                      observation_vector: np.ndarray) -> None:
     """
     Display predictions in an expandable section using Streamlit.
+
     Args:
         predictions (Tensor): The predictions to display.
         pipeline (Pipeline): The pipeline used to generate feature names.
@@ -194,6 +201,7 @@ def preprocess_data(dataset: 'Artifact', pipeline: 'Pipeline') -> np.ndarray:
     Preprocesses the data by detecting feature types, validating pipeline
     input features, and concatenating input vectors into a compact observation
     vector.
+
     Args:
         dataset (Artifact): The dataset to be preprocessed.
         pipeline (Pipeline): The pipeline containing the input features and
@@ -227,6 +235,7 @@ def prediction_accordion(automl: 'AutoMLSystem',
     """
     Displays an interactive accordion for making predictions using a given
     AutoML system, pipeline, and model.
+    
     Args:
         automl (AutoMLSystem): The automated machine learning system to use
         for selecting the dataset.

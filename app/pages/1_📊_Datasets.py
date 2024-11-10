@@ -9,8 +9,8 @@ def render_datasets():
     Renders the datasets page in the Streamlit app.
     This function sets up the page configuration, retrieves the list of
     datasets from the AutoML system, and displays them using various helper
-    functions.
-    It also provides functionality to upload and save new datasets.
+    functions. It also provides functionality to upload and save new datasets.
+
     Args:
         None
     Returns:
