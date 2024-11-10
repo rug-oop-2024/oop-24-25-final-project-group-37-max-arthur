@@ -36,6 +36,8 @@ def render_datasets():
     if file is not None:
         dh.save_csv(automl, file)
 
+    dh.upload_image_button(automl)
+
 
 if __name__ == "__main__":
     render_datasets()

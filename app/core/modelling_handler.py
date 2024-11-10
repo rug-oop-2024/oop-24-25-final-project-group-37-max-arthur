@@ -122,7 +122,8 @@ def choose_input_columns(dataset: 'Dataset', target_column: str) -> list[str]:
     else:
         input_columns = st.multiselect("Select input columns", columns)
 
-    st.write(f"Input columns selected: {input_columns}")
+    with st.container(height=200, border=False):
+        st.write(f"Input columns selected: {input_columns}")
     return input_columns
 
 

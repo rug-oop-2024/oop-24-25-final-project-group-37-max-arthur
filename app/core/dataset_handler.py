@@ -1,10 +1,14 @@
 import streamlit as st
 import pandas as pd
+import zipfile
+import io
+import os
 
 from typing import Optional, List
 from autoop.core.ml.dataset import Dataset
 from autoop.core.ml.artifact import Artifact
 from app.core.system import AutoMLSystem
+from autoop.functional.image_processing import create_image_dataframe
 
 
 def choose_dataset(datasets: List['Artifact']) -> 'Dataset':
@@ -192,3 +196,34 @@ def save_csv(automl: 'AutoMLSystem',
     asset_path = file.name
     # implement a check weather that name already exists
     save_df_to_dataset_button(automl, name, data, asset_path)
+
+
+def upload_image_button(automl: 'AutoMLSystem') -> None:
+    uploaded_file = st.file_uploader("Upload a zip file of images", type="zip")
+
+    if uploaded_file:
+        extract_path = "assets/uploaded_data"
+
+        if not os.path.exists(extract_path):
+            os.makedirs(extract_path)
+
+        with zipfile.ZipFile(uploaded_file) as z:
+            z.extractall(extract_path)
+            st.success(f"Files extracted to {extract_path}")
+
+        st.write("Extracted Directories and Files:")
+        st.write(os.listdir(extract_path))
+
+        image_paths = get_all_file_paths(extract_path)
+        df = create_image_dataframe(image_paths)
+        name = ask_for_input("Enter dataset name", uploaded_file.name)
+        asset_path = uploaded_file.name
+        save_df_to_dataset_button(automl, name, df, asset_path)
+
+
+def get_all_file_paths(directory):
+    file_paths = []
+    for root, _, files in os.walk(directory):
+        for file in files:
+            file_paths.append(os.path.join(root, file))  # Collect only files
+    return file_paths

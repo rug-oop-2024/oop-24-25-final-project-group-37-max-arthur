@@ -50,6 +50,8 @@ def render_modelling():
         model_type = mh.determine_task_type(
             target_feature, selected_dataset.read()[target_feature.name])
         st.write(f"Model type determined: {model_type}")
+        if model_type == "Classification":
+            target_feature.type = "categorical"
 
         selected_model = mh.choose_model(model_type)
 
