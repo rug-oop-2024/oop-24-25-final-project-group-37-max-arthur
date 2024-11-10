@@ -33,12 +33,14 @@ def render_modelling():
             selected_dataset, selected_target_column, selected_input_columns
             )
 
-        model_type = mh.determine_task_type(target_feature, selected_dataset.read()[target_feature.name])
+        model_type = mh.determine_task_type(
+            target_feature, selected_dataset.read()[target_feature.name])
         st.write(f"Model type determined: {model_type}")
 
         selected_model = mh.choose_model(model_type)
 
-        dataset_split = st.slider("Select the dataset split", 0.1, 0.9, 0.8, 0.1)
+        dataset_split = st.slider("Select the dataset split",
+                                  0.1, 0.9, 0.8, 0.1)
 
         selected_metrics = mh.choose_metrics(model_type)
 

@@ -69,7 +69,7 @@ def choose_data(automl: 'AutoMLSystem') -> 'Artifact':
         Artifact: The selected dataset artifact.
     """
     st.write("### Select Data")
-    st.write("Upload a CSV file to create da dataset or/and choose a dataset"
+    st.write("Upload a CSV file to create a dataset or/and choose a dataset"
              " to make predictions.")
     file = dh.upload_csv_button()
     if file is not None:
@@ -152,13 +152,16 @@ def get_feature_names(pipeline: 'Pipeline') -> List[str]:
         List[str]: A list of feature names.
     """
     feature_names = []
+    temp_cat_features = []
     for feature in pipeline._input_features:
         if feature.type == "categorical":
-            feature_names.extend(
+            temp_cat_features.extend(
                 [f"{feature.name}_class_{i}" for i in range(
                     feature.num_options)])
         else:
             feature_names.append(feature.name)
+    for feature in temp_cat_features:
+        feature_names.append(feature)
     return feature_names
 
 

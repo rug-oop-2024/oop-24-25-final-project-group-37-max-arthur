@@ -23,9 +23,7 @@ def choose_dataset(datasets: List['Artifact']) -> 'Dataset':
                                 [dataset.name for dataset in datasets])
     artifact = next(
         (dataset for dataset in datasets if dataset.name == dataset_name),
-        None
-        )
-    # st.write(f"### Selected Dataset: {artifact.name}")
+        None)
     return artifact_to_dataset(artifact)
 
 
