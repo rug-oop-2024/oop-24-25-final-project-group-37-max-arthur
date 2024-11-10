@@ -227,7 +227,6 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
             feature_names = get_feature_names(pipeline)
 
             data = pipeline._compact_vectors(pipeline._test_X)
-
             df = pd.DataFrame(data, columns=feature_names)
             df['Predictions'] = predictions
 
@@ -263,7 +262,7 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
                 height = bar.get_height()
                 ax.annotate(f'{height:.2f}',
                             xy=(bar.get_x() + bar.get_width() / 2, height),
-                            xytext=(0, 3),  # 3 points vertical offset
+                            xytext=(0, 3),
                             textcoords="offset points",
                             ha='center', va='bottom')
 
@@ -284,7 +283,7 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
         st.write(f"**Detected Model Type:** {model_type}")
 
         if model_type == "classification":
-            actual = pipeline._test_y
+            actual = pipeline._test_y.argmax(1)
             predicted = predictions
 
             if actual.ndim > 1:

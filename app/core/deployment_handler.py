@@ -1,19 +1,19 @@
-import pickle
-import streamlit as st
-import numpy as np
-import app.core.dataset_handler as dh
-import pandas as pd
 import base64
+import pickle
+from typing import List, Tuple
 
+import numpy as np
+import pandas as pd
+import streamlit as st
 from torch import Tensor
+
+import app.core.dataset_handler as dh
 from app.core.system import AutoMLSystem
 from autoop.core.ml.artifact import Artifact
-from autoop.core.ml.pipeline import Pipeline
 from autoop.core.ml.model import Model
+from autoop.core.ml.pipeline import Pipeline
 from autoop.functional.feature import detect_feature_types
 from autoop.functional.preprocessing import preprocess_features
-
-from typing import List, Tuple
 
 
 def delete_pipeline_button(automl: 'AutoMLSystem', name: str, id: str) -> None:

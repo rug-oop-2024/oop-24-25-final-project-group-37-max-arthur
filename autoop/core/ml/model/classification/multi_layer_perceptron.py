@@ -184,6 +184,7 @@ class MLP(Model, Module):
             f"Got {observations.size(0)} and {labels.size(0)} instead."
         )
         labels = labels.argmax(1).long()
+        print(labels)
         self._set_dims(observations, labels)
         self._create_layers()
         self._create_trainer()

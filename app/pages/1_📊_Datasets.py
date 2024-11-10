@@ -1,6 +1,6 @@
 import streamlit as st
-import app.core.dataset_handler as dh
 
+import app.core.dataset_handler as dh
 from app.core.system import AutoMLSystem
 
 
@@ -23,13 +23,13 @@ def render_datasets():
 
     datasets = automl.registry.list(type="dataset")
 
-    if not datasets:
+    if datasets:
+        dh.display_datasets_accordion(automl, datasets)
+
+        dh.slice_data_accordion(automl, datasets)
+
+    else:
         st.write("No datasets found.")
-        return
-
-    dh.display_datasets_accordion(automl, datasets)
-
-    dh.slice_data_accordion(automl, datasets)
 
     file = dh.upload_csv_button()
 
