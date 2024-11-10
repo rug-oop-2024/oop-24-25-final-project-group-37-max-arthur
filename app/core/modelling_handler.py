@@ -165,28 +165,35 @@ def display_pipeline_summary(pipeline: 'Pipeline', name: str = "Summary"
     """
     with st.expander(f"Pipeline {name}"):
         st.write("### Dataset")
-        st.write(f"**Name:** {pipeline._dataset.name}")
-        st.write(f"**Target Column:** {pipeline._target_feature}")
+        st.write(f"**Name:** `{pipeline._dataset.name}`")
+        st.write(f"**Target Column:** `{pipeline._target_feature}`")
         st.write("**Input Columns:**")
-        for feature in pipeline._input_features:
-            st.write(f"{str(feature)}")
+        with st.container(height=200, border=True):
+            for feature in pipeline._input_features:
+                st.write(f"`{str(feature)}`")
 
         st.write("### Model")
-        st.write(f"**Type:** {pipeline.model._type}")
-        st.write(f"**Selected Model:** {pipeline.model.__class__.__name__}")
+        st.write(f"**Type:** `{pipeline.model._type}`")
+        st.write(f"**Selected Model:** `{pipeline.model.__class__.__name__}`")
         st.write("**Parameters:**")
-        st.write(
-            pipeline.model.parameters if pipeline.model.parameters else "Model"
-            " has no parameters yet.")
+        if pipeline.model.parameters:
+            with st.container(height=200, border=True):
+                st.write(pipeline.model.parameters)
+        else:
+            st.write("Model has no parameters yet.")
 
         st.write("### Metrics")
         st.write(
             f"**Selected Metrics:** "
-            f"{', '.join(str(m) for m in pipeline._metrics)}")
+            f"`{', '.join(str(m) for m in pipeline._metrics)}`")
 
         st.write("### Dataset Split")
-        st.write(f"**Train Set:** {round((pipeline._split * 100), 2)}%")
-        st.write(f"**Test Set:** {round(((1 - pipeline._split) * 100), 2)}%")
+        col1, col2 = st.columns(2)
+        p_s = pipeline._split
+        with col1:
+            st.write(f"**Train Set:** `{round((p_s * 100), 2)}%`")
+        with col2:
+            st.write(f"**Test Set:** `{round(((1 - p_s) * 100), 2)}%`")
 
 
 def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:

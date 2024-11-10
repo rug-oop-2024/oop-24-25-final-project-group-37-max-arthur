@@ -97,6 +97,25 @@ def download_df(dataframe: pd.DataFrame, filename: str, linktext: str) -> None:
     st.markdown(href, unsafe_allow_html=True)
 
 
+def download_pickled_model(model: 'Model') -> None:
+    """
+    Serializes a given model using pickle and provides a Streamlit download
+    button for the pickled model.
+    Args:
+        model (Model): The model to be serialized and downloaded.
+    Returns:
+        None
+    """
+
+    data = pickle.dumps(model)
+    st.download_button(
+        label="Download Pickled Model",
+        data=data,
+        file_name=f'{model.__class__.__name__}.pkl',
+        mime='application/octet-stream'
+    )
+
+
 def predict_button(compact_observation_vector: np.ndarray,
                    pipeline: 'Pipeline', model: 'Model') -> None:
     """
@@ -112,10 +131,7 @@ def predict_button(compact_observation_vector: np.ndarray,
     """
     st.write("### Model Parameters")
     st.write(pipeline.model.parameters)
-    params_df = pd.DataFrame(list(pipeline.model.parameters.items()),
-                             columns=['Parameter', 'Value'])
-    download_df(params_df, "model_parameters.csv", "Download Model Parameters"
-                " CSV")
+    download_pickled_model(model)
 
     if st.button("Predict"):
         predictions = model.predict(compact_observation_vector)
@@ -143,7 +159,6 @@ def get_feature_names(pipeline: 'Pipeline') -> List[str]:
                     feature.num_options)])
         else:
             feature_names.append(feature.name)
-    feature_names.reverse()
     return feature_names
 
 
