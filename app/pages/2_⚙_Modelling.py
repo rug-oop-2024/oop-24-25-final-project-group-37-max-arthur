@@ -1,7 +1,8 @@
 import streamlit as st
+
 import app.core.modelling_handler as mh
-from app.core.system import AutoMLSystem
 from app.core.dataset_handler import choose_dataset
+from app.core.system import AutoMLSystem
 from autoop.core.ml.pipeline import Pipeline
 
 
@@ -32,7 +33,7 @@ def render_modelling():
             selected_dataset, selected_target_column, selected_input_columns
             )
 
-        model_type = mh.determine_task_type(target_feature)
+        model_type = mh.determine_task_type(target_feature, selected_dataset.read()[target_feature.name])
         st.write(f"Model type determined: {model_type}")
 
         selected_model = mh.choose_model(model_type)

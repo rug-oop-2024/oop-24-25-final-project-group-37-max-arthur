@@ -1,16 +1,17 @@
-import streamlit as st
+import numpy as np
 import pandas as pd
-
-from autoop.core.ml.metric import METRICS, get_metric, Metric
-from autoop.functional.feature import detect_feature_types, Feature
-from autoop.core.ml.model import REGRESSION_MODELS, CLASSIFICATION_MODELS
-from autoop.core.ml.model import get_model, Model
-from autoop.core.ml.pipeline import Pipeline
-from autoop.core.ml.dataset import Dataset
-from app.core.system import AutoMLSystem
-from app.core.dataset_handler import ask_for_input
+import streamlit as st
 from torch import Tensor
+
+from app.core.dataset_handler import ask_for_input
 from app.core.deployment_handler import get_feature_names
+from app.core.system import AutoMLSystem
+from autoop.core.ml.dataset import Dataset
+from autoop.core.ml.metric import METRICS, Metric, get_metric
+from autoop.core.ml.model import (CLASSIFICATION_MODELS, REGRESSION_MODELS,
+                                  Model, get_model)
+from autoop.core.ml.pipeline import Pipeline
+from autoop.functional.feature import Feature, detect_feature_types
 
 
 def write_helper_text(text: str) -> None:
@@ -41,21 +42,32 @@ def choose_model(model_type: str) -> 'Model':
     return get_model(selected_model)()
 
 
-def determine_task_type(target_feature: 'Feature') -> str:
+def determine_task_type(
+        target_feature: 'Feature',
+        target_column: pd.Series
+) -> str:
     """
     Determines the type of machine learning task based on the target feature.
     Args:
         target_feature (Feature): The target feature for which the task type
         is to be determined.
-                                  It should have an attribute 'type' which can
-                                  be either 'categorical' or 'numerical'.
+        target_column (pd.Series): The column data of the target feature.
+
     Returns:
         str: The type of task, either 'Classification' if the target feature
         is categorical, or 'Regression' if the target feature is numerical.
     """
+    target_column = target_column.to_numpy()
     if target_feature.type == "categorical":
         return "Classification"
     elif target_feature.type == "numerical":
+        # give user option to interpret numerical integer target as categorical
+        if np.issubdtype(target_column.dtype, np.integer):
+            interpret_as_categorical = st.checkbox(
+                "Interpret numerical target feature as categorical"
+            )
+            if interpret_as_categorical:
+                return "Classification"
         return "Regression"
 
 
@@ -104,7 +116,13 @@ def choose_input_columns(dataset: 'Dataset', target_column: str) -> list[str]:
         list[str]: A list of selected input column names.
     """
     columns = [col for col in dataset.read().columns if col != target_column]
-    input_columns = st.multiselect("Select input columns", columns)
+    select_all = st.checkbox("Select All Columns")
+
+    if select_all:
+        input_columns = columns  # Select all columns if checkbox is checked
+    else:
+        input_columns = st.multiselect("Select input columns", columns)
+
     st.write(f"Input columns selected: {input_columns}")
     return input_columns
 

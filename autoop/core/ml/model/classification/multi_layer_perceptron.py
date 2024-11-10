@@ -31,7 +31,7 @@ class MLP(Model, Module):
     def __init__(
             self,
             num_layers: int = 3,
-            num_epochs: int = 10,
+            num_epochs: int = 20,
             lr: float = 0.001,
             optimizer: Literal["adam", "rmsprop", "SGD"] = "adam"
     ) -> None:
@@ -41,7 +41,7 @@ class MLP(Model, Module):
         Args:
             num_layers (int): Number of layers for the model. Has to
                 be a positive integer.
-            num_epochs (int): Number of training epochs. Default is 10.
+            num_epochs (int): Number of training epochs. Default is 20.
             lr (float): Learning rate for the optimizer. Default is 0.001.
             optimizer (Literal["adam", "rmsprop", "SGD"]): Optimizer type.
                 Default is 'adam'.
