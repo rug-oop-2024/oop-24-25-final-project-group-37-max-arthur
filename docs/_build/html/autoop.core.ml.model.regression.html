@@ -1,0 +1,743 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>autoop.core.ml.model.regression package &mdash; AutoML v0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=34cd777e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="autoop.functional package" href="autoop.functional.html" />
+    <link rel="prev" title="autoop.core.ml.model.classification package" href="autoop.core.ml.model.classification.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            AutoML
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="autoop.html">autoop package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="autoop.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="autoop.core.html">autoop.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoop.functional.html">autoop.functional package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="autoop.html#module-autoop">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="app.core.html">app.core package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AutoML</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Modules</a></li>
+          <li class="breadcrumb-item"><a href="autoop.html">autoop package</a></li>
+          <li class="breadcrumb-item"><a href="autoop.core.html">autoop.core package</a></li>
+          <li class="breadcrumb-item"><a href="autoop.core.ml.html">autoop.core.ml package</a></li>
+          <li class="breadcrumb-item"><a href="autoop.core.ml.model.html">autoop.core.ml.model package</a></li>
+      <li class="breadcrumb-item active">autoop.core.ml.model.regression package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/autoop.core.ml.model.regression.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="autoop-core-ml-model-regression-package">
+<h1>autoop.core.ml.model.regression package<a class="headerlink" href="#autoop-core-ml-model-regression-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-autoop.core.ml.model.regression.elastic_net">
+<span id="autoop-core-ml-model-regression-elastic-net-module"></span><h2>autoop.core.ml.model.regression.elastic_net module<a class="headerlink" href="#module-autoop.core.ml.model.regression.elastic_net" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.elastic_net.ElasticNet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.model.regression.elastic_net.</span></span><span class="sig-name descname"><span class="pre">ElasticNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/model/regression/elastic_net.html#ElasticNet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.regression.elastic_net.ElasticNet" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.model.RegressionModel" title="autoop.core.ml.model.model.RegressionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegressionModel</span></code></a></p>
+<p>ElasticNet model using facade pattern.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.elastic_net.ElasticNet.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#autoop.core.ml.model.regression.elastic_net.ElasticNet.type" title="Link to this definition"></a></dt>
+<dd><p>Specifies the
+model type as ‘regression’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Literal[“regression”, “classification”]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.elastic_net.ElasticNet.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#autoop.core.ml.model.regression.elastic_net.ElasticNet.model" title="Link to this definition"></a></dt>
+<dd><p>The wrapped model instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ElasNet</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.elastic_net.ElasticNet.parameters">
+<span class="sig-name descname"><span class="pre">parameters</span></span><a class="headerlink" href="#autoop.core.ml.model.regression.elastic_net.ElasticNet.parameters" title="Link to this definition"></a></dt>
+<dd><p>Dictionary storing model parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ElasticNet</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd><p>Get a deep copy of the underlying model instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A copy of the wrapped model instance</dt><dd><p>used in training and prediction.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ElasNet</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id1">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd><p>Dynamically return the model parameters.</p>
+<p>Returns the hyperparameters stored in the model
+as well as the fitted parameters from the wrapped model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>parameters dict including hyperparameters.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-autoop.core.ml.model.regression.lasso">
+<span id="autoop-core-ml-model-regression-lasso-module"></span><h2>autoop.core.ml.model.regression.lasso module<a class="headerlink" href="#module-autoop.core.ml.model.regression.lasso" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.lasso.Lasso">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.model.regression.lasso.</span></span><span class="sig-name descname"><span class="pre">Lasso</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/model/regression/lasso.html#Lasso"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.regression.lasso.Lasso" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.model.RegressionModel" title="autoop.core.ml.model.model.RegressionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegressionModel</span></code></a></p>
+<p>Lasso model using facade pattern.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.lasso.Lasso.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#autoop.core.ml.model.regression.lasso.Lasso.type" title="Link to this definition"></a></dt>
+<dd><p>Specifies the
+model type as ‘regression’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Literal[“regression”, “classification”]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.lasso.Lasso.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#autoop.core.ml.model.regression.lasso.Lasso.model" title="Link to this definition"></a></dt>
+<dd><p>The wrapped model instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>SklearnLasso</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.lasso.Lasso.parameters">
+<span class="sig-name descname"><span class="pre">parameters</span></span><a class="headerlink" href="#autoop.core.ml.model.regression.lasso.Lasso.parameters" title="Link to this definition"></a></dt>
+<dd><p>Dictionary storing model parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id2">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Lasso</span></em><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd><p>Get a deep copy of the underlying model instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A copy of the wrapped model instance</dt><dd><p>used in training and prediction.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>SklearnLasso</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id3">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd><p>Dynamically return the model parameters.</p>
+<p>Returns the hyperparameters stored in the model
+as well as the fitted parameters from the wrapped model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>parameters dict including hyperparameters.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-autoop.core.ml.model.regression.multiple_linear_regression">
+<span id="autoop-core-ml-model-regression-multiple-linear-regression-module"></span><h2>autoop.core.ml.model.regression.multiple_linear_regression module<a class="headerlink" href="#module-autoop.core.ml.model.regression.multiple_linear_regression" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression.MultipleLinearRegression">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.model.regression.multiple_linear_regression.</span></span><span class="sig-name descname"><span class="pre">MultipleLinearRegression</span></span><a class="reference internal" href="_modules/autoop/core/ml/model/regression/multiple_linear_regression.html#MultipleLinearRegression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression.MultipleLinearRegression" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.model.RegressionModel" title="autoop.core.ml.model.model.RegressionModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegressionModel</span></code></a></p>
+<p>Multiple linear regression model using facade pattern.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression.MultipleLinearRegression.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression.MultipleLinearRegression.type" title="Link to this definition"></a></dt>
+<dd><p>Specifies the
+model type as ‘regression’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Literal[“regression”, “classification”]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression.MultipleLinearRegression.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression.MultipleLinearRegression.model" title="Link to this definition"></a></dt>
+<dd><p>The wrapped model instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld" title="autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld">ModelOld</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression.MultipleLinearRegression.parameters">
+<span class="sig-name descname"><span class="pre">parameters</span></span><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression.MultipleLinearRegression.parameters" title="Link to this definition"></a></dt>
+<dd><p>Dictionary storing model parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id4">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld" title="autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld"><span class="pre">MultipleLinearRegressionOld</span></a></em><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd><p>Get a deep copy of the underlying model instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A copy of the wrapped model instance</dt><dd><p>used in training and prediction.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>MLRold</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id5">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd><p>Dynamically return the model parameters.</p>
+<p>Returns the parameters from the wrapped model instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>parameters dict including hyperparameters.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-autoop.core.ml.model.regression.multiple_linear_regression_old">
+<span id="autoop-core-ml-model-regression-multiple-linear-regression-old-module"></span><h2>autoop.core.ml.model.regression.multiple_linear_regression_old module<a class="headerlink" href="#module-autoop.core.ml.model.regression.multiple_linear_regression_old" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.model.regression.multiple_linear_regression_old.</span></span><span class="sig-name descname"><span class="pre">ModelOld</span></span><a class="reference internal" href="_modules/autoop/core/ml/model/regression/multiple_linear_regression_old.html#ModelOld"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract base class for implementing supervised machine learning models.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld._parameters">
+<span class="sig-name descname"><span class="pre">_parameters</span></span><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld._parameters" title="Link to this definition"></a></dt>
+<dd><p>Private dict storing the parameters of the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld.fit">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/autoop/core/ml/model/regression/multiple_linear_regression_old.html#ModelOld.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld.fit" title="Link to this definition"></a></dt>
+<dd><p>Abstract method to fit the model to observations and labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>observations</strong> (<em>np.ndarray</em>) – The training data for the model.</p></li>
+<li><p><strong>labels</strong> (<em>np.ndarray</em>) – Target values corresponding to observations.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ComputedFieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld.model_computed_fields" title="Link to this definition"></a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld.model_fields" title="Link to this definition"></a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo] objects.</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld.model_post_init" title="Link to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld.predict">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/autoop/core/ml/model/regression/multiple_linear_regression_old.html#ModelOld.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld.predict" title="Link to this definition"></a></dt>
+<dd><p>Abstract method to predict from the trained model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>observations</strong> (<em>np.ndarray</em>) – The training data for the model.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array containing predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.model.regression.multiple_linear_regression_old.</span></span><span class="sig-name descname"><span class="pre">MultipleLinearRegressionOld</span></span><a class="reference internal" href="_modules/autoop/core/ml/model/regression/multiple_linear_regression_old.html#MultipleLinearRegressionOld"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld" title="autoop.core.ml.model.regression.multiple_linear_regression_old.ModelOld"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelOld</span></code></a></p>
+<p>Implementation of a multiple Linear Regression model.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld._parameters">
+<span class="sig-name descname"><span class="pre">_parameters</span></span><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld._parameters" title="Link to this definition"></a></dt>
+<dd><p>Dictionary storing the model parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">after</span> <span class="pre">fitting.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/autoop/core/ml/model/regression/multiple_linear_regression_old.html#MultipleLinearRegressionOld.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld.fit" title="Link to this definition"></a></dt>
+<dd><p>Fits the linear regression model to the observations and labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>observations</strong> (<em>np.ndarray</em>) – 2D or 1D array of independent features.</p></li>
+<li><p><strong>labels</strong> (<em>np.ndarray</em>) – 1D array of dependent variables.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If matrix inversion fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ComputedFieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld.model_computed_fields" title="Link to this definition"></a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld.model_fields" title="Link to this definition"></a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo] objects.</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld.model_post_init" title="Link to this definition"></a></dt>
+<dd><p>We need to both initialize private attributes and call the user-defined model_post_init
+method.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld.parameters">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld.parameters" title="Link to this definition"></a></dt>
+<dd><p>Getter for the private _parameters attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Deepcopy of the _parameters dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/autoop/core/ml/model/regression/multiple_linear_regression_old.html#MultipleLinearRegressionOld.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.MultipleLinearRegressionOld.predict" title="Link to this definition"></a></dt>
+<dd><p>Make predictions using the fitted model for new observations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>observations</strong> (<em>np.ndarray</em>) – 2D or 1D array of independent features.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Predicted labels for the input observations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If called before fitting model.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.Validator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.model.regression.multiple_linear_regression_old.</span></span><span class="sig-name descname"><span class="pre">Validator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_or_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/model/regression/multiple_linear_regression_old.html#Validator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.Validator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>A class for validating input arrays for multiple linear regression.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.fit" title="Link to this definition"></a></dt>
+<dd><p>True if model is fitting, False if model is predicting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.labels_or_params">
+<span class="sig-name descname"><span class="pre">labels_or_params</span></span><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.labels_or_params" title="Link to this definition"></a></dt>
+<dd><p>Array of labels or parameters,</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">depending</span> <span class="pre">on</span> <span class="pre">fit.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.observations">
+<span class="sig-name descname"><span class="pre">observations</span></span><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.observations" title="Link to this definition"></a></dt>
+<dd><p>Array of observations for the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.check_array_type">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_array_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/autoop/core/ml/model/regression/multiple_linear_regression_old.html#Validator.check_array_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.check_array_type" title="Link to this definition"></a></dt>
+<dd><p>Check if the provided array is a NumPy ndarray.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>array</strong> (<em>np.ndarray</em>) – The array to check.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The validated array.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>TypeError</strong> – If the array is not a NumPy ndarray.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.check_column_of_ones">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_column_of_ones</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations_arr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/autoop/core/ml/model/regression/multiple_linear_regression_old.html#Validator.check_column_of_ones"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.check_column_of_ones" title="Link to this definition"></a></dt>
+<dd><p>Ensure that no column in the observations array contains only ones.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>observations_arr</strong> (<em>np.ndarray</em>) – The array of observations to check.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The validated observations array.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If a column in observations contains only ones.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">fit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">labels_or_params</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ComputedFieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.model_computed_fields" title="Link to this definition"></a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'fit':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=True),</span> <span class="pre">'labels_or_params':</span> <span class="pre">FieldInfo(annotation=Any,</span> <span class="pre">required=True),</span> <span class="pre">'observations':</span> <span class="pre">FieldInfo(annotation=Any,</span> <span class="pre">required=True)}</span></em><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.model_fields" title="Link to this definition"></a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo] objects.</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">observations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.validate_dimensions">
+<span class="sig-name descname"><span class="pre">validate_dimensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.Validator" title="autoop.core.ml.model.regression.multiple_linear_regression_old.Validator"><span class="pre">Validator</span></a></span></span><a class="reference internal" href="_modules/autoop/core/ml/model/regression/multiple_linear_regression_old.html#Validator.validate_dimensions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.validate_dimensions" title="Link to this definition"></a></dt>
+<dd><p>Compare dimensions of observations and labels or parameters.</p>
+<p>If the model is fitting, dimensions 0 must match.</p>
+<p>If the model is predicting dimension 1 of observations must
+match dimension 0 of parameters. If observations
+has only 1 feature (1D), parameters must have only one
+coefficient.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the validated model.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.Validator" title="autoop.core.ml.model.regression.multiple_linear_regression_old.Validator">Validator</a></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – If there is a dimension mismatch between observations</p></li>
+<li><p><strong>and labels/parameters.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.validate_labels_or_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_labels_or_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lab_or_par_arr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/autoop/core/ml/model/regression/multiple_linear_regression_old.html#Validator.validate_labels_or_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.validate_labels_or_params" title="Link to this definition"></a></dt>
+<dd><p>Validate data type and dimensions for the lab_or_par_arr array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>lab_or_par_arr</strong> (<em>np.ndarray</em>) – Array of labels or parameters.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The validated labels or parameters array.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If the labels or parameters array is not of</p></li>
+<li><p><strong>type floating-point.</strong> – </p></li>
+<li><p><strong>ValueError</strong> – If the array is not 1 dimensional or is empty.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.validate_observations">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_observations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations_arr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/autoop/core/ml/model/regression/multiple_linear_regression_old.html#Validator.validate_observations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.regression.multiple_linear_regression_old.Validator.validate_observations" title="Link to this definition"></a></dt>
+<dd><p>Validate data type and dimensions for observations array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>observations_arr</strong> (<em>np.ndarray</em>) – Array of observations.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The validated observations array.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If the observations array is not of floating-point type.</p></li>
+<li><p><strong>ValueError</strong> – If the array is not 1 or 2 dimensional or is empty.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-autoop.core.ml.model.regression">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-autoop.core.ml.model.regression" title="Link to this heading"></a></h2>
+<p>Regression package including 3 different regression modules.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="autoop.core.ml.model.classification.html" class="btn btn-neutral float-left" title="autoop.core.ml.model.classification package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="autoop.functional.html" class="btn btn-neutral float-right" title="autoop.functional package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Arthur &amp; Max.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

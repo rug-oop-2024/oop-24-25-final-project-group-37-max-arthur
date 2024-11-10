@@ -1,3 +1,20 @@
+# Welcome to our AutoML library
+
+To run the application run:
+
+`streamlit run app/Welcome.py`
+
+You will be met with a custom welcome page and have acess to an instructions page. Our __HTML Docs__ are under `docs/_build/html`.
+
+We also prepared three use-cases, for all of which you can find datasets under assets/objects:
+
+- A [regression](docs/use_cases/regression.md) use case for predicting on an insurance dataset.
+- A [classification](docs/use_cases/simple_classification.md) use case on a dog breed dataset.
+- A [classification use](docs/use_cases/advanced_classification.md) case for training on the popular digit classification dataset MNIST. As our model as the capability to turn pictures into datasets, you can have the model predict based on uploaded pictures after training. 
+
+
+
+
 # AutOOP your first AutoML library
 
 🎉🥳 Congratulations on making it to this final project! We are excited to see what you can do.
@@ -91,7 +108,7 @@ You can place your decisions in a docs folder in the root of the project.
 E.g. docs/decisions/DSC-0001-use-typescript.md
 
 ### 📈 Testing
-* Showcase the capability of your streamlit app with at least 3 different usecases on real datasets (from Kaggle). 
+* Showcase the capability of your streamlit app with at least 3 different usecases on real datasets (from Kaggle).
 Some examples include housing prices, second-hand cars, etc.
 
 ### Checklist
@@ -152,33 +169,41 @@ If the feature has been implemented by both students, write `both`.
 If you did not implement the feature
 
 | Requirement                           | Type (FN/NF) | Implemented by       | Implementation Completed (add X if done) | Comment |
-|-------------------------------------- |--------------|----------------------|--------------------------|---------|         
-| Up-to-date requirements.txt           | NF           |                      |         | |
-| `ML/detect-features`                  | FN           |                      |         | |
-| `ML/artifact`                         | NF           |                      |         | |
-| `ML/feature`                          | NF           |                      |         | |
-| `ML/metric`                           | NF           |                      |         | |
-| `ML/metric/extensions`                | FN           |                      |         | |
-| `ML/model`                            | NF           |                      |         | |
-| `ML/model/extensions`                 | FN           |                      |         | |
-| `ML/pipeline/evaluation`              | FN           |                      |         | | 
-| `ST/page/datasets`                    | NF           |                      |         | |
-| `ST/datasets/management/create`       | FN           |                      |         | |
-| `ST/datasets/management/save`         | FN           |                      |         | |
-| `ST/page/modelling`                   | NF           |                      |         | |
-| `ST/modelling/datasets/list`          | FN           |                      |         | |
-| `ST/modelling/datasets/features`      | FN           |                      |         | |
-| `ST/modelling/models`                 | FN           |                      |         | |
-| `ST/modelling/pipeline/split`         | FN           |                      |         | |
-| `ST/modelling/pipeline/metrics`       | FN           |                      |         | |
-| `ST/modelling/pipeline/summary`       | FN           |                      |         | |
-| `ST/modelling/pipeline/train`         | FN           |                      |         | |
-| `ST/modelling/pipeline/save`          | FN           |                      |         | |
-| `ST/page/deployment`                  | FN           |                      |         | |
-| `ST/deployment/load`                  | FN           |                      |         | |
-| `ST/deployment/predict`               | FN           |                      |         | |
+|-------------------------------------- |--------------|----------------------|--------------------------|---------|
+| Up-to-date requirements.txt           | NF           | both    | X  | |
+| `ML/detect-features`                  | FN           | both    | X  | |
+| `ML/artifact`                         | NF           | both    | X  | |
+| `ML/feature`                          | NF           | both    | X  | |
+| `ML/metric`                           | NF           | both    | X  | |
+| `ML/metric/extensions`                | FN           | both    | X  | |
+| `ML/model`                            | NF           | both    | X  | |
+| `ML/model/extensions`                 | FN           | both    | X  | |
+| `ML/pipeline/evaluation`              | FN           | both    | X  | |
+| `ST/page/datasets`                    | NF           | both    | X  | |
+| `ST/datasets/management/create`       | FN           | both    | X  | |
+| `ST/datasets/management/save`         | FN           | both    | X  | |
+| `ST/page/modelling`                   | NF           | both    | X  | |
+| `ST/modelling/datasets/list`          | FN           | both    | X  | |
+| `ST/modelling/datasets/features`      | FN           | both    | X  | |
+| `ST/modelling/models`                 | FN           | both    | X  | |
+| `ST/modelling/pipeline/split`         | FN           | both    | X  | |
+| `ST/modelling/pipeline/metrics`       | FN           | both    | X  | |
+| `ST/modelling/pipeline/summary`       | FN           | both    | X  | |
+| `ST/modelling/pipeline/train`         | FN           | both    | X  | |
+| `ST/modelling/pipeline/save`          | FN           | both    | X  | |
+| `ST/page/deployment`                  | FN           | both    | X  | |
+| `ST/deployment/load`                  | FN           | both    | X  | |
+| `ST/deployment/predict`               | FN           | both    | X  | |
 
 If you add extra features, please indicate them below:
 | Requirement                           | Type (FN/NF) | Implemented by       | Implementation Completed (add X if done) | Comment |
 |-------------------------------------- |--------------|----------------------|---------|-----|
-|           |            |                      |         | |
+| `ST/datasets/slicing`          | FN           | Both                     | X        | The user can slice their dataset based on some criteria (e.g., age > 18, 80% split) etc.) |
+| `ST/modelling/download_model`          | FN           |                     |        | The user can download the model to use it in production. They simply need to unpickly to get the instance |
+| `ST/modelling/download_predictions`    | FN           |                     | X       | The user can download their predictions as a CSV |
+| `ML/image_preprocessing`          | FN           | Both                    | X       | Function to turn image data into a trainable dataset. |
+| `ST/image_preprocessing`          | FN           | Both                    | X       | Enable the user to upload image data to be turned into a dataset |
+| `ST/Image as dataset`          | FN           | Both                    | X       | Enables the user to input images to be turned into datasets for classification.|
+| `ST/pages/instructions_welcome`          | NF           | Both                    | X       | Custom welcome and instruction pages for the app. |
+| `HTML/docs`          | NF           | Both                    | X       | HTML documentation using sphinx. Located under docs/_build/ |
+

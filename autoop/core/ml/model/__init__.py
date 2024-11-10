@@ -1,13 +1,60 @@
+"""
+This package provides machine learning models for classification
+and regression. Also provides a factory function to retrieve models.
 
+Available Models:
+    - Regression: MultipleLinearRegression, Lasso, ElasticNet
+    - Classification: SupportVectorClassifier (SVC),
+        MultiLayerPerceptron (MLP), RandomForestClassifier
+
+Functions:
+    - get_model: Returns an instance of the specified model by name.
+"""
+from autoop.core.ml.model.classification import (MLP, SVC,
+                                                 RandomForestClassifier)
 from autoop.core.ml.model.model import Model
-from autoop.core.ml.model.regression import MultipleLinearRegression
+from autoop.core.ml.model.regression import (ElasticNet, Lasso,
+                                             MultipleLinearRegression)
 
 REGRESSION_MODELS = [
-] # add your models as str here
+    "MultipleLinearRegression",
+    "Lasso",
+    "ElasticNet"
+]
 
 CLASSIFICATION_MODELS = [
-] # add your models as str here
+    "SupportVectorClassifier",
+    "MultiLayerPerceptron",
+    "RandomForestClassifier"
+]
+
 
 def get_model(model_name: str) -> Model:
-    """Factory function to get a model by name."""
-    raise NotImplementedError("To be implemented.")
+    """
+    Return a model based on a given string.
+
+    Args:
+        model_name (str): _description_
+
+    Raises:
+        ValueError: _description_
+
+    Returns:
+        Model: _description_
+    """
+    model_dict = {
+        "supportvectorclassifier": SVC,
+        "multilayerperceptron": MLP,
+        "randomforestclassifier": RandomForestClassifier,
+        "multiplelinearregression": MultipleLinearRegression,
+        "lasso": Lasso,
+        "elasticnet": ElasticNet
+
+
+    }
+    if model_name.lower() not in model_dict:
+        raise ValueError(
+            f"Unknown model: {model_name}, valid models are: "
+            f"{model_dict.values()}"
+        )
+    return model_dict[model_name.lower()]

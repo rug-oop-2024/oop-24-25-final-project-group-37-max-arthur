@@ -1,0 +1,19 @@
+autoop package
+==============
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+   autoop.core
+   autoop.functional
+
+Module contents
+---------------
+
+.. automodule:: autoop
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,45 @@
+app.core package
+================
+
+Submodules
+----------
+
+app.core.dataset\_handler module
+--------------------------------
+
+.. automodule:: app.core.dataset_handler
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+app.core.deployment\_handler module
+-----------------------------------
+
+.. automodule:: app.core.deployment_handler
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+app.core.modelling\_handler module
+----------------------------------
+
+.. automodule:: app.core.modelling_handler
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+app.core.system module
+----------------------
+
+.. automodule:: app.core.system
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: app.core
+   :members:
+   :undoc-members:
+   :show-inheritance:
