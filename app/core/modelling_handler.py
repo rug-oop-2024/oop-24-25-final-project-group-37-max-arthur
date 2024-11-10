@@ -67,9 +67,9 @@ def choose_metrics(model_type: str) -> list['Metric']:
         list['Metric']: A list of selected metrics.
     """
     if model_type == "Regression":
-        available_metrics = METRICS[:4]
+        available_metrics = METRICS[:3]
     elif model_type == "Classification":
-        available_metrics = METRICS[4:]
+        available_metrics = METRICS[3:]
     selected_metrics = st.multiselect("Select metrics", available_metrics)
     metrics = [get_metric(m) for m in selected_metrics]
     return metrics

@@ -9,7 +9,6 @@ from autoop.functional.preprocessing import to_tensor
 
 METRICS = [
     "mean_squared_error",
-    "accuracy",
     "mean_absolute_error",
     "r_squared",
     "precision",
