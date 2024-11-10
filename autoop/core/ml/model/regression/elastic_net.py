@@ -50,7 +50,7 @@ class ElasticNet(RegressionModel):
         """
         params = {
             **self._model.get_params(),
-            "fitted_parameters": self._model.coef_,
-            "intercept": self._model.intercept_,
+            "fitted_parameters": getattr(self._model, "coef_", None),
+            "intercept": getattr(self._model, "intercept_", None),
         }
         return params

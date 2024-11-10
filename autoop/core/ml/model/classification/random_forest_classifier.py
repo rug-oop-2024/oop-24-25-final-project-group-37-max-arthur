@@ -40,10 +40,12 @@ class RandomForestClassifier(ClassificationFacadeModel):
         """
         params = {
             **self._model.get_params(),
-            "estimators_": self._model.estimators_,
-            "n_features_in_": self._model.n_features_in_,
-            "classes_": self._model.classes_,
-            "n_outputs_": self._model.n_outputs_,
-            "feature_importances_": self._model.feature_importances_,
+            "estimators_": getattr(self._model, "estimators_", None),
+            "n_features_in_": getattr(self._model, "n_features_in_", None),
+            "classes_": getattr(self._model, "classes_", None),
+            "n_outputs_": getattr(self._model, "n_outputs_", None),
+            "feature_importances_": getattr(
+                self._model, "feature_importances_", None
+            ),
         }
         return deepcopy(params)

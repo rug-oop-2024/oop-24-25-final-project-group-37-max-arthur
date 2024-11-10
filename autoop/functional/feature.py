@@ -26,11 +26,16 @@ def detect_feature_types(
             isinstance(element, int) for element in df[column]
         ):
             column_type = "categorical"
+            num_options = df[column].nunique()
         elif all(isinstance(element, (float, int)) for element in df[column]):
             column_type = "numerical"
             num_options = 1
         else:
             column_type = "categorical"
             num_options = df[column].nunique()
-        features.append(Feature(name=column, type=column_type, num_options=num_options))
+        features.append(Feature(
+            name=column,
+            type=column_type,
+            num_options=num_options
+        ))
     return features

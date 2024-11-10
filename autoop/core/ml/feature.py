@@ -24,6 +24,7 @@ class Feature():
             name (str): The name of the feature.
             type (Literal["categorical", "numerical"]): The type of the
                 feature, either 'categorical' or 'numerical'.
+            num_options (int): The number of classes of the feature.
 
         Returns:
             None
