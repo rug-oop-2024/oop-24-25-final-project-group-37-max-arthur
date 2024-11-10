@@ -8,7 +8,7 @@ You will be met with a custom welcome page and have acess to an instructions pag
 
 We also prepared three use-cases, for all of which you can find datasets under assets/objects:
 
-- A [regression predicting](docs/use_cases/regression.md) on an insurance dataset.
+- A [regression](docs/use_cases/regression.md) use case for predicting on an insurance dataset.
 - A [classification](docs/use_cases/simple_classification.md) use case on a dog breed dataset.
 - A [classification use](docs/use_cases/advanced_classification.md) case for training on the popular digit classification dataset MNIST. As our model as the capability to turn pictures into datasets, you can have the model predict based on uploaded pictures after training. 
 
@@ -202,8 +202,8 @@ If you add extra features, please indicate them below:
 | `ST/modelling/download_model`          | FN           |                     |        | The user can download the model to use it in production. They simply need to unpickly to get the instance |
 | `ST/modelling/download_predictions`    | FN           |                     | X       | The user can download their predictions as a CSV |
 | `ML/image_preprocessing`          | FN           | Both                    | X       | Function to turn image data into a trainable dataset. |
+| `ST/image_preprocessing`          | FN           | Both                    | X       | Enable the user to upload image data to be turned into a dataset |
 | `ST/Image as dataset`          | FN           | Both                    | X       | Enables the user to input images to be turned into datasets for classification.|
-| `ST/modelling/download_model`          |            |                     | X       | Under deployment the user can download a pickled version of the model |
 | `ST/pages/instructions_welcome`          | NF           | Both                    | X       | Custom welcome and instruction pages for the app. |
 | `HTML/docs`          | NF           | Both                    | X       | HTML documentation using sphinx. Located under docs/_build/ |
 
