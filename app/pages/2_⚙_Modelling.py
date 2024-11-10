@@ -17,48 +17,60 @@ def render_modelling():
 
     datasets = automl.registry.list(type="dataset")
 
-    selected_dataset = choose_dataset(datasets)
+    with st.container(border=True):
+        st.write("### Pipeline Configuration")
 
-    selected_target_column = mh.choose_target_column(selected_dataset)
+        selected_dataset = choose_dataset(datasets)
 
-    selected_input_columns = mh.choose_input_columns(
-        selected_dataset, selected_target_column
-        )
+        selected_target_column = mh.choose_target_column(selected_dataset)
 
-    target_feature, input_features = mh.generate_target_and_input_features(
-        selected_dataset, selected_target_column, selected_input_columns
-        )
-
-    model_type = mh.determine_task_type(target_feature)
-    st.write(f"Model type determined: {model_type}")
-
-    selected_model = mh.choose_model(model_type)
-
-    dataset_split = st.slider("Select the dataset split", 0.1, 0.9, 0.8, 0.1)
-
-    selected_metrics = mh.choose_metrics(model_type)
-
-    required_elements = [
-        selected_dataset, selected_metrics, target_feature,
-        input_features, selected_model, dataset_split
-    ]
-
-    if all(required_elements):
-
-        pipeline = Pipeline(
-            dataset=selected_dataset,
-            metrics=selected_metrics,
-            target_feature=target_feature,
-            input_features=input_features,
-            model=selected_model,
-            split=dataset_split
+        selected_input_columns = mh.choose_input_columns(
+            selected_dataset, selected_target_column
             )
 
-        mh.display_pipeline_summary(pipeline)
+        target_feature, input_features = mh.generate_target_and_input_features(
+            selected_dataset, selected_target_column, selected_input_columns
+            )
 
-        mh.execute_pipeline_button(pipeline)
+        model_type = mh.determine_task_type(target_feature)
+        st.write(f"Model type determined: {model_type}")
 
-        mh.save_pipeline_button(automl, pipeline)
+        selected_model = mh.choose_model(model_type)
+
+        dataset_split = st.slider("Select the dataset split", 0.1, 0.9, 0.8, 0.1)
+
+        selected_metrics = mh.choose_metrics(model_type)
+
+        required_elements = [
+            selected_dataset, selected_metrics, target_feature,
+            input_features, selected_model, dataset_split
+        ]
+
+        if all(required_elements):
+
+            if 'pipeline' not in st.session_state:
+                pipeline = Pipeline(
+                    dataset=selected_dataset,
+                    metrics=selected_metrics,
+                    target_feature=target_feature,
+                    input_features=input_features,
+                    model=selected_model,
+                    split=dataset_split
+                    )
+                st.session_state.pipeline = pipeline
+
+            mh.execute_pipeline_button(st.session_state.pipeline)
+
+            if 'results' in st.session_state:
+                mh.display_pipeline_results(st.session_state.results,
+                                            st.session_state.pipeline)
+
+            mh.display_pipeline_summary(st.session_state.pipeline)
+
+            if st.session_state.pipeline.model.parameters:
+                mh.save_pipeline_button(automl, st.session_state.pipeline)
+        else:
+            st.session_state.clear()
 
 
 if __name__ == "__main__":

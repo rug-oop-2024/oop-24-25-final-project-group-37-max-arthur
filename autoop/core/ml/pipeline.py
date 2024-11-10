@@ -264,7 +264,7 @@ Pipeline(
             "predictions": self._predictions,
         }
 
-    def to_artifact(self, name: str) -> 'Artifact':
+    def to_artifact(self, name: str, version: str) -> 'Artifact':
         """
         Serialize the pipeline instance into an artifact.
 
@@ -275,9 +275,9 @@ Pipeline(
             Artifact: Serialized pipeline artifact.
         """
         data = pickle.dumps(self)
-        return Artifact(
-            name=name,
-            data=data,
+        pipeline_artifact = Artifact(
+            name=name, data=data,
             asset_path=f"pipeline/pipeline_of_{self.model.type}_{name}",
-            type="pipeline"
-        )
+            type="pipeline",
+            version=version)
+        return pipeline_artifact

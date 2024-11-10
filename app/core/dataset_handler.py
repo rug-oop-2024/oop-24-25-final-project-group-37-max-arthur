@@ -191,6 +191,6 @@ def save_csv(automl: 'AutoMLSystem',
     data = pd.read_csv(file)
     show_preview("Data Preview:", data)
     name = ask_for_input("Enter dataset name", file.name)
-    asset_path = ask_for_input("Enter asset path", file.name)
+    asset_path = file.name
     # implement a check weather that name already exists
     save_df_to_dataset_button(automl, name, data, asset_path)

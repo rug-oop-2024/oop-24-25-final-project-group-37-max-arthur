@@ -1,15 +1,16 @@
+import streamlit as st
+import pandas as pd
+
 from autoop.core.ml.metric import METRICS, get_metric, Metric
 from autoop.functional.feature import detect_feature_types, Feature
 from autoop.core.ml.model import REGRESSION_MODELS, CLASSIFICATION_MODELS
 from autoop.core.ml.model import get_model, Model
 from autoop.core.ml.pipeline import Pipeline
-from app.core.system import AutoMLSystem
-
-
 from autoop.core.ml.dataset import Dataset
+from app.core.system import AutoMLSystem
 from app.core.dataset_handler import ask_for_input
-
-import streamlit as st
+from torch import Tensor
+from app.core.deployment_handler import get_feature_names
 
 
 def write_helper_text(text: str) -> None:
@@ -155,6 +156,10 @@ def display_pipeline_summary(pipeline: 'Pipeline', name: str = "Summary"
         st.write("### Model")
         st.write(f"**Type:** {pipeline.model._type}")
         st.write(f"**Selected Model:** {pipeline.model.__class__.__name__}")
+        st.write("**Parameters:**")
+        st.write(
+            pipeline.model.parameters if pipeline.model.parameters else "Model"
+            " has no parameters yet.")
 
         st.write("### Metrics")
         st.write(
@@ -162,11 +167,11 @@ def display_pipeline_summary(pipeline: 'Pipeline', name: str = "Summary"
             f"{', '.join(str(m) for m in pipeline._metrics)}")
 
         st.write("### Dataset Split")
-        st.write(f"**Training Set:** {pipeline._split * 100}%")
-        st.write(f"**Testing Set:** {(1 - pipeline._split) * 100}%")
+        st.write(f"**Train Set:** {round((pipeline._split * 100), 2)}%")
+        st.write(f"**Test Set:** {round(((1 - pipeline._split) * 100), 2)}%")
 
 
-def display_pipeline_results(results: dict) -> None:
+def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
     """
     Display the pipeline results using Streamlit.
     Args:
@@ -177,11 +182,21 @@ def display_pipeline_results(results: dict) -> None:
     Returns:
         None
     """
-    with st.expander("## Results", expanded=True):
+    with st.expander("## Results"):
         st.write("### Metrics:")
         st.write(results['metrics'])
         st.write("### Predictions:")
-        st.write(results['predictions'])
+        predictions = results['predictions']
+        if isinstance(predictions, Tensor):
+            predictions = predictions.numpy()
+        feature_names = get_feature_names(pipeline)
+
+        data = pipeline._compact_vectors(pipeline._test_X)
+
+        df = pd.DataFrame(data, columns=feature_names)
+        df['Predictions'] = predictions
+
+        st.write(df)
 
 
 def execute_pipeline_button(pipeline: 'Pipeline') -> None:
@@ -196,8 +211,10 @@ def execute_pipeline_button(pipeline: 'Pipeline') -> None:
     """
 
     if st.button("Execute Pipeline"):
-        results = pipeline.execute()
-        display_pipeline_results(results)
+        if 'results' not in st.session_state:
+            results = pipeline.execute()
+            st.session_state.results = results
+            st.success("Pipeline executed")
 
 
 def save_pipeline_button(automl: 'AutoMLSystem', pipeline: 'Pipeline') -> None:
@@ -216,7 +233,10 @@ def save_pipeline_button(automl: 'AutoMLSystem', pipeline: 'Pipeline') -> None:
     """
     st.write("### Save Pipeline")
     name = ask_for_input("Pipeline Name")
-    if st.button("Save Pipeline with pickle"):
-        pipeline_artifact = pipeline.to_artifact(name=name)
+    version = ask_for_input("Pipeline Version", "Version1.1")
+
+    if st.button("Save Pipeline"):
+        pipeline.execute()
+        pipeline_artifact = pipeline.to_artifact(name=name, version=version)
         automl.registry.register(pipeline_artifact)
         st.success("Pipeline saved successfully!")

@@ -17,14 +17,17 @@ def render_deployment():
         st.write("No pipelines found.")
         return
 
-    pipeline, name, selected_pipeline_artifact = dph.select_pipeline(pipelines)
-    model = pipeline._model
+    with st.container(border=True):
+        st.write("### Select a Pipeline")
+        pipeline, name, selected_pipeline_artifact = dph.select_pipeline(
+            pipelines)
+        model = pipeline._model
 
-    dph.delete_pipeline_button(automl,
-                               name + " Pipeline",
-                               selected_pipeline_artifact.id)
+        dph.delete_pipeline_button(automl,
+                                   name + " Pipeline",
+                                   selected_pipeline_artifact.id)
 
-    display_pipeline_summary(pipeline, name + " Summary")
+        display_pipeline_summary(pipeline, name + " Summary")
 
     dph.prediction_accordion(automl, pipeline, model)
 

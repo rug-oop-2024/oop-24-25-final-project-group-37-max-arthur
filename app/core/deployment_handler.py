@@ -2,7 +2,10 @@ import pickle
 import streamlit as st
 import numpy as np
 import app.core.dataset_handler as dh
+import pandas as pd
+import base64
 
+from torch import Tensor
 from app.core.system import AutoMLSystem
 from autoop.core.ml.artifact import Artifact
 from autoop.core.ml.pipeline import Pipeline
@@ -66,13 +69,32 @@ def choose_data(automl: 'AutoMLSystem') -> 'Artifact':
         Artifact: The selected dataset artifact.
     """
     st.write("### Select Data")
-    st.write("Select a CSV file or choose a dataset to make predictions.")
+    st.write("Upload a CSV file to create da dataset or/and choose a dataset"
+             " to make predictions.")
     file = dh.upload_csv_button()
     if file is not None:
         dh.save_csv(automl, file)
         st.write("Refresh to choose just uploaded CSV file.")
     datasets = automl.registry.list(type="dataset")
     return dh.choose_dataset(datasets)
+
+
+def download_df(dataframe: pd.DataFrame, filename: str, linktext: str) -> None:
+    """
+    Generates a download link for a given DataFrame and displays it in a
+    Streamlit app.
+    Args:
+        dataframe (pd.DataFrame): The DataFrame to be downloaded.
+        filename (str): The name of the file to be downloaded.
+        linktext (str): The text to be displayed for the download link.
+    Returns:
+        None
+    """
+    csv = dataframe.to_csv(index=False)
+    b64 = base64.b64encode(csv.encode()).decode()
+    string = "data:file/csv;base64"
+    href = f'<a href="{string},{b64}" download="{filename}">{linktext}</a>'
+    st.markdown(href, unsafe_allow_html=True)
 
 
 def predict_button(compact_observation_vector: np.ndarray,
@@ -88,11 +110,56 @@ def predict_button(compact_observation_vector: np.ndarray,
     Returns:
         None
     """
+    st.write("### Model Parameters")
     st.write(pipeline.model.parameters)
+    params_df = pd.DataFrame(list(pipeline.model.parameters.items()),
+                             columns=['Parameter', 'Value'])
+    download_df(params_df, "model_parameters.csv", "Download Model Parameters"
+                " CSV")
+
     if st.button("Predict"):
         predictions = model.predict(compact_observation_vector)
         st.write("### Predictions")
-        st.write(predictions)
+        show_predictions(predictions, pipeline, compact_observation_vector)
+
+        if isinstance(predictions, Tensor):
+            df = pd.DataFrame(predictions.numpy())
+            download_df(df, "predictions.csv", "Download Predictions CSV")
+
+
+def get_feature_names(pipeline: 'Pipeline') -> List[str]:
+    """
+    Extracts the feature names from the pipeline's input features.
+    Args:
+        pipeline (Pipeline): The pipeline object containing the input features.
+    Returns:
+        List[str]: A list of feature names.
+    """
+    feature_names = []
+    for feature in pipeline._input_features:
+        if feature.type == "categorical":
+            feature_names.extend(
+                [f"{feature.name}_class_{i}" for i in range(
+                    feature.num_options)])
+        else:
+            feature_names.append(feature.name)
+    feature_names.reverse()
+    return feature_names
+
+
+def show_predictions(predictions: Tensor, pipeline: 'Pipeline',
+                     observation_vector: np.ndarray) -> None:
+    with st.expander("Show Predictions"):
+        if isinstance(predictions, Tensor):
+            predictions = predictions.numpy()
+        feature_names = get_feature_names(pipeline)
+
+        data = observation_vector
+
+        df = pd.DataFrame(data, columns=feature_names)
+        df['Predictions'] = predictions
+
+        st.write(df)
 
 
 def preprocess_data(dataset: 'Artifact', pipeline: 'Pipeline') -> np.ndarray:
@@ -121,12 +188,10 @@ def preprocess_data(dataset: 'Artifact', pipeline: 'Pipeline') -> np.ndarray:
             raise ValueError(
                 "Input features of the pipeline are not present in the new "
                 "data. Please choose a different dataset.")
-            return
 
     input_results = preprocess_features(pipeline_input_features, dataset)
     input_vectors = [data for (feature_name, data, artifact) in input_results]
     compact_observation_vector = np.concatenate(input_vectors, axis=1)
-    pipeline.execute()
     return compact_observation_vector
 
 
@@ -145,11 +210,14 @@ def prediction_accordion(automl: 'AutoMLSystem',
         None
     """
 
-    with st.expander("### Predict", expanded=True):
+    with st.container(border=True):
         dataset = choose_data(automl)
-
         if dataset is not None:
             st.write("### Data Preview")
             st.write(dataset.read().head())
+
+    with st.container(border=True):
+        st.write("### Predict")
+        if dataset is not None:
             observations = preprocess_data(dataset, pipeline)
             predict_button(observations, pipeline, model)

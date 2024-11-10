@@ -14,7 +14,8 @@ class Feature():
     def __init__(
             self,
             name: str,
-            type: Literal["categorical", "numerical"]
+            type: Literal["categorical", "numerical"],
+            num_options: int
     ) -> None:
         """
         Initialize a Feature with a name and type.
@@ -29,6 +30,7 @@ class Feature():
         """
         self.name = name
         self.type = type
+        self.num_options = num_options
 
     def __str__(self) -> str:
         """
