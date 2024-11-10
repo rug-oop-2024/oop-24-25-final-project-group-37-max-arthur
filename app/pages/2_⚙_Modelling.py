@@ -6,7 +6,7 @@ from app.core.system import AutoMLSystem
 from autoop.core.ml.pipeline import Pipeline
 
 
-def render_modelling():
+def render_modelling() -> None:
     """
     Renders the Modelling page for the Streamlit application.
     This function sets up the page configuration, displays the modelling

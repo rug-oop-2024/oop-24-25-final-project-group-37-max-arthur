@@ -6,6 +6,14 @@ from typing import List
 
 
 class ArtifactRegistry():
+    """
+    A class used to register, get, delete, and list artifacts.
+
+    Attributes:
+        database (Database): The database instance used by the system.
+        storage (Storage): The storage instance used by the system.
+    """
+
     def __init__(self,
                  database: Database,
                  storage: Storage):
@@ -111,9 +119,14 @@ class ArtifactRegistry():
 
 
 class AutoMLSystem:
+    """ A class representing the AutoML system.
+
+    Attributes:
+        _instance (AutoMLSystem): The singleton instance of the AutoMLSystem
+    """
     _instance = None
 
-    def __init__(self, storage: LocalStorage, database: Database):
+    def __init__(self, storage: LocalStorage, database: Database) -> None:
         """
         Initializes the System class with the provided storage and database.
 
@@ -129,7 +142,7 @@ class AutoMLSystem:
         self._registry = ArtifactRegistry(database, storage)
 
     @staticmethod
-    def get_instance():
+    def get_instance() -> 'AutoMLSystem':
         """
         Retrieves the singleton instance of the AutoMLSystem class. If the
         instance does not exist, it initializes it with LocalStorage and
@@ -150,5 +163,10 @@ class AutoMLSystem:
         return AutoMLSystem._instance
 
     @property
-    def registry(self):
+    def registry(self) -> ArtifactRegistry:
+        """ A getter method for the ArtifactRegistry instance.
+
+        Returns:
+            ArtifactRegistry: _description_
+        """
         return self._registry

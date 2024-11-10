@@ -243,12 +243,13 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
 
             fig, ax = plt.subplots(figsize=(10, 6))
 
-            bars_train = ax.bar([i - bar_width/2 for i in indices],
+            bars_train = ax.bar([i - bar_width / 2 for i in indices],
                                 train_values, width=bar_width, label='Train',
                                 color='skyblue')
 
-            bars_test = ax.bar([i + bar_width/2 for i in indices], test_values,
-                               width=bar_width, label='Test', color='salmon')
+            bars_test = ax.bar([i + bar_width / 2 for i in indices],
+                               test_values, width=bar_width, label='Test',
+                               color='salmon')
 
             ax.set_ylabel('Scores')
             ax.set_title('Model Performance Metrics')

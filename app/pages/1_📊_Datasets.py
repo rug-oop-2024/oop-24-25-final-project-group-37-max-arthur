@@ -4,7 +4,7 @@ import app.core.dataset_handler as dh
 from app.core.system import AutoMLSystem
 
 
-def render_datasets():
+def render_datasets() -> None:
     """
     Renders the datasets page in the Streamlit app.
     This function sets up the page configuration, retrieves the list of

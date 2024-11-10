@@ -240,7 +240,7 @@ def upload_image_button(automl: 'AutoMLSystem') -> None:
         save_df_to_dataset_button(automl, name, df, asset_path)
 
 
-def get_all_file_paths(directory):
+def get_all_file_paths(directory: str) -> List[str]:
     """
     Recursively retrieves all file paths from the specified directory.
 

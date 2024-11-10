@@ -5,7 +5,7 @@ from app.core.system import AutoMLSystem
 from app.core.modelling_handler import display_pipeline_summary
 
 
-def render_deployment():
+def render_deployment() -> None:
     """
     Renders the deployment page for the application.
     This function sets up the deployment page using Streamlit, allowing users
