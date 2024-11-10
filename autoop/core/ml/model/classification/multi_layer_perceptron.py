@@ -20,7 +20,7 @@ class MLP(Model, Module):
     labels passed during fit.
 
     Attributes:
-        num_layers (int): Number of layers in the model, set to 1.
+        num_layers (int): Number of layers in the model.
         parameters (dict[str, Any]): Dictionary storing model parameters.
         layers (ModuleList): Module list containing the layers of the model.
         trainer (Trainer): Contains the trainer object.

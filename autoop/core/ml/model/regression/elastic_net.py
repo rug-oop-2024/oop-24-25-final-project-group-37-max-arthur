@@ -1,6 +1,5 @@
 from copy import deepcopy
 
-from sklearn.base import BaseEstimator
 from sklearn.linear_model import ElasticNet as ElasNet
 
 from autoop.core.ml.model.model import RegressionModel
@@ -13,7 +12,7 @@ class ElasticNet(RegressionModel):
     Attributes:
         type (Literal["regression", "classification"]): Specifies the
             model type as 'regression'.
-        model (BaseEstimator): The wrapped model instance.
+        model (ElasNet): The wrapped model instance.
         parameters (dict[str, Any]): Dictionary storing model parameters.
     """
 
@@ -28,12 +27,12 @@ class ElasticNet(RegressionModel):
         self._model = ElasNet(*args, **kwargs)
 
     @property
-    def model(self) -> BaseEstimator:
+    def model(self) -> ElasNet:
         """
         Get a deep copy of the underlying model instance.
 
         Returns:
-            BaseEstimator: A copy of the wrapped model instance
+            ElasNet: A copy of the wrapped model instance
                 used in training and prediction.
         """
         return deepcopy(self._model)

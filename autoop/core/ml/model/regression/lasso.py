@@ -1,6 +1,5 @@
 from copy import deepcopy
 
-from sklearn.base import BaseEstimator
 from sklearn.linear_model import Lasso as SklearnLasso
 
 from autoop.core.ml.model.model import RegressionModel
@@ -13,7 +12,7 @@ class Lasso(RegressionModel):
     Attributes:
         type (Literal["regression", "classification"]): Specifies the
             model type as 'regression'.
-        model (BaseEstimator): The wrapped model instance.
+        model (SklearnLasso): The wrapped model instance.
         parameters (dict[str, Any]): Dictionary storing model parameters.
     """
 
@@ -28,12 +27,12 @@ class Lasso(RegressionModel):
         self._model = SklearnLasso(*args, **kwargs)
 
     @property
-    def model(self) -> BaseEstimator:
+    def model(self) -> SklearnLasso:
         """
         Get a deep copy of the underlying model instance.
 
         Returns:
-            BaseEstimator: A copy of the wrapped model instance
+            SklearnLasso: A copy of the wrapped model instance
                 used in training and prediction.
         """
         return deepcopy(self._model)
