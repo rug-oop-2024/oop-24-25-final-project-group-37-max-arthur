@@ -231,8 +231,6 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
             df['Predictions'] = predictions
 
             st.write(df)
-        else:
-            st.write("No predictions available.")
         if all(isinstance(v, dict) for v in metrics.values()):
             metric_names = list(metrics.keys())
             train_values = [v.get('train', 0) for v in metrics.values()]
@@ -258,7 +256,6 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
             ax.legend()
             plt.tight_layout()
 
-            # Add annotations
             for bar in bars_train:
                 height = bar.get_height()
                 ax.annotate(f'{height:.2f}',
@@ -276,13 +273,8 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
                             ha='center', va='bottom')
 
             st.pyplot(fig)
-        else:
-            st.write("Metrics are not in the expected format for "
-                     "visualization.")
 
         model_type = pipeline.model._type
-        st.write(f"**Detected Model Type:** {model_type}")
-
         if model_type == "classification":
             actual = pipeline._test_y.argmax(1)
             predicted = predictions
@@ -317,34 +309,24 @@ def display_pipeline_results(results: dict, pipeline: 'Pipeline') -> None:
             st.dataframe(cm_df)
 
         elif model_type == "regression":
-            try:
-                actual = pipeline._test_y.flatten()
-                predicted = predictions.flatten()
+            actual = pipeline._test_y.flatten()
+            predicted = predictions.flatten()
 
-                st.write(f"**Actual Values Shape After Flattening:**"
-                         f" {actual.shape}")
-                st.write(f"**Predicted Values Shape After Flattening:**"
-                         f" {predicted.shape}")
+            residuals = actual - predicted
 
-                residuals = actual - predicted
+            fig_res, ax_res = plt.subplots(figsize=(10, 6))
+            ax_res.scatter(predicted, residuals, alpha=0.5)
+            ax_res.axhline(y=0, color='r', linestyle='--')
+            ax_res.set_xlabel('Predicted Values')
+            ax_res.set_ylabel('Residuals')
+            ax_res.set_title('Residual Plot')
+            plt.tight_layout()
+            st.pyplot(fig_res)
 
-                fig_res, ax_res = plt.subplots(figsize=(10, 6))
-                ax_res.scatter(predicted, residuals, alpha=0.5)
-                ax_res.axhline(y=0, color='r', linestyle='--')
-                ax_res.set_xlabel('Predicted Values')
-                ax_res.set_ylabel('Residuals')
-                ax_res.set_title('Residual Plot')
-                plt.tight_layout()
-                st.pyplot(fig_res)
-
-                residual_mean = residuals.mean()
-                residual_std = residuals.std()
-                st.write(f"**Residuals Mean:** {residual_mean:.4f}")
-                st.write(f"**Residuals Standard Deviation:**"
-                         f" {residual_std:.4f}")
-            except Exception as e:
-                st.error(f"An error occurred while generating the residual"
-                         f" plot: {e}")
+            residual_mean = residuals.mean()
+            residual_std = residuals.std()
+            st.write(f"**Residuals Mean:** {residual_mean:.4f}")
+            st.write(f"**Residuals Standard Deviation:**{residual_std:.4f}")
 
 
 def execute_pipeline_button(pipeline: 'Pipeline') -> None:
