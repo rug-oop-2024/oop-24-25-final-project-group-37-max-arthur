@@ -277,7 +277,8 @@ Pipeline(
         """
         data = pickle.dumps(self)
         pipeline_artifact = Artifact(
-            name=name, data=data,
+            name=name,
+            data=data,
             asset_path=f"pipeline/pipeline_of_{self.model.type}_{name}",
             type="pipeline",
             version=version)

@@ -184,7 +184,7 @@ If you add extra features, please indicate them below:
 | `ST/datasets/slicing`          | FN           | Both                     | X        | The user can slice their dataset based on some criteria (e.g., age > 18, 80% split) etc.) |
 | `ST/modelling/download_model`          | FN           |                     |        | The user can download the model to use it in production. They simply need to unpickly to get the instance |
 | `ST/modelling/download_predictions`    | FN           |                     |        | The user can download their predictions as a CSV |
-| `ST/modelling/download_model`          |            |                     |        |  |
+| `ML/image_preprocessing`          | FN           | Both                    | X       | Function to turn image data into a trainable dataset. |
 | `ST/modelling/download_model`          |            |                     |        |  |
 | `ST/modelling/download_model`          |            |                     |        |  |
 
