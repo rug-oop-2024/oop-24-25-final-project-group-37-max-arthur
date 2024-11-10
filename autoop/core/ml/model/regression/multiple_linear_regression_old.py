@@ -7,18 +7,12 @@ from pydantic import (BaseModel, Field, PrivateAttr, field_validator,
                       model_validator)
 
 
-class Model(BaseModel, ABC):
+class ModelOld(BaseModel, ABC):
     """
     Abstract base class for implementing supervised machine learning models.
 
     Attributes:
         _parameters (dict): Private dict storing the parameters of the model.
-
-    Methods:
-        fit(observations: np.ndarray, labels: np.ndarray) -> None:
-            Abstract method to fit the model to observations and labels.
-        predict(observations: np.ndarray) -> np.ndarray:
-            Abstract method to predict from the trained model.
     """
 
     _parameters: dict = PrivateAttr(default_factory=dict)
@@ -48,27 +42,13 @@ class Model(BaseModel, ABC):
         pass
 
 
-class MultipleLinearRegressionOld(Model):
+class MultipleLinearRegressionOld(ModelOld):
     """
     Implementation of a multiple Linear Regression model.
 
     Attributes:
         _parameters (dict): Dictionary storing the model parameters
         after fitting.
-
-    Methods:
-        fit(observations: np.ndarray, labels: np.ndarray) -> None:
-            Fits the regression model to observations and labels.
-
-        predict(observations: np.ndarray) -> np.ndarray:
-            Makes predictions based on new observations using the fitted model.
-
-        parameters() -> dict[str, np.ndarray]:
-            Property that returns a deepcopy of the model parameters.
-
-        _arg_validator(observations: np.ndarray,
-        labels_or_params: np.ndarray, fit: bool) -> None:
-            Validates the input arrays for fit or predict.
     """
 
     def fit(self, observations: np.ndarray, labels: np.ndarray) -> None:
@@ -162,26 +142,6 @@ class Validator(BaseModel):
         labels_or_params (np.ndarray): Array of labels or parameters,
         depending on fit.
         observations (np.ndarray): Array of observations for the model.
-
-    Methods:
-        check_array_type(array: np.ndarray) -> np.ndarray:
-            Ensures the input is a NumPy ndarray.
-
-        validate_observations(observations_arr: np.ndarray) -> np.ndarray:
-            Validates that the observations array has the correct type,
-            dimensions, and is non-empty.
-
-        validate_labels_or_params(lab_or_par_arr: np.ndarray) -> np.ndarray:
-            Validates that the labels or parameters array has the correct type,
-            dimensions, and is non-empty.
-
-        compare_dimensions(observations_arr: np.ndarray, info: ValidationInfo)
-        -> np.ndarray:
-            Checks if the dimensions of observations match with
-            labels_or_params.
-
-        check_column_of_ones(observations_arr: np.ndarray) -> np.ndarray:
-            Ensures no column in observations contains only ones.
     """
 
     labels_or_params: Any = Field(...)

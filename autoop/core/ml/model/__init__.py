@@ -1,3 +1,15 @@
+"""
+This package provides machine learning models for classification
+and regression. Also provides a factory function to retrieve models.
+
+Available Models:
+    - Regression: MultipleLinearRegression, Lasso, ElasticNet
+    - Classification: SupportVectorClassifier (SVC),
+        MultiLayerPerceptron (MLP), RandomForestClassifier
+
+Functions:
+    - get_model: Returns an instance of the specified model by name.
+"""
 from autoop.core.ml.model.classification import (MLP, SVC,
                                                  RandomForestClassifier)
 from autoop.core.ml.model.model import Model

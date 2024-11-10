@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from autoop.core.ml.model.model import RegressionModel
 from autoop.core.ml.model.regression.multiple_linear_regression_old import \
     MultipleLinearRegressionOld as MLRold
@@ -10,18 +12,8 @@ class MultipleLinearRegression(RegressionModel):
     Attributes:
         type (Literal["regression", "classification"]): Specifies the
             model type as 'regression'.
-        model (BaseEstimator | Model): The wrapped model instance.
+        model (ModelOld): The wrapped model instance.
         parameters (dict[str, Any]): Dictionary storing model parameters.
-
-    Methods:
-        fit(observations: np.ndarray, labels: np.ndarray) -> None:
-            Trains the model using provided observations and labels.
-
-        predict(observations: np.ndarray) -> Tensor:
-            Generates predictions from the trained model.
-
-        to_artifact(name: str) -> Artifact:
-            Serialize the model and create an Artifact object.
     """
 
     def __init__(self) -> None:
@@ -33,6 +25,17 @@ class MultipleLinearRegression(RegressionModel):
         """
         super().__init__()
         self._model = MLRold()
+
+    @property
+    def model(self) -> MLRold:
+        """
+        Get a deep copy of the underlying model instance.
+
+        Returns:
+            MLRold: A copy of the wrapped model instance
+                used in training and prediction.
+        """
+        return deepcopy(self._model)
 
     @property
     def parameters(self) -> dict:

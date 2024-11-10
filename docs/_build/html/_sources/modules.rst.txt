@@ -1,0 +1,7 @@
+autoop
+======
+
+.. toctree::
+   :maxdepth: 2
+
+   autoop

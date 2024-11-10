@@ -21,19 +21,7 @@ class NotFoundError(Exception):
 
 
 class Storage(ABC):
-    """
-    Abstract base class for storage operations.
-
-    Methods:
-        save(data: bytes, path: str) -> None:
-            Abstractmethod to save data to a specified path.
-        load(path: str) -> bytes:
-            Abstractmethod to load data from a specified path.
-        delete(path: str) -> None:
-            Abstractmethod to delete data at a specified path.
-        list(path: str) -> list:
-            Abstractmethod to list all paths under a specified path.
-    """
+    """Abstract base class for storage operations."""
 
     @abstractmethod
     def save(self, data: bytes, path: str) -> None:
@@ -90,19 +78,7 @@ class Storage(ABC):
 
 
 class LocalStorage(Storage):
-    """
-    Local storage class for saving, loading, deleting, and listing data.
-
-    Methods:
-        save(data: bytes, key: str) -> None:
-            Save data to a specified local path.
-        load(key: str) -> bytes:
-            Load data from a specified local path.
-        delete(key: str = "/") -> None:
-            Delete a file at the specified local path.
-        list(prefix: str) -> List[str]:
-            List all files under a specified prefix path.
-    """
+    """Local storage class for saving, loading, deleting, and listing data."""
 
     def __init__(self, base_path: str = "./assets") -> None:
         """

@@ -15,16 +15,6 @@ class SVC(ClassificationFacadeModel):
             model type as 'classification'.
         model (BaseEstimator): The wrapped model instance.
         parameters (dict[str, Any]): Dictionary storing model parameters.
-
-    Methods:
-        fit(observations: np.ndarray, labels: np.ndarray) -> None:
-            Trains the model using provided observations and labels.
-
-        predict(observations: np.ndarray) -> Tensor:
-            Generates predictions from the trained model.
-
-        to_artifact(name: str) -> Artifact:
-            Serialize the model and create an Artifact object.
     """
 
     def __init__(self, *args, **kwargs) -> None:

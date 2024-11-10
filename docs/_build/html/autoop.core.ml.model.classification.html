@@ -1,0 +1,452 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>autoop.core.ml.model.classification package &mdash; p p documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=4a36d9c3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="autoop.core.ml.model.regression package" href="autoop.core.ml.model.regression.html" />
+    <link rel="prev" title="autoop.core.ml.model package" href="autoop.core.ml.model.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            p
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">autoop</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="autoop.html">autoop package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="autoop.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="autoop.core.html">autoop.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoop.functional.html">autoop.functional package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="autoop.html#module-autoop">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">p</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">autoop</a></li>
+          <li class="breadcrumb-item"><a href="autoop.html">autoop package</a></li>
+          <li class="breadcrumb-item"><a href="autoop.core.html">autoop.core package</a></li>
+          <li class="breadcrumb-item"><a href="autoop.core.ml.html">autoop.core.ml package</a></li>
+          <li class="breadcrumb-item"><a href="autoop.core.ml.model.html">autoop.core.ml.model package</a></li>
+      <li class="breadcrumb-item active">autoop.core.ml.model.classification package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/autoop.core.ml.model.classification.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="autoop-core-ml-model-classification-package">
+<h1>autoop.core.ml.model.classification package<a class="headerlink" href="#autoop-core-ml-model-classification-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-autoop.core.ml.model.classification.multi_layer_perceptron">
+<span id="autoop-core-ml-model-classification-multi-layer-perceptron-module"></span><h2>autoop.core.ml.model.classification.multi_layer_perceptron module<a class="headerlink" href="#module-autoop.core.ml.model.classification.multi_layer_perceptron" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.multi_layer_perceptron.MLP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.model.classification.multi_layer_perceptron.</span></span><span class="sig-name descname"><span class="pre">MLP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'adam'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'rmsprop'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'SGD'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'adam'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/model/classification/multi_layer_perceptron.html#MLP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.classification.multi_layer_perceptron.MLP" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.model.Model" title="autoop.core.ml.model.model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Multi-layer perceptron model for classification.</p>
+<p>Initialized automatically according to the attribute
+num_layers and the dimensions of observations and
+labels passed during fit.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.multi_layer_perceptron.MLP.num_layers">
+<span class="sig-name descname"><span class="pre">num_layers</span></span><a class="headerlink" href="#autoop.core.ml.model.classification.multi_layer_perceptron.MLP.num_layers" title="Link to this definition"></a></dt>
+<dd><p>Number of layers in the model, set to 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.multi_layer_perceptron.MLP.parameters">
+<span class="sig-name descname"><span class="pre">parameters</span></span><a class="headerlink" href="#autoop.core.ml.model.classification.multi_layer_perceptron.MLP.parameters" title="Link to this definition"></a></dt>
+<dd><p>Dictionary storing model parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.multi_layer_perceptron.MLP.layers">
+<span class="sig-name descname"><span class="pre">layers</span></span><a class="headerlink" href="#autoop.core.ml.model.classification.multi_layer_perceptron.MLP.layers" title="Link to this definition"></a></dt>
+<dd><p>Module list containing the layers of the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ModuleList</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.multi_layer_perceptron.MLP.trainer">
+<span class="sig-name descname"><span class="pre">trainer</span></span><a class="headerlink" href="#autoop.core.ml.model.classification.multi_layer_perceptron.MLP.trainer" title="Link to this definition"></a></dt>
+<dd><p>Contains the trainer object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.trainer.Trainer" title="autoop.core.ml.model.trainer.Trainer">Trainer</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.multi_layer_perceptron.MLP.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#autoop.core.ml.model.classification.multi_layer_perceptron.MLP.type" title="Link to this definition"></a></dt>
+<dd><p>Specifies the model
+type as ‘classification’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Literal[“classification, “regression”]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.multi_layer_perceptron.MLP.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/autoop/core/ml/model/classification/multi_layer_perceptron.html#MLP.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.classification.multi_layer_perceptron.MLP.fit" title="Link to this definition"></a></dt>
+<dd><p>Fit the model to observations and labels.</p>
+<p>Calls helper functions to convert observations and labels to
+tensors, set input and output dimensions based on the data,
+create model layers, instantiate the Trainer, and initiate
+the training loop.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>observations</strong> (<em>np.ndarray</em>) – Array of training data.</p></li>
+<li><p><strong>labels</strong> (<em>np.ndarray</em>) – Array of target labels.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>AssertionError</strong> – If the number of samples in observations</p></li>
+<li><p><strong>and labels do not match.</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.multi_layer_perceptron.MLP.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="_modules/autoop/core/ml/model/classification/multi_layer_perceptron.html#MLP.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.classification.multi_layer_perceptron.MLP.forward" title="Link to this definition"></a></dt>
+<dd><p>Perform a forward pass through all layers.</p>
+<p>Applies ReLu activation function after each layer apart from
+the final layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>Tensor</em>) – Input tensor containing observations.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Output tensor from the logistic regression layer.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">layers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ModuleList</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd><p>Return a copy of the models layers if they have been created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>AttributeError</strong> – If _layer have not been initialized yet.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The models layers.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ModuleList</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id1">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_layers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd><p>Get the value of num_layers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The number of layers.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id2">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd><p>Dynamically return the model parameters.</p>
+<p>Returns the hyperparameters stored in the model
+as well as the fitted parameters from torch’s nn.Module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>parameters dict including hyperparameters.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.multi_layer_perceptron.MLP.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="_modules/autoop/core/ml/model/classification/multi_layer_perceptron.html#MLP.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.classification.multi_layer_perceptron.MLP.predict" title="Link to this definition"></a></dt>
+<dd><p>Predict class labels for the given observations.</p>
+<p>Converts observations to tensors, performs a forward pass without
+gradient computation, and returns predicted class labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>observations</strong> (<em>np.ndarray</em>) – Array of observations to predict.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotFittedError</strong> – If the model has not been fitted.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Predicted class labels as a tensor.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id3">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">trainer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.trainer.Trainer" title="autoop.core.ml.model.trainer.Trainer"><span class="pre">Trainer</span></a></em><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd><p>Return a copy of the models trainer if it has been created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>AttributeError</strong> – If the _trainer attribute does not exist.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A copy of the trainer instance of the model.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.trainer.Trainer" title="autoop.core.ml.model.trainer.Trainer">Trainer</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-autoop.core.ml.model.classification.random_forest_classifier">
+<span id="autoop-core-ml-model-classification-random-forest-classifier-module"></span><h2>autoop.core.ml.model.classification.random_forest_classifier module<a class="headerlink" href="#module-autoop.core.ml.model.classification.random_forest_classifier" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.random_forest_classifier.RandomForestClassifier">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.model.classification.random_forest_classifier.</span></span><span class="sig-name descname"><span class="pre">RandomForestClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/model/classification/random_forest_classifier.html#RandomForestClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.classification.random_forest_classifier.RandomForestClassifier" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.model.ClassificationFacadeModel" title="autoop.core.ml.model.model.ClassificationFacadeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClassificationFacadeModel</span></code></a></p>
+<p>Random forest classifier model using facade pattern.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.random_forest_classifier.RandomForestClassifier.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#autoop.core.ml.model.classification.random_forest_classifier.RandomForestClassifier.type" title="Link to this definition"></a></dt>
+<dd><p>Specifies the
+model type as ‘classification’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Literal[“regression”, “classification”]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.random_forest_classifier.RandomForestClassifier.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#autoop.core.ml.model.classification.random_forest_classifier.RandomForestClassifier.model" title="Link to this definition"></a></dt>
+<dd><p>The wrapped model instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>BaseEstimator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.random_forest_classifier.RandomForestClassifier.parameters">
+<span class="sig-name descname"><span class="pre">parameters</span></span><a class="headerlink" href="#autoop.core.ml.model.classification.random_forest_classifier.RandomForestClassifier.parameters" title="Link to this definition"></a></dt>
+<dd><p>Dictionary storing model parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id4">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd><p>Dynamically return the model parameters.</p>
+<p>Returns the hyperparameters stored in the model
+as well as the fitted parameters from the wrapped model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>parameters dict including hyperparameters.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-autoop.core.ml.model.classification.support_vector_classifier">
+<span id="autoop-core-ml-model-classification-support-vector-classifier-module"></span><h2>autoop.core.ml.model.classification.support_vector_classifier module<a class="headerlink" href="#module-autoop.core.ml.model.classification.support_vector_classifier" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.support_vector_classifier.SVC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.model.classification.support_vector_classifier.</span></span><span class="sig-name descname"><span class="pre">SVC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/model/classification/support_vector_classifier.html#SVC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.model.classification.support_vector_classifier.SVC" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.model.ClassificationFacadeModel" title="autoop.core.ml.model.model.ClassificationFacadeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClassificationFacadeModel</span></code></a></p>
+<p>Support vector classifier model using facade pattern.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.support_vector_classifier.SVC.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#autoop.core.ml.model.classification.support_vector_classifier.SVC.type" title="Link to this definition"></a></dt>
+<dd><p>Specifies the
+model type as ‘classification’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Literal[“regression”, “classification”]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.support_vector_classifier.SVC.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#autoop.core.ml.model.classification.support_vector_classifier.SVC.model" title="Link to this definition"></a></dt>
+<dd><p>The wrapped model instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>BaseEstimator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.model.classification.support_vector_classifier.SVC.parameters">
+<span class="sig-name descname"><span class="pre">parameters</span></span><a class="headerlink" href="#autoop.core.ml.model.classification.support_vector_classifier.SVC.parameters" title="Link to this definition"></a></dt>
+<dd><p>Dictionary storing model parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id5">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd><p>Dynamically return the model parameters.</p>
+<p>Returns the hyperparameters stored in the model
+as well as the fitted parameters from the wrapped model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>parameters dict including hyperparameters.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-autoop.core.ml.model.classification">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-autoop.core.ml.model.classification" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="autoop.core.ml.model.html" class="btn btn-neutral float-left" title="autoop.core.ml.model package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="autoop.core.ml.model.regression.html" class="btn btn-neutral float-right" title="autoop.core.ml.model.regression package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, p.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -155,8 +155,8 @@ If you did not implement the feature
 |-------------------------------------- |--------------|----------------------|--------------------------|---------|
 | Up-to-date requirements.txt           | NF           | both    | X  | |
 | `ML/detect-features`                  | FN           | both    | X  | |
-| `ML/artifact`                         | NF           | both    | X  | Unsure about the purpose of .save method. Perhaps connected to requirement OOP-007 |
-| `ML/feature`                          | NF           | both    | X  | Unsure whether the \_\_str\_\_ method is correct like this |
+| `ML/artifact`                         | NF           | both    | X  | |
+| `ML/feature`                          | NF           | both    | X  | |
 | `ML/metric`                           | NF           | both    | X  | |
 | `ML/metric/extensions`                | FN           | both    | X  | |
 | `ML/model`                            | NF           | both    | X  | |
@@ -181,4 +181,10 @@ If you did not implement the feature
 If you add extra features, please indicate them below:
 | Requirement                           | Type (FN/NF) | Implemented by       | Implementation Completed (add X if done) | Comment |
 |-------------------------------------- |--------------|----------------------|---------|-----|
-|           |            |                      |         | |
+| `ST/datasets/slicing`          | FN           | Both                     | X        | The user can slice their dataset based on some criteria (e.g., age > 18, 80% split) etc.) |
+| `ST/modelling/download_model`          | FN           |                     |        | The user can download the model to use it in production. They simply need to unpickly to get the instance |
+| `ST/modelling/download_predictions`    | FN           |                     |        | The user can download their predictions as a CSV |
+| `ST/modelling/download_model`          |            |                     |        |  |
+| `ST/modelling/download_model`          |            |                     |        |  |
+| `ST/modelling/download_model`          |            |                     |        |  |
+

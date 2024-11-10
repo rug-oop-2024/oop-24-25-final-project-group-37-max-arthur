@@ -9,11 +9,6 @@ class Feature():
         name (str): The name of the feature.
         type (Literal["categorical", "numerical"]): The type of the feature,
             indicating whether it is categorical or numerical.
-
-    Methods:
-        __str__() -> str:
-            Return a string representation of the feature, including its
-                name and type.
     """
 
     def __init__(

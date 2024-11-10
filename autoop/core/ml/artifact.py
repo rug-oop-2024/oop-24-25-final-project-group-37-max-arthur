@@ -13,10 +13,6 @@ class Artifact:
         version (str): Version identifier of the artifact. Default is '1.0.0'.
         tags (list[str]): List of tags associated with the artifact.
         metadata (dict): Additional metadata for the artifact.
-
-    Methods:
-        read() -> bytes: Read the artifact data.
-        save(data: bytes) -> bytes: Save new data to the artifact.
     """
 
     def __init__(

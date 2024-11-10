@@ -26,19 +26,6 @@ class MLP(Model, Module):
         trainer (Trainer): Contains the trainer object.
         type (Literal["classification, "regression"]): Specifies the model
             type as 'classification'.
-
-    Methods:
-        forward(x: Tensor) -> Tensor:
-            Perform a forward pass of the model.
-
-        fit(observations: np.ndarray, labels: np.ndarray) -> None:
-            Train the model using the provided observations and labels.
-
-        predict(observations: np.ndarray) -> Tensor:
-            Predict class labels for the given observations.
-
-        to_artifact(name: str) -> Artifact:
-            Serialize the model and create an Artifact object.
     """
 
     def __init__(

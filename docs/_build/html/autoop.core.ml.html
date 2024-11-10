@@ -1,0 +1,811 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>autoop.core.ml package &mdash; p p documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=4a36d9c3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="autoop.core.ml.model package" href="autoop.core.ml.model.html" />
+    <link rel="prev" title="autoop.core package" href="autoop.core.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            p
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">autoop</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="autoop.html">autoop package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="autoop.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="autoop.core.html">autoop.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoop.functional.html">autoop.functional package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="autoop.html#module-autoop">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">p</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">autoop</a></li>
+          <li class="breadcrumb-item"><a href="autoop.html">autoop package</a></li>
+          <li class="breadcrumb-item"><a href="autoop.core.html">autoop.core package</a></li>
+      <li class="breadcrumb-item active">autoop.core.ml package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/autoop.core.ml.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="autoop-core-ml-package">
+<h1>autoop.core.ml package<a class="headerlink" href="#autoop-core-ml-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="autoop.core.ml.model.html">autoop.core.ml.model package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="autoop.core.ml.model.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoop.core.ml.model.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoop.core.ml.model.html#module-autoop.core.ml.model.model">autoop.core.ml.model.model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoop.core.ml.model.html#module-autoop.core.ml.model.trainer">autoop.core.ml.model.trainer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoop.core.ml.model.html#module-autoop.core.ml.model">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-autoop.core.ml.artifact">
+<span id="autoop-core-ml-artifact-module"></span><h2>autoop.core.ml.artifact module<a class="headerlink" href="#module-autoop.core.ml.artifact" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.artifact.Artifact">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.artifact.</span></span><span class="sig-name descname"><span class="pre">Artifact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'1.0.0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/artifact.html#Artifact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.artifact.Artifact" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class representing a data artifact with metadata and version control.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.artifact.Artifact.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#autoop.core.ml.artifact.Artifact.name" title="Link to this definition"></a></dt>
+<dd><p>The name of the artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.artifact.Artifact.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#autoop.core.ml.artifact.Artifact.data" title="Link to this definition"></a></dt>
+<dd><p>The binary data of the artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.artifact.Artifact.asset_path">
+<span class="sig-name descname"><span class="pre">asset_path</span></span><a class="headerlink" href="#autoop.core.ml.artifact.Artifact.asset_path" title="Link to this definition"></a></dt>
+<dd><p>The file path or identifier for the artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.artifact.Artifact.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#autoop.core.ml.artifact.Artifact.type" title="Link to this definition"></a></dt>
+<dd><p>The type or category of the artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.artifact.Artifact.version">
+<span class="sig-name descname"><span class="pre">version</span></span><a class="headerlink" href="#autoop.core.ml.artifact.Artifact.version" title="Link to this definition"></a></dt>
+<dd><p>Version identifier of the artifact. Default is ‘1.0.0’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.artifact.Artifact.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><a class="headerlink" href="#autoop.core.ml.artifact.Artifact.tags" title="Link to this definition"></a></dt>
+<dd><p>List of tags associated with the artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.artifact.Artifact.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><a class="headerlink" href="#autoop.core.ml.artifact.Artifact.metadata" title="Link to this definition"></a></dt>
+<dd><p>Additional metadata for the artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="autoop.core.ml.artifact.Artifact.id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#autoop.core.ml.artifact.Artifact.id" title="Link to this definition"></a></dt>
+<dd><p>Dynamically generate a unique identifier for the artifact based.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A base64 encoded identifier of the format</dt><dd><p>’encoded_path:version’.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.artifact.Artifact.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="reference internal" href="_modules/autoop/core/ml/artifact.html#Artifact.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.artifact.Artifact.read" title="Link to this definition"></a></dt>
+<dd><p>Read the artifact data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The binary data of the artifact.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.artifact.Artifact.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="reference internal" href="_modules/autoop/core/ml/artifact.html#Artifact.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.artifact.Artifact.save" title="Link to this definition"></a></dt>
+<dd><p>Save new data to the artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>bytes</em>) – The new data to store in the artifact.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated binary data of the artifact.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-autoop.core.ml.dataset">
+<span id="autoop-core-ml-dataset-module"></span><h2>autoop.core.ml.dataset module<a class="headerlink" href="#module-autoop.core.ml.dataset" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.dataset.Dataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.dataset.</span></span><span class="sig-name descname"><span class="pre">Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/dataset.html#Dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.dataset.Dataset" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact"><code class="xref py py-class docutils literal notranslate"><span class="pre">Artifact</span></code></a></p>
+<p>A class representing a dataset artifact.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.dataset.Dataset.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#autoop.core.ml.dataset.Dataset.name" title="Link to this definition"></a></dt>
+<dd><p>The name of the artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.dataset.Dataset.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#autoop.core.ml.dataset.Dataset.data" title="Link to this definition"></a></dt>
+<dd><p>The binary data of the artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.dataset.Dataset.asset_path">
+<span class="sig-name descname"><span class="pre">asset_path</span></span><a class="headerlink" href="#autoop.core.ml.dataset.Dataset.asset_path" title="Link to this definition"></a></dt>
+<dd><p>The file path or identifier for the artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.dataset.Dataset.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#autoop.core.ml.dataset.Dataset.type" title="Link to this definition"></a></dt>
+<dd><p>The type or category of the artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.dataset.Dataset.version">
+<span class="sig-name descname"><span class="pre">version</span></span><a class="headerlink" href="#autoop.core.ml.dataset.Dataset.version" title="Link to this definition"></a></dt>
+<dd><p>Version identifier of the artifact. Default is ‘1.0.0’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.dataset.Dataset.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><a class="headerlink" href="#autoop.core.ml.dataset.Dataset.tags" title="Link to this definition"></a></dt>
+<dd><p>List of tags associated with the artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.dataset.Dataset.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><a class="headerlink" href="#autoop.core.ml.dataset.Dataset.metadata" title="Link to this definition"></a></dt>
+<dd><p>Additional metadata for the artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.dataset.Dataset.from_dataframe">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'1.0.0'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#autoop.core.ml.dataset.Dataset" title="autoop.core.ml.dataset.Dataset"><span class="pre">Dataset</span></a></span></span><a class="reference internal" href="_modules/autoop/core/ml/dataset.html#Dataset.from_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.dataset.Dataset.from_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Create a Dataset artifact from a pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pd.DataFrame</em>) – The DataFrame to be saved as a
+Dataset artifact.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the dataset artifact.</p></li>
+<li><p><strong>asset_path</strong> (<em>str</em>) – The path or identifier for the dataset artifact.</p></li>
+<li><p><strong>version</strong> (<em>str</em><em>, </em><em>optional</em>) – Version identifier for the dataset.
+Default is “1.0.0”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of Dataset artifact based on the dataframe.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#autoop.core.ml.dataset.Dataset" title="autoop.core.ml.dataset.Dataset">Dataset</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.dataset.Dataset.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/autoop/core/ml/dataset.html#Dataset.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.dataset.Dataset.read" title="Link to this definition"></a></dt>
+<dd><p>Return the dataframe from the Dataset artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The Dataset’s data as a pandas DataFrame.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.dataset.Dataset.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="reference internal" href="_modules/autoop/core/ml/dataset.html#Dataset.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.dataset.Dataset.save" title="Link to this definition"></a></dt>
+<dd><p>Save a new pandas DataFrame to the dataset artifact.</p>
+<p>Encodes the DataFrame to binary CSV format and updates
+the artifact’s data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>pd.DataFrame</em>) – The DataFrame to be saved to the artifact.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated binary data of the dataset.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-autoop.core.ml.feature">
+<span id="autoop-core-ml-feature-module"></span><h2>autoop.core.ml.feature module<a class="headerlink" href="#module-autoop.core.ml.feature" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.feature.Feature">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.feature.</span></span><span class="sig-name descname"><span class="pre">Feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'categorical'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'numerical'</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/feature.html#Feature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.feature.Feature" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class representing a feature from a dataset.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.feature.Feature.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#autoop.core.ml.feature.Feature.name" title="Link to this definition"></a></dt>
+<dd><p>The name of the feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.feature.Feature.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#autoop.core.ml.feature.Feature.type" title="Link to this definition"></a></dt>
+<dd><p>The type of the feature,
+indicating whether it is categorical or numerical.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Literal[“categorical”, “numerical”]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-autoop.core.ml.metric">
+<span id="autoop-core-ml-metric-module"></span><h2>autoop.core.ml.metric module<a class="headerlink" href="#module-autoop.core.ml.metric" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.Accuracy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.metric.</span></span><span class="sig-name descname"><span class="pre">Accuracy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">needs_avtivation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/metric.html#Accuracy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.metric.Accuracy" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#autoop.core.ml.metric.Metric" title="autoop.core.ml.metric.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a></p>
+<p>Metric class for calculating classification accuracy.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.Accuracy.needs_activation">
+<span class="sig-name descname"><span class="pre">needs_activation</span></span><a class="headerlink" href="#autoop.core.ml.metric.Accuracy.needs_activation" title="Link to this definition"></a></dt>
+<dd><p>Indicates if the metric requires an
+activation function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.F1Score">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.metric.</span></span><span class="sig-name descname"><span class="pre">F1Score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">needs_activation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/metric.html#F1Score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.metric.F1Score" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#autoop.core.ml.metric.Metric" title="autoop.core.ml.metric.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a></p>
+<p>Metric class for calculating the F1 score in classification tasks.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.F1Score.needs_activation">
+<span class="sig-name descname"><span class="pre">needs_activation</span></span><a class="headerlink" href="#autoop.core.ml.metric.F1Score.needs_activation" title="Link to this definition"></a></dt>
+<dd><p>Indicates if the metric requires an
+activation function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.MeanAbsoluteError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.metric.</span></span><span class="sig-name descname"><span class="pre">MeanAbsoluteError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">needs_avtivation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/metric.html#MeanAbsoluteError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.metric.MeanAbsoluteError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#autoop.core.ml.metric.Metric" title="autoop.core.ml.metric.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a></p>
+<p>Metric class for calculating mean absolute error (MAE).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.MeanAbsoluteError.needs_activation">
+<span class="sig-name descname"><span class="pre">needs_activation</span></span><a class="headerlink" href="#autoop.core.ml.metric.MeanAbsoluteError.needs_activation" title="Link to this definition"></a></dt>
+<dd><p>Indicates if the metric requires an
+activation function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.MeanSquaredError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.metric.</span></span><span class="sig-name descname"><span class="pre">MeanSquaredError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">needs_avtivation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/metric.html#MeanSquaredError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.metric.MeanSquaredError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#autoop.core.ml.metric.Metric" title="autoop.core.ml.metric.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a></p>
+<p>Metric class for calculating mean squared error (MSE).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.MeanSquaredError.needs_activation">
+<span class="sig-name descname"><span class="pre">needs_activation</span></span><a class="headerlink" href="#autoop.core.ml.metric.MeanSquaredError.needs_activation" title="Link to this definition"></a></dt>
+<dd><p>Indicates if the metric requires an
+activation function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.Metric">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.metric.</span></span><span class="sig-name descname"><span class="pre">Metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">needs_avtivation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/metric.html#Metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.metric.Metric" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract base class for evaluation metrics.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.Metric.needs_activation">
+<span class="sig-name descname"><span class="pre">needs_activation</span></span><a class="headerlink" href="#autoop.core.ml.metric.Metric.needs_activation" title="Link to this definition"></a></dt>
+<dd><p>Indicates if the metric requires an
+activation function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.Metric.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/autoop/core/ml/metric.html#Metric.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.metric.Metric.evaluate" title="Link to this definition"></a></dt>
+<dd><p>Calculate the metric value as an alias for __call__.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>predictions</strong> (<em>Tensor</em>) – Model predictions.</p></li>
+<li><p><strong>labels</strong> (<em>np.ndarray</em>) – True labels.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The computed metric value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">needs_activation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd><p>Indicates whether the metric requires activation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if activation is needed, otherwise False.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.Precision">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.metric.</span></span><span class="sig-name descname"><span class="pre">Precision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">needs_avtivation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/metric.html#Precision"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.metric.Precision" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#autoop.core.ml.metric.Metric" title="autoop.core.ml.metric.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a></p>
+<p>Metric class for calculating precision in classification tasks.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.Precision.needs_activation">
+<span class="sig-name descname"><span class="pre">needs_activation</span></span><a class="headerlink" href="#autoop.core.ml.metric.Precision.needs_activation" title="Link to this definition"></a></dt>
+<dd><p>Indicates if the metric requires an
+activation function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.RSquared">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.metric.</span></span><span class="sig-name descname"><span class="pre">RSquared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">needs_avtivation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/metric.html#RSquared"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.metric.RSquared" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#autoop.core.ml.metric.Metric" title="autoop.core.ml.metric.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a></p>
+<p>Metric class for calculating R-squared (coefficient of determination).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.RSquared.needs_activation">
+<span class="sig-name descname"><span class="pre">needs_activation</span></span><a class="headerlink" href="#autoop.core.ml.metric.RSquared.needs_activation" title="Link to this definition"></a></dt>
+<dd><p>Indicates if the metric requires an
+activation function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.Recall">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.metric.</span></span><span class="sig-name descname"><span class="pre">Recall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">needs_avtivation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/metric.html#Recall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.metric.Recall" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#autoop.core.ml.metric.Metric" title="autoop.core.ml.metric.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a></p>
+<p>Metric class for calculating recall in classification tasks.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.Recall.needs_activation">
+<span class="sig-name descname"><span class="pre">needs_activation</span></span><a class="headerlink" href="#autoop.core.ml.metric.Recall.needs_activation" title="Link to this definition"></a></dt>
+<dd><p>Indicates if the metric requires an
+activation function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="autoop.core.ml.metric.get_metric">
+<span class="sig-prename descclassname"><span class="pre">autoop.core.ml.metric.</span></span><span class="sig-name descname"><span class="pre">get_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">needs_activation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#autoop.core.ml.metric.Metric" title="autoop.core.ml.metric.Metric"><span class="pre">Metric</span></a></span></span><a class="reference internal" href="_modules/autoop/core/ml/metric.html#get_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.metric.get_metric" title="Link to this definition"></a></dt>
+<dd><p>Get a metric by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the metric to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of the corresponding Metric class.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#autoop.core.ml.metric.Metric" title="autoop.core.ml.metric.Metric">Metric</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the name is not a valid metric.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-autoop.core.ml.pipeline">
+<span id="autoop-core-ml-pipeline-module"></span><h2>autoop.core.ml.pipeline module<a class="headerlink" href="#module-autoop.core.ml.pipeline" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="autoop.core.ml.pipeline.Pipeline">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">autoop.core.ml.pipeline.</span></span><span class="sig-name descname"><span class="pre">Pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#autoop.core.ml.metric.Metric" title="autoop.core.ml.metric.Metric"><span class="pre">Metric</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#autoop.core.ml.dataset.Dataset" title="autoop.core.ml.dataset.Dataset"><span class="pre">Dataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.model.Model" title="autoop.core.ml.model.model.Model"><span class="pre">Model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#autoop.core.ml.feature.Feature" title="autoop.core.ml.feature.Feature"><span class="pre">Feature</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_feature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#autoop.core.ml.feature.Feature" title="autoop.core.ml.feature.Feature"><span class="pre">Feature</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/autoop/core/ml/pipeline.html#Pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.pipeline.Pipeline" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class representing a machine learning pipeline.</p>
+<p>Combines data preprocessing, model training, and evaluation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.pipeline.Pipeline.metrics">
+<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#autoop.core.ml.pipeline.Pipeline.metrics" title="Link to this definition"></a></dt>
+<dd><p>List of evaluation metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#autoop.core.ml.metric.Metric" title="autoop.core.ml.metric.Metric">Metric</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.pipeline.Pipeline.dataset">
+<span class="sig-name descname"><span class="pre">dataset</span></span><a class="headerlink" href="#autoop.core.ml.pipeline.Pipeline.dataset" title="Link to this definition"></a></dt>
+<dd><p>The dataset to be used in the pipeline.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#autoop.core.ml.dataset.Dataset" title="autoop.core.ml.dataset.Dataset">Dataset</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.pipeline.Pipeline.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#autoop.core.ml.pipeline.Pipeline.model" title="Link to this definition"></a></dt>
+<dd><p>The model to be trained and evaluated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.model.Model" title="autoop.core.ml.model.model.Model">Model</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.pipeline.Pipeline.input_features">
+<span class="sig-name descname"><span class="pre">input_features</span></span><a class="headerlink" href="#autoop.core.ml.pipeline.Pipeline.input_features" title="Link to this definition"></a></dt>
+<dd><p>Features used as model inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#autoop.core.ml.feature.Feature" title="autoop.core.ml.feature.Feature">Feature</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.pipeline.Pipeline.target_feature">
+<span class="sig-name descname"><span class="pre">target_feature</span></span><a class="headerlink" href="#autoop.core.ml.pipeline.Pipeline.target_feature" title="Link to this definition"></a></dt>
+<dd><p>The target feature to be predicted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#autoop.core.ml.feature.Feature" title="autoop.core.ml.feature.Feature">Feature</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="autoop.core.ml.pipeline.Pipeline.split">
+<span class="sig-name descname"><span class="pre">split</span></span><a class="headerlink" href="#autoop.core.ml.pipeline.Pipeline.split" title="Link to this definition"></a></dt>
+<dd><p>Fraction of data used for training. Default is 0.8.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="autoop.core.ml.pipeline.Pipeline.artifacts">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">artifacts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact"><span class="pre">Artifact</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#autoop.core.ml.pipeline.Pipeline.artifacts" title="Link to this definition"></a></dt>
+<dd><p>Retrieve artifacts generated during pipeline execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>Artifacts like encoders and scalers</dt><dd><p>saved during execution.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact">Artifact</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.pipeline.Pipeline.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/autoop/core/ml/pipeline.html#Pipeline.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.pipeline.Pipeline.execute" title="Link to this definition"></a></dt>
+<dd><p>Execute the pipeline.</p>
+<p>Performs preprocessing, splitting, training, and evaluation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>Dictionary with evaluation metrics</dt><dd><p>and model predictions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict[str, Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id1">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.model.Model" title="autoop.core.ml.model.model.Model"><span class="pre">Model</span></a></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd><p>Access the pipeline’s model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The model instance used in the pipeline.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="autoop.core.ml.model.html#autoop.core.ml.model.model.Model" title="autoop.core.ml.model.model.Model">Model</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="autoop.core.ml.pipeline.Pipeline.to_artifact">
+<span class="sig-name descname"><span class="pre">to_artifact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact"><span class="pre">Artifact</span></a></span></span><a class="reference internal" href="_modules/autoop/core/ml/pipeline.html#Pipeline.to_artifact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#autoop.core.ml.pipeline.Pipeline.to_artifact" title="Link to this definition"></a></dt>
+<dd><p>Serialize the pipeline instance into an artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the artifact.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Serialized pipeline artifact.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#autoop.core.ml.artifact.Artifact" title="autoop.core.ml.artifact.Artifact">Artifact</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-autoop.core.ml">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-autoop.core.ml" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="autoop.core.html" class="btn btn-neutral float-left" title="autoop.core package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="autoop.core.ml.model.html" class="btn btn-neutral float-right" title="autoop.core.ml.model package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, p.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

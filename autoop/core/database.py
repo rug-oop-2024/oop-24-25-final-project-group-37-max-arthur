@@ -10,18 +10,6 @@ class Database():
 
     Attributes:
         storage (Storage): The storage backend used to persist data.
-
-    Methods:
-        set(collection: str, id: str, entry: dict) -> dict:
-            Store an entry in the database under the collection and ID.
-        get(collection: str, id: str) -> Union[dict, None]:
-            Retrieve an entry from the database by collection and ID.
-        delete(collection: str, id: str) -> None:
-            Remove an entry from the database by collection and ID.
-        list(collection: str) -> List[Tuple[str, dict]]:
-            List all entries in a specified collection.
-        refresh() -> None:
-            Reload the database from storage.
     """
 
     def __init__(self, storage: Storage) -> None:

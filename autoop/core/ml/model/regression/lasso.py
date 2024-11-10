@@ -1,3 +1,6 @@
+from copy import deepcopy
+
+from sklearn.base import BaseEstimator
 from sklearn.linear_model import Lasso as SklearnLasso
 
 from autoop.core.ml.model.model import RegressionModel
@@ -10,18 +13,8 @@ class Lasso(RegressionModel):
     Attributes:
         type (Literal["regression", "classification"]): Specifies the
             model type as 'regression'.
-        model (BaseEstimator | Model): The wrapped model instance.
+        model (BaseEstimator): The wrapped model instance.
         parameters (dict[str, Any]): Dictionary storing model parameters.
-
-    Methods:
-        fit(observations: np.ndarray, labels: np.ndarray) -> None:
-            Trains the model using provided observations and labels.
-
-        predict(observations: np.ndarray) -> Tensor:
-            Generates predictions from the trained model.
-
-        to_artifact(name: str) -> Artifact:
-            Serialize the model and create an Artifact object.
     """
 
     def __init__(self, *args, **kwargs) -> None:
@@ -33,6 +26,17 @@ class Lasso(RegressionModel):
         """
         super().__init__()
         self._model = SklearnLasso(*args, **kwargs)
+
+    @property
+    def model(self) -> BaseEstimator:
+        """
+        Get a deep copy of the underlying model instance.
+
+        Returns:
+            BaseEstimator: A copy of the wrapped model instance
+                used in training and prediction.
+        """
+        return deepcopy(self._model)
 
     @property
     def parameters(self) -> dict:

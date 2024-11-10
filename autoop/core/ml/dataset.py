@@ -17,19 +17,6 @@ class Dataset(Artifact):
         version (str): Version identifier of the artifact. Default is '1.0.0'.
         tags (list[str]): List of tags associated with the artifact.
         metadata (dict): Additional metadata for the artifact.
-
-    Methods:
-        from_dataframe(
-            data: pd.DataFrame,
-            name: str,
-            asset_path: str,
-            version: str = "1.0.0"
-        ) -> Dataset:
-            Create a Dataset artifact from a pandas DataFrame.
-        read() -> pd.DataFrame:
-            Read and return the dataset as a pandas DataFrame.
-        save(data: pd.DataFrame) -> bytes:
-            Save a new pandas DataFrame to the dataset artifact.
     """
 
     def __init__(self, *args, **kwargs) -> None:

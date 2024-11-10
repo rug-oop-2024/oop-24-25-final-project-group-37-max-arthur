@@ -56,24 +56,6 @@ class Metric(ABC):
     Attributes:
         needs_activation (bool): Indicates if the metric requires an
             activation function.
-
-    Methods:
-        __call__(predictions: Tensor, labels: np.ndarray) -> float:
-            Abstract method for calculating the metric value based on
-            predictions and labels.
-        __str__() -> str:
-            Abstractmethod for returning the name of the metric.
-        evaluate(predictions: Tensor, labels: np.ndarray) -> float:
-            Alias for __call__, performs the metric calculation.
-        _validate_inputs(predictions: Tensor, labels: Tensor) -> None:
-            Validates the shape of predictions and labels.
-        _select_activation(labels: Tensor) -> Callable[[Tensor], Tensor]:
-            Selects an appropriate activation function for the metric.
-        _preprocess_classification(
-            predictions: Tensor,
-            labels: Tensor
-        ) -> tuple:
-            Preprocess predictions and labels for classification tasks.
     """
 
     def __init__(self, needs_avtivation: bool = False) -> None:
@@ -205,23 +187,6 @@ class MeanSquaredError(Metric):
     Attributes:
         needs_activation (bool): Indicates if the metric requires an
             activation function.
-
-    Methods:
-        __call__(predictions: Tensor, labels: np.ndarray) -> float:
-            Calculate the metric value based on predictions and labels.
-        __str__() -> str:
-            Return the name of the metric.
-        evaluate(predictions: Tensor, labels: np.ndarray) -> float:
-            Alias for __call__, performs the metric calculation.
-        _validate_inputs(predictions: Tensor, labels: Tensor) -> None:
-            Validates the shape of predictions and labels.
-        _select_activation(labels: Tensor) -> Callable[[Tensor], Tensor]:
-            Selects an appropriate activation function for the metric.
-        _preprocess_classification(
-            predictions: Tensor,
-            labels: Tensor
-        ) -> tuple:
-            Preprocess predictions and labels for classification tasks.
     """
 
     def __call__(
@@ -260,23 +225,6 @@ class MeanAbsoluteError(Metric):
     Attributes:
         needs_activation (bool): Indicates if the metric requires an
             activation function.
-
-    Methods:
-        __call__(predictions: Tensor, labels: np.ndarray) -> float:
-            Calculate the metric value based on predictions and labels.
-        __str__() -> str:
-            Return the name of the metric.
-        evaluate(predictions: Tensor, labels: np.ndarray) -> float:
-            Alias for __call__, performs the metric calculation.
-        _validate_inputs(predictions: Tensor, labels: Tensor) -> None:
-            Validates the shape of predictions and labels.
-        _select_activation(labels: Tensor) -> Callable[[Tensor], Tensor]:
-            Selects an appropriate activation function for the metric.
-        _preprocess_classification(
-            predictions: Tensor,
-            labels: Tensor
-        ) -> tuple:
-            Preprocess predictions and labels for classification tasks.
     """
 
     def __call__(
@@ -315,23 +263,6 @@ class RSquared(Metric):
     Attributes:
         needs_activation (bool): Indicates if the metric requires an
             activation function.
-
-    Methods:
-        __call__(predictions: Tensor, labels: np.ndarray) -> float:
-            Calculate the metric value based on predictions and labels.
-        __str__() -> str:
-            Return the name of the metric.
-        evaluate(predictions: Tensor, labels: np.ndarray) -> float:
-            Alias for __call__, performs the metric calculation.
-        _validate_inputs(predictions: Tensor, labels: Tensor) -> None:
-            Validates the shape of predictions and labels.
-        _select_activation(labels: Tensor) -> Callable[[Tensor], Tensor]:
-            Selects an appropriate activation function for the metric.
-        _preprocess_classification(
-            predictions: Tensor,
-            labels: Tensor
-        ) -> tuple:
-            Preprocess predictions and labels for classification tasks.
     """
 
     def __call__(
@@ -373,23 +304,6 @@ class Accuracy(Metric):
     Attributes:
         needs_activation (bool): Indicates if the metric requires an
             activation function.
-
-    Methods:
-        __call__(predictions: Tensor, labels: np.ndarray) -> float:
-            Calculate the metric value based on predictions and labels.
-        __str__() -> str:
-            Return the name of the metric.
-        evaluate(predictions: Tensor, labels: np.ndarray) -> float:
-            Alias for __call__, performs the metric calculation.
-        _validate_inputs(predictions: Tensor, labels: Tensor) -> None:
-            Validates the shape of predictions and labels.
-        _select_activation(labels: Tensor) -> Callable[[Tensor], Tensor]:
-            Selects an appropriate activation function for the metric.
-        _preprocess_classification(
-            predictions: Tensor,
-            labels: Tensor
-        ) -> tuple:
-            Preprocess predictions and labels for classification tasks.
     """
 
     def __call__(
@@ -433,23 +347,6 @@ class Precision(Metric):
     Attributes:
         needs_activation (bool): Indicates if the metric requires an
             activation function.
-
-    Methods:
-        __call__(predictions: Tensor, labels: np.ndarray) -> float:
-            Calculate the metric value based on predictions and labels.
-        __str__() -> str:
-            Return the name of the metric.
-        evaluate(predictions: Tensor, labels: np.ndarray) -> float:
-            Alias for __call__, performs the metric calculation.
-        _validate_inputs(predictions: Tensor, labels: Tensor) -> None:
-            Validates the shape of predictions and labels.
-        _select_activation(labels: Tensor) -> Callable[[Tensor], Tensor]:
-            Selects an appropriate activation function for the metric.
-        _preprocess_classification(
-            predictions: Tensor,
-            labels: Tensor
-        ) -> tuple:
-            Preprocess predictions and labels for classification tasks.
     """
 
     def __call__(self, predictions: Tensor, labels: np.ndarray) -> float:
@@ -497,23 +394,6 @@ class Recall(Metric):
     Attributes:
         needs_activation (bool): Indicates if the metric requires an
             activation function.
-
-    Methods:
-        __call__(predictions: Tensor, labels: np.ndarray) -> float:
-            Calculate the metric value based on predictions and labels.
-        __str__() -> str:
-            Return the name of the metric.
-        evaluate(predictions: Tensor, labels: np.ndarray) -> float:
-            Alias for __call__, performs the metric calculation.
-        _validate_inputs(predictions: Tensor, labels: Tensor) -> None:
-            Validates the shape of predictions and labels.
-        _select_activation(labels: Tensor) -> Callable[[Tensor], Tensor]:
-            Selects an appropriate activation function for the metric.
-        _preprocess_classification(
-            predictions: Tensor,
-            labels: Tensor
-        ) -> tuple:
-            Preprocess predictions and labels for classification tasks.
     """
 
     def __call__(self, predictions: Tensor, labels: np.ndarray) -> float:
@@ -561,23 +441,6 @@ class F1Score(Metric):
     Attributes:
         needs_activation (bool): Indicates if the metric requires an
             activation function.
-
-    Methods:
-        __call__(predictions: Tensor, labels: np.ndarray) -> float:
-            Calculate the metric value based on predictions and labels.
-        __str__() -> str:
-            Return the name of the metric.
-        evaluate(predictions: Tensor, labels: np.ndarray) -> float:
-            Alias for __call__, performs the metric calculation.
-        _validate_inputs(predictions: Tensor, labels: Tensor) -> None:
-            Validates the shape of predictions and labels.
-        _select_activation(labels: Tensor) -> Callable[[Tensor], Tensor]:
-            Selects an appropriate activation function for the metric.
-        _preprocess_classification(
-            predictions: Tensor,
-            labels: Tensor
-        ) -> tuple:
-            Preprocess predictions and labels for classification tasks.
     """
 
     def __init__(self, needs_activation: bool = True) -> None:

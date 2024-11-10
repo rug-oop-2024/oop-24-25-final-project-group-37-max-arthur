@@ -19,16 +19,6 @@ class Model(ABC):
     Attributes:
         parameters (dict[str, Any]): A dictionary to store model parameters.
         fitted (bool): A flag indicating whether the model has been fitted.
-
-    Methods:
-        fit(observations: np.ndarray, labels: np.ndarray) -> None:
-            Abstract method to fit the model to observations and labels.
-
-        predict(observations: np.ndarray) -> Tensor:
-            Abstract method to predict from the trained model.
-
-        to_artifact(name: str) -> Artifact:
-            Serialize the model and create an Artifact object.
     """
 
     def __init__(self) -> None:
@@ -169,14 +159,6 @@ class RegressionModel(Model):
     Attributes:
         type (Literal["regression", "classification"]): Specifies the
             model type as 'regression'.
-        model (BaseEstimator | Model): The wrapped model instance.
-
-    Methods:
-        fit(observations: np.ndarray, labels: np.ndarray) -> None:
-            Trains the model using provided observations and labels.
-
-        predict(observations: np.ndarray) -> Tensor:
-            Generates predictions from the trained model.
     """
 
     def __init__(self) -> None:
@@ -188,17 +170,6 @@ class RegressionModel(Model):
         """
         super().__init__()
         self.type = "regression"
-
-    @property
-    def model(self) -> BaseEstimator | Model:
-        """
-        Get a deep copy of the underlying model instance.
-
-        Returns:
-            BaseEstimator | Model: A copy of the wrapped model instance
-                used in training and prediction.
-        """
-        return deepcopy(self._model)
 
     def fit(self, observations: np.ndarray, labels: np.ndarray) -> None:
         """
@@ -261,13 +232,6 @@ class ClassificationFacadeModel(Model):
         type (Literal["regression", "classification"]): Specifies the
             model type as 'classification'.
         model (BaseEstimator): The wrapped model instance.
-
-    Methods:
-        fit(observations: np.ndarray, labels: np.ndarray) -> None:
-            Trains the model using provided observations and labels.
-
-        predict(observations: np.ndarray) -> Tensor:
-            Generates predictions from the trained model.
     """
 
     def __init__(self) -> None:

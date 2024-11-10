@@ -13,10 +13,6 @@ class Trainer:
     Attributes:
         model (Module): The model to be trained.
         optimizer (Optimizer): The optimizer used for training.
-
-    Methods:
-        train(observations: Tensor, labels: Tensor) -> None:
-            Runs the training loop over the specified number of epochs.
     """
 
     def __init__(

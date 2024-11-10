@@ -25,14 +25,6 @@ class Pipeline():
         input_features (List[Feature]): Features used as model inputs.
         target_feature (Feature): The target feature to be predicted.
         split (float): Fraction of data used for training. Default is 0.8.
-
-    Methods:
-        artifacts() -> List[Artifact]:
-            Retrieve artifacts generated during pipeline execution.
-        execute() -> dict[str, Tensor]:
-            Execute the pipeline, returning evaluation metrics and predictions.
-        to_artifact(name: str) -> Artifact:
-            Serialize the pipeline instance to an artifact.
     """
 
     def __init__(
